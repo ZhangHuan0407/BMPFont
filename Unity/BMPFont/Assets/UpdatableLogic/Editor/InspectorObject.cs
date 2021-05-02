@@ -52,6 +52,8 @@ namespace Encoder.Editor
             UseUnitySerialize = serializeItem.UseUnitySerialize;
             UseJsonSerialize = serializeItem.UseJsonSerialize;
             ObjectType = Type.GetType(serializeItem.TypeFullName, false);
+            if (ObjectType is null)
+                Debug.LogError($"Not found type : {serializeItem.TypeFullName}");
 
             deserializeDictionary.TryGetValue(Name, out OldValue);
             NewValue = OldValue;
@@ -66,6 +68,8 @@ namespace Encoder.Editor
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label(Title);
+            if (ObjectType is null)
+                return;
             bool isUnityObject = ObjectType.IsAssignableFrom(typeof(UnityEngine.Object));
             // Unity Object, 展示完成后可能序列化
             if (UseUnitySerialize || isUnityObject)

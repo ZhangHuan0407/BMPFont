@@ -89,6 +89,9 @@
       <HintPath>..\HotFixReference.dll\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\HotFixReference.dll\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\HotFixReference.dll\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
@@ -130,6 +133,7 @@
     <Compile Include="Database\ITable.cs" />
     <Compile Include="Database\Table.cs" />
     <Compile Include="Database\IDataItem.cs" />
+    <Compile Include="UI\MakeSureWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

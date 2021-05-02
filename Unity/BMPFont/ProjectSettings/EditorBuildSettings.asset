@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/BMPFont.unity
+    guid: 5e624c3529e0090429dff02d1909533e
   m_configObjects: {}
