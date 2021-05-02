@@ -1,5 +1,7 @@
-﻿using Encoder;
+﻿using AssetBundleUpdate;
+using Encoder;
 using HotFix.EncoderExtend;
+using HotFix.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -57,6 +59,17 @@ namespace HotFix
         public void Main()
         {
             Debug.Log("Invoke GameStart.Main.");
+            int task = 0;
+            
+            task++;
+            AssetBundlePool.LoadAsset<GameObject>(
+                "bmpfont_prefab.assetbundle",
+                "MakeSureWindow.prefab",
+                (gameObject) =>
+                {
+                    MakeSureWindow.Prefab = gameObject;
+                    task--;
+                });
 
         }
     }

@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c83e1e9d3d5ef4c997965857d3b957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UriBase: http://39.103.211.127/Encoder/
+  UriBase: http://39.103.211.127/BMPFont/
 --- !u!114 &1978537353145315773
 MonoBehaviour:
   m_ObjectHideFlags: 0

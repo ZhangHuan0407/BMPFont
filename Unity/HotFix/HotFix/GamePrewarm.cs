@@ -40,7 +40,10 @@ namespace HotFix
         /// </summary>
         public readonly string[] PreloadAssetBundlesArray = new string[]
         {
-
+            // 资源总体积这么小，
+            // 我直接一个滑铲，成为常驻包
+            "bmpfont_animator.assetbundle",
+            "bmpfont_prefab.assetbundle",
         };
 
         /* field */

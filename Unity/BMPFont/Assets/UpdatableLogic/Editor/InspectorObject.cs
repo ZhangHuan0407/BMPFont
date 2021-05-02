@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Reflection;
 
 namespace Encoder.Editor
 {
@@ -11,6 +12,17 @@ namespace Encoder.Editor
     public class InspectorObject : IComparable<InspectorObject>
     {
         /* const */
+        public static readonly Dictionary<string, Type> TypeDictionary = new Dictionary<string, Type>()
+        {
+            // UnityEngine
+            { "UnityEngine.Animation", typeof(UnityEngine.Animation)},
+            { "UnityEngine.Animator", typeof(UnityEngine.Animator)},
+
+            // UnityEngine.UI
+            { "UnityEngine.UI.Button", typeof(UnityEngine.UI.Button)},
+            { "UnityEngine.UI.Image", typeof(UnityEngine.UI.Image)},
+            { "UnityEngine.UI.Text", typeof(UnityEngine.UI.Text)},
+        };
 
         /* field */
         public readonly string Name;
@@ -52,7 +64,8 @@ namespace Encoder.Editor
             UseUnitySerialize = serializeItem.UseUnitySerialize;
             UseJsonSerialize = serializeItem.UseJsonSerialize;
             ObjectType = Type.GetType(serializeItem.TypeFullName, false);
-            if (ObjectType is null)
+            if (ObjectType is null
+                && !TypeDictionary.TryGetValue(serializeItem.TypeFullName, out ObjectType))
                 Debug.LogError($"Not found type : {serializeItem.TypeFullName}");
 
             deserializeDictionary.TryGetValue(Name, out OldValue);
@@ -78,7 +91,7 @@ namespace Encoder.Editor
                 NewValue = UseUnitySerialize ? input : OldValue;
             }
             // Json 序列化，尽量按照具体数据类型做展示
-            if (UseJsonSerialize || !isUnityObject)
+            else if (UseJsonSerialize || !isUnityObject)
             {
                 string input = string.Empty;
                 if (ObjectType.Equals(typeof(int)))

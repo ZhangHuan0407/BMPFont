@@ -433,9 +433,9 @@ MonoBehaviour:
   ILTypeFullName: HotFix.UI.MakeSureWindow
   StructData: '{}'
   SerializableObject:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 480794915611513656}
+  - {fileID: 480794916719545174}
+  - {fileID: 480794915296682674}
   SerializableObjectName:
   - m_WindowAnimator
   - m_TitleText
