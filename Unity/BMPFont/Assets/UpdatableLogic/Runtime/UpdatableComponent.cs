@@ -1,8 +1,8 @@
-﻿using ILRuntime.Runtime.Intepreter;
+﻿using ILRuntime.CLR.Method;
+using ILRuntime.Runtime.Intepreter;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 namespace Encoder
@@ -85,18 +85,17 @@ namespace Encoder
         /* func */
         public void InvokeAction(string actionName)
         {
-            if (Instance.GetType().GetMethod(actionName) is MethodInfo methodInfo)
+            Dictionary<string, IMethod> typeMethods = CustomComponentMethodBuffer.ComponentMethodsCache[ILTypeFullName];
+            if (typeMethods.TryGetValue(actionName, out IMethod method))
             {
 #if UNITY_EDITOR
-                ParameterInfo[] parameterInfos = methodInfo.GetParameters();
-                if (parameterInfos.Length > 0
-                    && !parameterInfos[0].HasDefaultValue)
-                    Debug.LogError($"Try to Invoke actionName : {actionName}, but it's not a Action");
+                if (method.ParameterCount > 0)
+                    Debug.LogError($"Try to Invoke actionName : {ILTypeFullName}.{actionName}, but it's not a Action.");
 #endif
-                methodInfo.Invoke(Instance, new object[0]);
+                ILRuntimeService.InvokeMethod(method, Instance, EmptyParameters);
             }
             else
-                Debug.LogError("Not Found Method Exception.");
+                Debug.LogError($"Not Found Method Exception, {ILTypeFullName}.{actionName}");
         }
         /// <summary>
         /// 实例化成功后，调用以缓存组件内可能存在的方法
