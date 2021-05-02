@@ -1,5 +1,6 @@
 [
-{"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.MakeSureWindow","SerializeItems":["m_WindowAnimator","m_TitleText","m_ContentText"],"MarkingMethods":["OnClickNoButton","OnClickYesButton"]},
+{"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.MakeSureWindow","SerializeItems":["m_WindowAnimator","m_TitleText","m_ContentText"],"MarkingMethods":["OnClickNoButton","OnClickYesButton","OnEnable"]},
 {"BindingComponentName":"Encoder.CommonUpdatableComponent","TypeFullName":"HotFix.UI.Component.CountdownText","SerializeItems":["m_UseEmptyIfLessZero","StringFormat"],"MarkingMethods":["Update"]},
+{"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.Component.FileItem","SerializeItems":[],"MarkingMethods":[]},
 {"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.Component.UIHorizontalLayout","SerializeItems":["ChildsInLayout"],"MarkingMethods":[]}
 ]

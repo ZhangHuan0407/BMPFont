@@ -260,6 +260,10 @@ namespace Encoder.Editor
         public bool DeserializeInspectorObject()
         {
             InspectorObjects.Clear();
+
+            // 暂不支持运行时反序列化
+            if (EditorApplication.isPlaying)
+                return true;
             
             if (CustomComponentBuffer_Editor.ComponentInfoCache.Value.TryGetValue(
                             updatableComponent.ILTypeFullName,

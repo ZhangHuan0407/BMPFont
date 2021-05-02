@@ -6,7 +6,6 @@ namespace Encoder
     {
         private void OnApplicationFocus(bool focus)
         {
-            Debug.Log($"OnApplicationFocus, focus : {focus}");
 #if UNITY_EDITOR
             Application.targetFrameRate = 60;
 #else

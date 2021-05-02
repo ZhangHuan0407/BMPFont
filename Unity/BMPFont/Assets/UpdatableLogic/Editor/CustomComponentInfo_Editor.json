@@ -49,6 +49,12 @@
         "IsRuntimeAction": true,
         "Name": "OnClickYesButton",
         "Title": "OnClickYesButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
       }
     ]
   },
@@ -104,6 +110,12 @@
         "Title": "Update"
       }
     ]
+  },
+  {
+    "BindingComponentName": "Encoder.ContainerUpdatableComponent",
+    "TypeFullName": "HotFix.UI.Component.FileItem",
+    "SerializeItems": [],
+    "MarkingMethods": []
   },
   {
     "BindingComponentName": "Encoder.ContainerUpdatableComponent",

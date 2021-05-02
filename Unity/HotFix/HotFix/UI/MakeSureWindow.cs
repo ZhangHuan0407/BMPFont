@@ -1,5 +1,6 @@
 ﻿using Encoder;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,9 @@ namespace HotFix.UI
     public class MakeSureWindow
     {
         /* const */
+        /// <summary>
+        /// <see cref="MakeSureWindow"/> 预制体
+        /// </summary>
         public static GameObject Prefab;
 
         /* field */
@@ -82,14 +86,43 @@ namespace HotFix.UI
 
         /* func */
         [InvokeAction(IsRuntimeAction = true)]
+        public void OnEnable()
+        {
+            Debug.Log($"OnEnable, Appear {m_WindowAnimator}");
+            m_WindowAnimator?.Play("Appear");
+        }
+
+        [InvokeAction(IsRuntimeAction = true)]
         public void OnClickYesButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickYesButton)}");
         }
+
         [InvokeAction(IsRuntimeAction = true)]
         public void OnClickNoButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickNoButton)}");
+            if (m_WindowAnimator)
+            {
+                ILRuntimeService.StartILCoroutine(WaitToDestroy());
+            }
+            else
+                UnityEngine.Object.Destroy(gameObject);
+        }
+        private IEnumerator<object> WaitToDestroy()
+        {
+            while (m_UpdatableComponent
+                && m_WindowAnimator)
+            {
+                if (m_WindowAnimator.GetCurrentAnimatorStateInfo(0).IsName("DisappearIdle"))
+                {
+                    UnityEngine.Object.Destroy(gameObject);
+                    Debug.Log("WaitToDestroy");
+                    yield break;
+                }
+                else
+                    yield return null;
+            }
         }
     }
 }
