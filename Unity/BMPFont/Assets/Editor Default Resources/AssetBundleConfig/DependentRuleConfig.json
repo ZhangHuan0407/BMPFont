@@ -1,0 +1,44 @@
+{
+  "PieceDependentRules": [
+    {
+      "PieceAssetBundleName_RegexString": "\\A.*\\.assetbundle\\Z",
+      "DependentOnName_EscapeRegexString": [],
+      "ForbiddenDependentOnName_EscapeRegexString": [
+        "\\Aupdatablelogic/[\\w+_0-9].assetbundle\\Z",
+        "(?!\\.assetbundle) \\Z"
+      ]
+    },
+    {
+      "PieceAssetBundleName_RegexString": "\\Aupdatablelogic/[\\w+_0-9].assetbundle\\Z",
+      "DependentOnName_EscapeRegexString": [],
+      "ForbiddenDependentOnName_EscapeRegexString": [
+        ".*"
+      ]
+    }
+  ],
+  "GroupDependentRules": [
+    {
+      "TryGetGroupName_RegexString": "(?<=/) \\w+ (?=_prefab\\.assetbundle\\Z)",
+      "TryGetItemName_RegexString": "(?<=/\\w+_) prefab (?=\\.assetbundle\\Z)",
+      "DependentOnName_EscapeRegexString": [
+        "{GroupName}_image.assetbundle\\Z",
+        "{GroupName}_audio.assetbundle\\Z",
+        "\\w*common_\\w+.assetbundle\\Z"
+      ]
+    },
+    {
+      "TryGetGroupName_RegexString": "(?<=/) \\w+ (?=_image\\.assetbundle\\Z)",
+      "TryGetItemName_RegexString": "(?<=/\\w+_) image (?=\\.assetbundle\\Z)",
+      "DependentOnName_EscapeRegexString": [
+        "\\w*common_image.assetbundle\\Z"
+      ]
+    },
+    {
+      "TryGetGroupName_RegexString": "(?<=/) \\w+ (?=_audio\\.assetbundle\\Z)",
+      "TryGetItemName_RegexString": "(?<=/\\w+_) audio (?=\\.assetbundle\\Z)",
+      "DependentOnName_EscapeRegexString": [
+        "\\w*common_audio.assetbundle\\Z"
+      ]
+    }
+  ]
+}

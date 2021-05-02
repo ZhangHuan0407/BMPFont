@@ -1,0 +1,73 @@
+[
+  {
+    "BindingComponentName": "Encoder.CommonUpdatableComponent",
+    "TypeFullName": "HotFix.UI.Component.CountdownText",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_UseEmptyIfLessZero",
+        "Title": "使用空字符串代替倒计时结束",
+        "ToolTip": "小于 0 的状态下使用空字符串还是 00:00:00",
+        "TypeFullName": "System.Boolean",
+        "Order": 0,
+        "UseUnitySerialize": false,
+        "UseJsonSerialize": true
+      },
+      {
+        "IsField": false,
+        "IsProperty": true,
+        "Name": "TimeStamp",
+        "Title": "UTC 时间戳",
+        "ToolTip": null,
+        "TypeFullName": "System.Int32",
+        "Order": 1,
+        "UseUnitySerialize": false,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": false,
+        "IsProperty": true,
+        "Name": "StringFormat",
+        "Title": "字符串格式化",
+        "ToolTip": null,
+        "TypeFullName": "System.String",
+        "Order": 2,
+        "UseUnitySerialize": false,
+        "UseJsonSerialize": true
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": true,
+        "IsRuntimeAction": false,
+        "Name": "SetTextValue",
+        "Title": "SetTextValue"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Update",
+        "Title": "Update"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.ContainerUpdatableComponent",
+    "TypeFullName": "HotFix.UI.Component.UIHorizontalLayout",
+    "SerializeItems": [
+      {
+        "IsField": false,
+        "IsProperty": true,
+        "Name": "ChildsInLayout",
+        "Title": "当前参与布局的子节点",
+        "ToolTip": null,
+        "TypeFullName": "System.Collections.Generic.List`1[[UnityEngine.RectTransform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Order": 0,
+        "UseUnitySerialize": false,
+        "UseJsonSerialize": true
+      }
+    ],
+    "MarkingMethods": []
+  }
+]

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f5d3090a4c07540b141e5dcd9993b2, type: 3}
+  m_Name: FileCopyConfig
+  m_EditorClassIdentifier: 
+  BindingFiles:
+  - ImportLocalDirectoryPath: ../HotFix/ExportUpdatableComponent
+    ExportLocalDirectoryPath: Assets/UpdatableLogic/Editor
+    SearchPattern: SerializeItem.cs
+    ReplaceName: '{FileName}'
+  - ImportLocalDirectoryPath: ../HotFix/ExportUpdatableComponent
+    ExportLocalDirectoryPath: Assets/UpdatableLogic/Editor
+    SearchPattern: CustomComponentInfo_Editor.cs
+    ReplaceName: '{FileName}'
+  - ImportLocalDirectoryPath: ../HotFix/ExportUpdatableComponent
+    ExportLocalDirectoryPath: Assets/UpdatableLogic/Editor
+    SearchPattern: MarkingMethod.cs
+    ReplaceName: '{FileName}'
+  - ImportLocalDirectoryPath: ../HotFix/HotFixDLL
+    ExportLocalDirectoryPath: Assets/UpdatableLogic/Hotfix
+    SearchPattern: HotFix.dll
+    ReplaceName: '{FileName}.bytes'
+  - ImportLocalDirectoryPath: ../HotFix/HotFixDLL
+    ExportLocalDirectoryPath: Assets/UpdatableLogic/Hotfix
+    SearchPattern: HotFix.pdb
+    ReplaceName: '{FileName}.bytes'

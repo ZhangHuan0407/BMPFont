@@ -1,0 +1,4 @@
+[
+{"BindingComponentName":"Encoder.CommonUpdatableComponent","TypeFullName":"HotFix.UI.Component.CountdownText","SerializeItems":["m_UseEmptyIfLessZero","StringFormat"],"MarkingMethods":["Update"]},
+{"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.Component.UIHorizontalLayout","SerializeItems":["ChildsInLayout"],"MarkingMethods":[]}
+]

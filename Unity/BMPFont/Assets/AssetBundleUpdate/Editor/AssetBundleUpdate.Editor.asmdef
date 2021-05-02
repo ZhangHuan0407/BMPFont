@@ -1,0 +1,17 @@
+{
+    "name": "AssetBundleUpdate.Editor",
+    "references": [
+        "GUID:6d32aea113b5b56439bbea1c0e22a717"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

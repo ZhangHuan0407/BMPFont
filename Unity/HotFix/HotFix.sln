@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotFix", "HotFix\HotFix.csproj", "{E0718C0B-F72E-47CE-98F7-593BFAD2553D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportUpdatableComponent", "ExportUpdatableComponent\ExportUpdatableComponent.csproj", "{CC72A3BC-C036-4718-BB7F-67AB94A96759}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0718C0B-F72E-47CE-98F7-593BFAD2553D} = {E0718C0B-F72E-47CE-98F7-593BFAD2553D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0718C0B-F72E-47CE-98F7-593BFAD2553D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0718C0B-F72E-47CE-98F7-593BFAD2553D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0718C0B-F72E-47CE-98F7-593BFAD2553D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0718C0B-F72E-47CE-98F7-593BFAD2553D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC72A3BC-C036-4718-BB7F-67AB94A96759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC72A3BC-C036-4718-BB7F-67AB94A96759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC72A3BC-C036-4718-BB7F-67AB94A96759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC72A3BC-C036-4718-BB7F-67AB94A96759}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8576EB24-C32D-4C6E-8B63-EA1CF990F578}
+	EndGlobalSection
+EndGlobal

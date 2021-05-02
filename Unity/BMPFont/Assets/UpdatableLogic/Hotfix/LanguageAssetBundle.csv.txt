@@ -1,0 +1,2 @@
+Language, InterfaceLanguageAssetBundleName
+ChineseSimplified, language/chinesesimplified_text.assetbundle
