@@ -7,7 +7,12 @@ namespace Encoder
         private void OnApplicationFocus(bool focus)
         {
             Debug.Log($"OnApplicationFocus, focus : {focus}");
+#if UNITY_EDITOR
+            Application.targetFrameRate = 60;
+#else
+            // 我曾经手残在 UnityEditor 内设置帧率为1...
             Application.targetFrameRate = focus ? 60 : 1;
+#endif
         }
     }
 }
