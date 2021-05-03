@@ -9,7 +9,7 @@ namespace HotFix.UI.Component
     {
         /* field */
         public string DateTime { get; set; }
-        public string FileName { get; set; }
+        public string ItemName { get; set; }
         public int Index { get; set; }
         public FileAndDirectoryWindow Window { get; set; }
 
@@ -18,6 +18,7 @@ namespace HotFix.UI.Component
         public Transform transform { get; }
 
         /* func */
+        public void Selected();
         public void NotSelected();
     }
 }

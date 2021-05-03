@@ -31,7 +31,7 @@
         "Name": "m_FullPathText",
         "Title": "全路径",
         "ToolTip": "",
-        "TypeFullName": "UnityEngine.UI.Text",
+        "TypeFullName": "UnityEngine.UI.InputField",
         "Order": 2,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false

@@ -47,7 +47,7 @@ namespace HotFix.UI
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
             Title = "全路径")]
-        private Text m_FullPathText;
+        private InputField m_FullPathText;
 
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
@@ -132,7 +132,7 @@ namespace HotFix.UI
                 m_TitleText = null;
 
             if (deserializeDictionary.TryGetValue(nameof(m_FullPathText), out object fullPathText_object)
-                && fullPathText_object is Text fullPathText_text)
+                && fullPathText_object is InputField fullPathText_text)
                 m_FullPathText = fullPathText_text;
             else
                 m_FullPathText = null;
@@ -248,23 +248,37 @@ namespace HotFix.UI
                 || !Directory.Exists(selectedDirectory.FullName))
                 return;
 
+            // 第一项是返回上一级
+            if (selectedDirectory.Parent != null)
+            {
+                IFileAndDirectoryItem item = GetDirectoryItem();
+                item.ItemName = "../";
+                FileSystemInfos.Add(selectedDirectory.Parent);
+                FileAndDirectoryItems.Add(item);
+            }
             foreach (string directoryPath in Directory.GetDirectories(selectedDirectory.FullName))
             {
-                FileSystemInfos.Add(new DirectoryInfo(directoryPath));
-                FileAndDirectoryItems.Add(GetDirectoryItem());
+                DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);
+                IFileAndDirectoryItem item = GetDirectoryItem();
+                item.ItemName = directoryInfo.Name;
+                FileSystemInfos.Add(directoryInfo);
+                FileAndDirectoryItems.Add(item);
             }
             foreach (string filePath in Directory.GetFiles(selectedDirectory.FullName))
             {
-                FileSystemInfos.Add(new FileInfo(filePath));
-                FileAndDirectoryItems.Add(GetFileItem());
+                FileInfo fileInfo = new FileInfo(filePath);
+                IFileAndDirectoryItem item = GetFileItem();
+                item.ItemName = fileInfo.Name;
+                FileSystemInfos.Add(fileInfo);
+                FileAndDirectoryItems.Add(item);
             }
 
             for (int index = 0; index < FileAndDirectoryItems.Count; index++)
             {
                 IFileAndDirectoryItem item = FileAndDirectoryItems[index];
                 FileSystemInfo fileSystemInfo = FileSystemInfos[index];
-                item.FileName = fileSystemInfo.Name;
                 item.DateTime = fileSystemInfo.LastWriteTime.ToString();
+                item.Index = index;
                 item.Window = this;
                 item.transform.SetParent(m_ScrollContentTrans, false);
                 item.gameObject.SetActive(true);
@@ -311,10 +325,6 @@ namespace HotFix.UI
             }
         }
 
-        /// <summary>
-        /// 上一次的单击时间
-        /// </summary>
-        private float m_LastClickTime = 0f;
         private IFileAndDirectoryItem m_LastTouchItem;
         /// <summary>
         /// 单击界面上的这一选项
@@ -325,17 +335,14 @@ namespace HotFix.UI
             for (int index = 0; index < FileAndDirectoryItems.Count; index++)
             {
                 IFileAndDirectoryItem fileAndDirectoryItem = FileAndDirectoryItems[index];
-                if (fileAndDirectoryItem != item)
+                if (fileAndDirectoryItem == item)
+                    fileAndDirectoryItem.Selected();
+                else
                     fileAndDirectoryItem.NotSelected();
             }
 
-            // 算作单击
-            if (Time.time - m_LastClickTime > 0.5f
-                || m_LastTouchItem != item)
-            {
+            if (m_LastTouchItem != item)
                 m_LastTouchItem = item;
-                m_LastClickTime = Time.time;
-            }
             else
             {
                 SelectedFileSystemInfo = FileSystemInfos[item.Index];
@@ -346,6 +353,13 @@ namespace HotFix.UI
         [InvokeAction(IsRuntimeAction = true)]
         public void OnClickRefreshButton()
         {
+            string fullPath = m_FullPathText.text ?? string.Empty.Replace('\\', '/');
+            // 视作文件夹
+            if (Directory.Exists(fullPath))
+                SelectedFileSystemInfo = new DirectoryInfo(fullPath);
+            else
+                SelectedFileSystemInfo = new FileInfo(fullPath);
+            
             RefreshUI();
         }
 

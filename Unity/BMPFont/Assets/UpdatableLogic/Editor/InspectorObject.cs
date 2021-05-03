@@ -23,6 +23,7 @@ namespace Encoder.Editor
             // UnityEngine.UI
             { "UnityEngine.UI.Button", typeof(UnityEngine.UI.Button)},
             { "UnityEngine.UI.Image", typeof(UnityEngine.UI.Image)},
+            { "UnityEngine.UI.InputField", typeof(UnityEngine.UI.InputField)},
             { "UnityEngine.UI.Text", typeof(UnityEngine.UI.Text)},
         };
 

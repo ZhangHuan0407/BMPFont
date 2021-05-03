@@ -47,7 +47,7 @@ namespace HotFix.UI.Component
             State = ItemSerializableState.SerializeIt,
             Title = "文件名称")]
         private Text m_FileNameText;
-        public string FileName
+        public string ItemName
         {
             get
             {
