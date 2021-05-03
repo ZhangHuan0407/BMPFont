@@ -61,11 +61,22 @@
       {
         "IsField": true,
         "IsProperty": false,
+        "Name": "m_CacheTrans",
+        "Title": "缓存节点",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Transform",
+        "Order": 5,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
         "Name": "m_FileItemPrefab",
         "Title": "文件对象预制体",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.GameObject",
-        "Order": 5,
+        "Order": 6,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -76,7 +87,7 @@
         "Title": "文件夹对象预制体",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.GameObject",
-        "Order": 6,
+        "Order": 7,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }
@@ -99,6 +110,12 @@
         "IsRuntimeAction": true,
         "Name": "OnEnable",
         "Title": "OnEnable"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "RefreshUI",
+        "Title": "RefreshUI"
       }
     ]
   },

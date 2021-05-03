@@ -64,13 +64,21 @@ namespace HotFix
             task++;
             AssetBundlePool.LoadAsset<GameObject>(
                 "bmpfont_prefab.assetbundle",
-                "MakeSureWindow",
+                nameof(MakeSureWindow),
                 (gameObject) =>
                 {
                     MakeSureWindow.Prefab = gameObject;
                     task--;
-                    Transform canvasTrans = GameObject.Find("Canvas").transform;
-                    UnityEngine.Object.Instantiate(gameObject, canvasTrans);
+                });
+
+            task++;
+            AssetBundlePool.LoadAsset<GameObject>(
+                "bmpfont_prefab.assetbundle",
+                nameof(FileAndDirectoryWindow),
+                (gameObject) =>
+                {
+                    MakeSureWindow.Prefab = gameObject;
+                    task--;
                 });
         }
     }

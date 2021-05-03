@@ -64,24 +64,14 @@ namespace HotFix.UI.Component
             }
         }
 
-        private float m_LastClickTime = 0;
-        /// <summary>
-        /// 上一次的单击时间
-        /// </summary>
-        public float LastClickTime
-        {
-            get => m_LastClickTime;
-            set => m_LastClickTime = value;
-        }
-
         private UpdatableComponent m_UpdatableComponent;
 
 
         public FileAndDirectoryWindow Window { get; set; }
-        
+
         /* inter */
-        protected GameObject gameObject;
-        protected Transform transform;
+        public GameObject gameObject { get; }
+        public Transform transform { get; }
 #pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释
 
         /* ctor */
@@ -114,15 +104,15 @@ namespace HotFix.UI.Component
         [InvokeAction(IsRuntimeAction = true)]
         public void OnClickButtonSelected()
         {
-            if (Time.time - m_LastClickTime > 0.5f)
-            {
-                m_LastClickTime = Time.time;
-                return;
-            }
-
             Debug.Log($"{nameof(FileItem)}.{nameof(OnClickButtonSelected)}");
-            m_Animator?.Play("Selected");
-            // do something
+            Window.TouchThisItem(this);
+        }
+        /// <summary>
+        /// 选中状态(仅动画展示)
+        /// </summary>
+        public void Selected()
+        {
+            m_Animator?.Play(nameof(Selected));
         }
         /// <summary>
         /// 取消选中状态(仅动画展示)
