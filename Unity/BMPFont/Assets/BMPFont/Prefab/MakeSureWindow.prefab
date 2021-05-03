@@ -436,10 +436,14 @@ MonoBehaviour:
   - {fileID: 480794915611513656}
   - {fileID: 480794916719545174}
   - {fileID: 480794915296682674}
+  - {fileID: 480794915094120874}
+  - {fileID: 480794915778563276}
   SerializableObjectName:
   - m_WindowAnimator
   - m_TitleText
   - m_ContentText
+  - m_YesButton
+  - m_NoButton
 --- !u!1 &480794915678495510
 GameObject:
   m_ObjectHideFlags: 0

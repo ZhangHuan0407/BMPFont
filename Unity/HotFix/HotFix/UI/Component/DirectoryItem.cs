@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace HotFix.UI.Component
 {
     [BindingUpdatableComponent(BindingUpdatableComponentAttribute.ContainerComponent)]
-    public class FileItem : IFileAndDirectory
+    public class DirectoryItem : IFileAndDirectory
     {
         /* field */
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
@@ -84,7 +84,7 @@ namespace HotFix.UI.Component
         public FileAndDirectoryWindow Window { get; set; }
 
         /* ctor */
-        public FileItem(Dictionary<string, object> deserializeDictionary)
+        public DirectoryItem(Dictionary<string, object> deserializeDictionary)
         {
             m_UpdatableComponent = deserializeDictionary[nameof(UpdatableComponent)] as UpdatableComponent ?? throw new ArgumentException($"{nameof(UpdatableComponent)} is null.");
             gameObject = m_UpdatableComponent.gameObject;

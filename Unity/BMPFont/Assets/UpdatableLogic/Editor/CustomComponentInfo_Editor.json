@@ -1,6 +1,98 @@
 [
   {
     "BindingComponentName": "Encoder.ContainerUpdatableComponent",
+    "TypeFullName": "HotFix.UI.FileAndDirectoryWindow",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_WindowAnimator",
+        "Title": "窗体动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_TitleText",
+        "Title": "标题",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_OKButton",
+        "Title": "确定按钮",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Button",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_CancleButton",
+        "Title": "取消按钮",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Button",
+        "Order": 3,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_FileItemPrefab",
+        "Title": "文件对象预制体",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.GameObject",
+        "Order": 4,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_DirectoryItemPrefab",
+        "Title": "文件夹对象预制体",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.GameObject",
+        "Order": 5,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickCancleButton",
+        "Title": "OnClickCancleButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickOKButton",
+        "Title": "OnClickOKButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.ContainerUpdatableComponent",
     "TypeFullName": "HotFix.UI.MakeSureWindow",
     "SerializeItems": [
       {
@@ -33,6 +125,28 @@
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Text",
         "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_YesButton",
+        "Title": "确认按钮",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Button",
+        "Order": 3,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_NoButton",
+        "Title": "拒绝按钮",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Button",
+        "Order": 4,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }
@@ -113,9 +227,119 @@
   },
   {
     "BindingComponentName": "Encoder.ContainerUpdatableComponent",
+    "TypeFullName": "HotFix.UI.Component.DirectoryItem",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_Animator",
+        "Title": "动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_DateTimeText",
+        "Title": "文件修改日期",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_FileNameText",
+        "Title": "文件名称",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": false,
+        "IsProperty": true,
+        "Name": "Index",
+        "Title": "索引序号",
+        "ToolTip": null,
+        "TypeFullName": "System.Int32",
+        "Order": 3,
+        "UseUnitySerialize": false,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickButtonSelected",
+        "Title": "OnClickButtonSelected"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.ContainerUpdatableComponent",
     "TypeFullName": "HotFix.UI.Component.FileItem",
-    "SerializeItems": [],
-    "MarkingMethods": []
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_Animator",
+        "Title": "动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_DateTimeText",
+        "Title": "文件修改日期",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_FileNameText",
+        "Title": "文件名称",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": false,
+        "IsProperty": true,
+        "Name": "Index",
+        "Title": "索引序号",
+        "ToolTip": null,
+        "TypeFullName": "System.Int32",
+        "Order": 3,
+        "UseUnitySerialize": false,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickButtonSelected",
+        "Title": "OnClickButtonSelected"
+      }
+    ]
   },
   {
     "BindingComponentName": "Encoder.ContainerUpdatableComponent",

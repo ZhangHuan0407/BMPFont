@@ -1,6 +1,5 @@
 ﻿using Encoder;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 namespace HotFix.UI
 {
     [BindingUpdatableComponent(BindingUpdatableComponentAttribute.ContainerComponent)]
-    public class MakeSureWindow
+    public class FileAndDirectoryWindow
     {
         /* const */
         /// <summary>
@@ -29,7 +28,8 @@ namespace HotFix.UI
         private Text m_TitleText;
         public string TitleText
         {
-            get {
+            get
+            {
                 if (m_TitleText)
                     return m_TitleText.text;
                 else
@@ -44,35 +44,25 @@ namespace HotFix.UI
 
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
-            Title = "提示内容")]
-        private Text m_ContentText;
-        private string ContentText
-        {
-            get
-            {
-                if (m_ContentText)
-                    return m_ContentText.text;
-                else
-                    return null;
-            }
-            set
-            {
-                if (m_ContentText)
-                    m_ContentText.text = value;
-            }
-        }
+            Title = "确定按钮")]
+        private Button m_OKButton;
 
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
-            Title = "确认按钮")]
-        private Button m_YesButton;
-
-        [InspectorInfo(
-            State = ItemSerializableState.SerializeIt,
-            Title = "拒绝按钮")]
-        private Button m_NoButton;
+            Title = "取消按钮")]
+        private Button m_CancleButton;
 
         private UpdatableComponent m_UpdatableComponent;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "文件对象预制体")]
+        private GameObject m_FileItemPrefab;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "文件夹对象预制体")]
+        private GameObject m_DirectoryItemPrefab;
 
         /* inter */
         protected GameObject gameObject;
@@ -80,7 +70,7 @@ namespace HotFix.UI
 #pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释
 
         /* ctor */
-        public MakeSureWindow(Dictionary<string, object> deserializeDictionary)
+        public FileAndDirectoryWindow(Dictionary<string, object> deserializeDictionary)
         {
             m_UpdatableComponent = deserializeDictionary[nameof(UpdatableComponent)] as UpdatableComponent ?? throw new ArgumentException($"{nameof(UpdatableComponent)} is null.");
             gameObject = m_UpdatableComponent.gameObject;
@@ -98,23 +88,29 @@ namespace HotFix.UI
             else
                 m_TitleText = null;
 
-            if (deserializeDictionary.TryGetValue(nameof(m_ContentText), out object contentText_object)
-                && contentText_object is Text contentText_text)
-                m_ContentText = contentText_text;
+            if (deserializeDictionary.TryGetValue(nameof(m_OKButton), out object okButton_object)
+                && okButton_object is Button okButton_button)
+                m_OKButton = okButton_button;
             else
-                m_ContentText = null;
+                m_OKButton = null;
 
-            if (deserializeDictionary.TryGetValue(nameof(m_YesButton), out object yesButton_object)
-                && yesButton_object is Button yesButton_button)
-                m_YesButton = yesButton_button;
+            if (deserializeDictionary.TryGetValue(nameof(m_CancleButton), out object cancleButton_object)
+                && cancleButton_object is Button cancleButton_button)
+                m_CancleButton = cancleButton_button;
             else
-                m_YesButton = null;
+                m_CancleButton = null;
 
-            if (deserializeDictionary.TryGetValue(nameof(m_NoButton), out object noButton_object)
-                && noButton_object is Button noButton_button)
-                m_NoButton = noButton_button;
+            if (deserializeDictionary.TryGetValue(nameof(m_FileItemPrefab), out object fileItemPrefab_object)
+                && fileItemPrefab_object is GameObject fileItem_gameObject)
+                m_FileItemPrefab = fileItem_gameObject;
             else
-                m_NoButton = null;
+                m_FileItemPrefab = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_DirectoryItemPrefab), out object directoryItemPrefab_object)
+                && directoryItemPrefab_object is GameObject directoryItem_gameObject)
+                m_DirectoryItemPrefab = directoryItem_gameObject;
+            else
+                m_DirectoryItemPrefab = null;
         }
 
         /* func */
@@ -125,19 +121,19 @@ namespace HotFix.UI
         }
 
         [InvokeAction(IsRuntimeAction = true)]
-        public void OnClickYesButton()
+        public void OnClickOKButton()
         {
-            Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickYesButton)}");
-            m_YesButton.interactable = false;
-            m_NoButton.interactable = false;
+            Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickOKButton)}");
+            m_OKButton.interactable = false;
+            m_CancleButton.interactable = false;
         }
 
         [InvokeAction(IsRuntimeAction = true)]
-        public void OnClickNoButton()
+        public void OnClickCancleButton()
         {
-            Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickNoButton)}");
-            m_YesButton.interactable = false;
-            m_NoButton.interactable = false;
+            Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickCancleButton)}");
+            m_OKButton.interactable = false;
+            m_CancleButton.interactable = false;
             if (m_WindowAnimator)
             {
                 m_WindowAnimator.Play("Disappear");

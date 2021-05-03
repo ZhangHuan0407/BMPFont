@@ -127,13 +127,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="UI\Component\CountdownText.cs" />
+    <Compile Include="UI\Component\DirectoryItem.cs" />
     <Compile Include="UI\Component\FileItem.cs" />
+    <Compile Include="UI\Component\IFileAndDirectory.cs" />
     <Compile Include="UI\Component\UIHorizontalLayout.cs" />
     <Compile Include="UI\Component\UILayout.cs" />
     <Compile Include="Database\TableSet.cs" />
     <Compile Include="Database\ITable.cs" />
     <Compile Include="Database\Table.cs" />
     <Compile Include="Database\IDataItem.cs" />
+    <Compile Include="UI\FileAndDirectoryWindow.cs" />
     <Compile Include="UI\MakeSureWindow.cs" />
   </ItemGroup>
   <ItemGroup>
