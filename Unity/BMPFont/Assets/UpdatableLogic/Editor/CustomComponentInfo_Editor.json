@@ -28,11 +28,22 @@
       {
         "IsField": true,
         "IsProperty": false,
+        "Name": "m_FullPathText",
+        "Title": "全路径",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
         "Name": "m_OKButton",
         "Title": "确定按钮",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Button",
-        "Order": 2,
+        "Order": 3,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -43,7 +54,7 @@
         "Title": "取消按钮",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Button",
-        "Order": 3,
+        "Order": 4,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -54,7 +65,7 @@
         "Title": "滑动区域挂载位置",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.RectTransform",
-        "Order": 4,
+        "Order": 5,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -65,7 +76,7 @@
         "Title": "缓存节点",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.Transform",
-        "Order": 5,
+        "Order": 6,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -76,7 +87,7 @@
         "Title": "文件对象预制体",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.GameObject",
-        "Order": 6,
+        "Order": 7,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -87,7 +98,7 @@
         "Title": "文件夹对象预制体",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.GameObject",
-        "Order": 7,
+        "Order": 8,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }
@@ -108,14 +119,14 @@
       {
         "IsEditorAction": false,
         "IsRuntimeAction": true,
-        "Name": "OnEnable",
-        "Title": "OnEnable"
+        "Name": "OnClickRefreshButton",
+        "Title": "OnClickRefreshButton"
       },
       {
         "IsEditorAction": false,
         "IsRuntimeAction": true,
-        "Name": "RefreshUI",
-        "Title": "RefreshUI"
+        "Name": "OnEnable",
+        "Title": "OnEnable"
       }
     ]
   },

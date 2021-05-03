@@ -77,8 +77,13 @@ namespace HotFix
                 nameof(FileAndDirectoryWindow),
                 (gameObject) =>
                 {
-                    MakeSureWindow.Prefab = gameObject;
+                    FileAndDirectoryWindow.Prefab = gameObject;
                     task--;
+                    FileAndDirectoryWindow.OpenWindow(
+                        new System.IO.DirectoryInfo("A:/BMPFont/"),
+                        (FileAndDirectoryWindow window) => Debug.Log($"OK {window.SelectedFileSystemInfo}\n{window.SelectedFileSystemInfo?.FullName}"),
+                        (FileAndDirectoryWindow window) => Debug.Log($"Cancle {window.SelectedFileSystemInfo}\n{window.SelectedFileSystemInfo?.FullName}")
+                        );
                 });
         }
     }

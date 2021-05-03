@@ -46,6 +46,11 @@ namespace HotFix.UI
 
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
+            Title = "全路径")]
+        private Text m_FullPathText;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
             Title = "确定按钮")]
         private Button m_OKButton;
 
@@ -84,20 +89,23 @@ namespace HotFix.UI
         /// <summary>
         /// 当前展示的文件系统信息项
         /// </summary>
-        internal List<FileSystemInfo> FileSystemInfos;
+        private List<FileSystemInfo> FileSystemInfos;
 
         /// <summary>
         /// 当前展示的文件和文件夹项
         /// </summary>
-        internal List<IFileAndDirectoryItem> FileAndDirectoryItems;
+        private List<IFileAndDirectoryItem> FileAndDirectoryItems;
         /// <summary>
         /// 缓存不显示的文件项
         /// </summary>
-        internal Stack<IFileAndDirectoryItem> FileItemsCache;
+        private Stack<IFileAndDirectoryItem> FileItemsCache;
         /// <summary>
         /// 缓存不显示的文件夹项
         /// </summary>
-        internal Stack<IFileAndDirectoryItem> DirectoryItemsCache;
+        private Stack<IFileAndDirectoryItem> DirectoryItemsCache;
+
+        private Action<FileAndDirectoryWindow> OKCallback;
+        private Action<FileAndDirectoryWindow> CancleCallback;
 
         /* inter */
         protected GameObject gameObject;
@@ -122,6 +130,12 @@ namespace HotFix.UI
                 m_TitleText = titleText_text;
             else
                 m_TitleText = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_FullPathText), out object fullPathText_object)
+                && fullPathText_object is Text fullPathText_text)
+                m_FullPathText = fullPathText_text;
+            else
+                m_FullPathText = null;
 
             if (deserializeDictionary.TryGetValue(nameof(m_OKButton), out object okButton_object)
                 && okButton_object is Button okButton_button)
@@ -166,6 +180,33 @@ namespace HotFix.UI
             FileItemsCache = new Stack<IFileAndDirectoryItem>();
             DirectoryItemsCache = new Stack<IFileAndDirectoryItem>();
         }
+        public static void OpenWindow(
+            FileSystemInfo fileSystemInfo, 
+            Action<FileAndDirectoryWindow> okCallback = null,
+            Action<FileAndDirectoryWindow> cancleCallback = null)
+        {
+            if (fileSystemInfo is null)
+                throw new ArgumentNullException(nameof(fileSystemInfo));
+
+            GameObject go = UnityEngine.Object.Instantiate(Prefab);
+            go.transform.SetParent(GameObject.Find("Canvas").transform, false);
+            FileAndDirectoryWindow window = null;
+            foreach (UpdatableComponent updatableComponent in go.GetComponents<UpdatableComponent>())
+            {
+                if (typeof(FileAndDirectoryWindow).FullName.Equals(updatableComponent.ILTypeFullName))
+                {
+                    window = updatableComponent.InstanceObject as FileAndDirectoryWindow;
+                    break;
+                }
+            }
+            if (window is null)
+                throw new NullReferenceException($"Not found {nameof(FileAndDirectoryWindow)} in {nameof(UpdatableComponent)}.");
+            
+            window.SelectedFileSystemInfo = fileSystemInfo;
+            window.OKCallback = okCallback;
+            window.CancleCallback = cancleCallback;
+            window.RefreshUI();
+        }
 
         /* func */
         [InvokeAction(IsRuntimeAction = true)]
@@ -178,7 +219,6 @@ namespace HotFix.UI
         /// <summary>
         /// 强制刷新 UI，使得当前展示的可选项信息是基于<see cref="SelectedFileSystemInfo"/>得到的
         /// </summary>
-        [InvokeAction(IsRuntimeAction = true)]
         public void RefreshUI()
         {
             foreach (IFileAndDirectoryItem item in FileAndDirectoryItems)
@@ -199,6 +239,9 @@ namespace HotFix.UI
                 selectedDirectory = selectedFileInfo.Directory;
             else if (SelectedFileSystemInfo is DirectoryInfo directoryInfo && directoryInfo.Exists)
                 selectedDirectory = directoryInfo;
+
+            if (m_FullPathText)
+                m_FullPathText.text = selectedDirectory?.FullName;
 
             // 无有效文件夹选择
             if (selectedDirectory is null
@@ -223,11 +266,15 @@ namespace HotFix.UI
                 item.FileName = fileSystemInfo.Name;
                 item.DateTime = fileSystemInfo.LastWriteTime.ToString();
                 item.Window = this;
+                item.transform.SetParent(m_ScrollContentTrans, false);
                 item.gameObject.SetActive(true);
                 item.NotSelected();
             }
         }
 
+        /// <summary>
+        /// 从缓存中拿取一个文件夹对象，如果没有则创建一个
+        /// </summary>
         private IFileAndDirectoryItem GetDirectoryItem()
         {
             if (DirectoryItemsCache.Count > 0)
@@ -244,6 +291,9 @@ namespace HotFix.UI
                 throw new NullReferenceException($"Not found {nameof(DirectoryItem)} in {nameof(UpdatableComponent)}.");
             }
         }
+        /// <summary>
+        /// 从缓存中拿取一个文件对象，如果没有则创建一个
+        /// </summary>
         private IFileAndDirectoryItem GetFileItem()
         {
             if (FileItemsCache.Count > 0)
@@ -294,6 +344,12 @@ namespace HotFix.UI
         }
 
         [InvokeAction(IsRuntimeAction = true)]
+        public void OnClickRefreshButton()
+        {
+            RefreshUI();
+        }
+
+        [InvokeAction(IsRuntimeAction = true)]
         public void OnClickOKButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickOKButton)}");
@@ -306,6 +362,22 @@ namespace HotFix.UI
             }
             else
                 UnityEngine.Object.Destroy(gameObject);
+
+            IEnumerator<object> WaitToDestroy()
+            {
+                while (m_UpdatableComponent
+                    && m_WindowAnimator)
+                {
+                    if (m_WindowAnimator.GetCurrentAnimatorStateInfo(0).IsName("DisappearIdle"))
+                    {
+                        UnityEngine.Object.Destroy(gameObject);
+                        OKCallback?.Invoke(this);
+                        yield break;
+                    }
+                    else
+                        yield return null;
+                }
+            }
         }
 
         [InvokeAction(IsRuntimeAction = true)]
@@ -321,20 +393,21 @@ namespace HotFix.UI
             }
             else
                 UnityEngine.Object.Destroy(gameObject);
-        }
-        private IEnumerator<object> WaitToDestroy()
-        {
-            while (m_UpdatableComponent
-                && m_WindowAnimator)
+
+            IEnumerator<object> WaitToDestroy()
             {
-                if (m_WindowAnimator.GetCurrentAnimatorStateInfo(0).IsName("DisappearIdle"))
+                while (m_UpdatableComponent
+                    && m_WindowAnimator)
                 {
-                    UnityEngine.Object.Destroy(gameObject);
-                    Debug.Log("WaitToDestroy");
-                    yield break;
+                    if (m_WindowAnimator.GetCurrentAnimatorStateInfo(0).IsName("DisappearIdle"))
+                    {
+                        UnityEngine.Object.Destroy(gameObject);
+                        CancleCallback?.Invoke(this);
+                        yield break;
+                    }
+                    else
+                        yield return null;
                 }
-                else
-                    yield return null;
             }
         }
     }
