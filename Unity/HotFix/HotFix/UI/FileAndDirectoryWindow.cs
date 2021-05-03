@@ -1,6 +1,8 @@
 ﻿using Encoder;
+using HotFix.UI.Component;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,7 +54,10 @@ namespace HotFix.UI
             Title = "取消按钮")]
         private Button m_CancleButton;
 
-        private UpdatableComponent m_UpdatableComponent;
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "滑动区域挂载位置")]
+        private RectTransform m_ScrollContentTrans;
 
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
@@ -63,6 +68,14 @@ namespace HotFix.UI
             State = ItemSerializableState.SerializeIt,
             Title = "文件夹对象预制体")]
         private GameObject m_DirectoryItemPrefab;
+
+        private UpdatableComponent m_UpdatableComponent;
+
+
+        public bool TargetIsDirectory { get; set; }
+        public FileSystemInfo SelectedFileSystemInfo;
+        internal List<IFileAndDirectoryItem> FileAndDirectoryItems;
+        internal List<FileSystemInfo> FileSystemInfos;
 
         /* inter */
         protected GameObject gameObject;
@@ -100,6 +113,12 @@ namespace HotFix.UI
             else
                 m_CancleButton = null;
 
+            if (deserializeDictionary.TryGetValue(nameof(m_ScrollContentTrans), out object scrollContentTrans_object)
+                && scrollContentTrans_object is RectTransform scrollContent_transform)
+                m_ScrollContentTrans = scrollContent_transform;
+            else
+                m_ScrollContentTrans = null;
+
             if (deserializeDictionary.TryGetValue(nameof(m_FileItemPrefab), out object fileItemPrefab_object)
                 && fileItemPrefab_object is GameObject fileItem_gameObject)
                 m_FileItemPrefab = fileItem_gameObject;
@@ -111,6 +130,10 @@ namespace HotFix.UI
                 m_DirectoryItemPrefab = directoryItem_gameObject;
             else
                 m_DirectoryItemPrefab = null;
+
+
+            FileAndDirectoryItems = new List<IFileAndDirectoryItem>();
+            FileSystemInfos = new List<FileSystemInfo>();
         }
 
         /* func */

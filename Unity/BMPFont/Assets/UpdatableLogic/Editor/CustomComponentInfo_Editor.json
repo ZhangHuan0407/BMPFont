@@ -50,11 +50,22 @@
       {
         "IsField": true,
         "IsProperty": false,
+        "Name": "m_ScrollContentTrans",
+        "Title": "滑动区域挂载位置",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.RectTransform",
+        "Order": 4,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
         "Name": "m_FileItemPrefab",
         "Title": "文件对象预制体",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.GameObject",
-        "Order": 4,
+        "Order": 5,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -65,7 +76,7 @@
         "Title": "文件夹对象预制体",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.GameObject",
-        "Order": 5,
+        "Order": 6,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }

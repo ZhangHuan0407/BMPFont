@@ -16,6 +16,9 @@ namespace Encoder.Editor
             // UnityEngine
             { "UnityEngine.Animation", typeof(UnityEngine.Animation)},
             { "UnityEngine.Animator", typeof(UnityEngine.Animator)},
+            { "UnityEngine.GameObject", typeof(UnityEngine.GameObject)},
+            { "UnityEngine.Transform", typeof(UnityEngine.Transform)},
+            { "UnityEngine.RectTransform", typeof(UnityEngine.RectTransform)},
 
             // UnityEngine.UI
             { "UnityEngine.UI.Button", typeof(UnityEngine.UI.Button)},
