@@ -90,6 +90,13 @@ namespace HotFix
                     ProcessWindow.Prefab = gameObject;
                     task--;
                 });
+
+            ILRuntimeService.StartILCoroutine(WaitAllLoaded());
+            IEnumerator<object> WaitAllLoaded()
+            {
+                while (task > 0)
+                    yield return null;
+            }
         }
     }
 }

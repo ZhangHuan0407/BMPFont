@@ -73,7 +73,7 @@ namespace HotFix.UI
             set
             {
                 value = Mathf.Clamp01(value);
-                m_ProcessImage.fillAmount = value;
+                m_ProcessImage.DoFillAmount(value, 0.3f).DoIt();
             }
         }
 
