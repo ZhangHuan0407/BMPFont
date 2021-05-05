@@ -69,6 +69,7 @@ namespace HotFix
             while (TaskCount > 0)
                 yield return null;
 
+            TaskCount = Windows.Count;
             foreach (Type window in Windows)
             {
                 AssetBundlePool.LoadAsset<GameObject>(
@@ -82,6 +83,10 @@ namespace HotFix
             }
             while (TaskCount > 0)
                 yield return null;
+
+            FontSettingWindow.OpenWindow();
+            MenuWindow.OpenWindow();
+            RendererWindow.OpenWindow();
             Debug.Log("return GameStart.WaitForAll_Coroutine.");
         }
     }

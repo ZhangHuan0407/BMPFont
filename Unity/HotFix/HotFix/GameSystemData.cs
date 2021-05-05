@@ -81,6 +81,5 @@ namespace HotFix
             go.transform.SetParent(GameObject.Find("Canvas").transform, false);
             return go;
         }
-
     }
 }

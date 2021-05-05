@@ -41,7 +41,7 @@ namespace HotFix.UI
         }
         public static FontSettingWindow OpenWindow()
         {
-            GameObject go = GameSystemData.Instance.InstantiateGo(nameof(RendererWindow));
+            GameObject go = GameSystemData.Instance.InstantiateGo(nameof(FontSettingWindow));
             FontSettingWindow window = null;
             foreach (UpdatableComponent updatableComponent in go.GetComponents<UpdatableComponent>())
             {
