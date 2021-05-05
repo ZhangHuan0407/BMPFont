@@ -74,6 +74,9 @@ namespace HotFix.UI
 
         private UpdatableComponent m_UpdatableComponent;
 
+        public Action<MakeSureWindow> YesCallback;
+        public Action<MakeSureWindow> NoCallback;
+
         /* inter */
         protected GameObject gameObject;
         protected Transform transform;
@@ -116,6 +119,23 @@ namespace HotFix.UI
             else
                 m_NoButton = null;
         }
+        public MakeSureWindow OpenWindow()
+        {
+            GameObject go = UnityEngine.Object.Instantiate(Prefab);
+            go.transform.SetParent(GameObject.Find("Canvas").transform, false);
+            MakeSureWindow window = null;
+            foreach (UpdatableComponent updatableComponent in go.GetComponents<UpdatableComponent>())
+            {
+                if (typeof(MakeSureWindow).FullName.Equals(updatableComponent.ILTypeFullName))
+                {
+                    window = updatableComponent.InstanceObject as MakeSureWindow;
+                    break;
+                }
+            }
+            if (window is null)
+                throw new NullReferenceException($"Not found {nameof(MakeSureWindow)} in {nameof(UpdatableComponent)}.");
+            return window;
+        }
 
         /* func */
         [InvokeAction(IsRuntimeAction = true)]
@@ -130,14 +150,7 @@ namespace HotFix.UI
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickYesButton)}");
             m_YesButton.interactable = false;
             m_NoButton.interactable = false;
-        }
-
-        [InvokeAction(IsRuntimeAction = true)]
-        public void OnClickNoButton()
-        {
-            Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickNoButton)}");
-            m_YesButton.interactable = false;
-            m_NoButton.interactable = false;
+            YesCallback?.Invoke(this);
             if (m_WindowAnimator)
             {
                 m_WindowAnimator.Play("Disappear");
@@ -146,6 +159,23 @@ namespace HotFix.UI
             else
                 UnityEngine.Object.Destroy(gameObject);
         }
+
+        [InvokeAction(IsRuntimeAction = true)]
+        public void OnClickNoButton()
+        {
+            Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickNoButton)}");
+            m_YesButton.interactable = false;
+            m_NoButton.interactable = false;
+            NoCallback?.Invoke(this);
+            if (m_WindowAnimator)
+            {
+                m_WindowAnimator.Play("Disappear");
+                ILRuntimeService.StartILCoroutine(WaitToDestroy());
+            }
+            else
+                UnityEngine.Object.Destroy(gameObject);
+        }
+
         private IEnumerator<object> WaitToDestroy()
         {
             while (m_UpdatableComponent

@@ -104,8 +104,8 @@ namespace HotFix.UI
         /// </summary>
         private Stack<IFileAndDirectoryItem> DirectoryItemsCache;
 
-        private Action<FileAndDirectoryWindow> OKCallback;
-        private Action<FileAndDirectoryWindow> CancleCallback;
+        public Action<FileAndDirectoryWindow> OKCallback;
+        public Action<FileAndDirectoryWindow> CancleCallback;
 
         /* inter */
         protected GameObject gameObject;
@@ -180,13 +180,15 @@ namespace HotFix.UI
             FileItemsCache = new Stack<IFileAndDirectoryItem>();
             DirectoryItemsCache = new Stack<IFileAndDirectoryItem>();
         }
-        public static void OpenWindow(
-            FileSystemInfo fileSystemInfo, 
-            Action<FileAndDirectoryWindow> okCallback = null,
-            Action<FileAndDirectoryWindow> cancleCallback = null)
+        /// <summary>
+        /// 开启一个文件与文件夹选择窗体
+        /// </summary>
+        /// <param name="fileSystemInfo">指向的文件系统信息，默认指向当前文件夹</param>
+        /// <returns>窗体实例</returns>
+        public static FileAndDirectoryWindow OpenWindow(FileSystemInfo fileSystemInfo = null)
         {
             if (fileSystemInfo is null)
-                throw new ArgumentNullException(nameof(fileSystemInfo));
+                fileSystemInfo = new DirectoryInfo(Environment.CurrentDirectory);
 
             GameObject go = UnityEngine.Object.Instantiate(Prefab);
             go.transform.SetParent(GameObject.Find("Canvas").transform, false);
@@ -203,9 +205,8 @@ namespace HotFix.UI
                 throw new NullReferenceException($"Not found {nameof(FileAndDirectoryWindow)} in {nameof(UpdatableComponent)}.");
             
             window.SelectedFileSystemInfo = fileSystemInfo;
-            window.OKCallback = okCallback;
-            window.CancleCallback = cancleCallback;
             window.RefreshUI();
+            return window;
         }
 
         /* func */
@@ -369,6 +370,7 @@ namespace HotFix.UI
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickOKButton)}");
             m_OKButton.interactable = false;
             m_CancleButton.interactable = false;
+            OKCallback?.Invoke(this);
             if (m_WindowAnimator)
             {
                 m_WindowAnimator.Play("Disappear");
@@ -376,22 +378,6 @@ namespace HotFix.UI
             }
             else
                 UnityEngine.Object.Destroy(gameObject);
-
-            IEnumerator<object> WaitToDestroy()
-            {
-                while (m_UpdatableComponent
-                    && m_WindowAnimator)
-                {
-                    if (m_WindowAnimator.GetCurrentAnimatorStateInfo(0).IsName("DisappearIdle"))
-                    {
-                        UnityEngine.Object.Destroy(gameObject);
-                        OKCallback?.Invoke(this);
-                        yield break;
-                    }
-                    else
-                        yield return null;
-                }
-            }
         }
 
         [InvokeAction(IsRuntimeAction = true)]
@@ -400,6 +386,7 @@ namespace HotFix.UI
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickCancleButton)}");
             m_OKButton.interactable = false;
             m_CancleButton.interactable = false;
+            CancleCallback?.Invoke(this);
             if (m_WindowAnimator)
             {
                 m_WindowAnimator.Play("Disappear");
@@ -407,21 +394,20 @@ namespace HotFix.UI
             }
             else
                 UnityEngine.Object.Destroy(gameObject);
+        }
 
-            IEnumerator<object> WaitToDestroy()
+        private IEnumerator<object> WaitToDestroy()
+        {
+            while (m_UpdatableComponent
+                && m_WindowAnimator)
             {
-                while (m_UpdatableComponent
-                    && m_WindowAnimator)
+                if (m_WindowAnimator.GetCurrentAnimatorStateInfo(0).IsName("DisappearIdle"))
                 {
-                    if (m_WindowAnimator.GetCurrentAnimatorStateInfo(0).IsName("DisappearIdle"))
-                    {
-                        UnityEngine.Object.Destroy(gameObject);
-                        CancleCallback?.Invoke(this);
-                        yield break;
-                    }
-                    else
-                        yield return null;
+                    UnityEngine.Object.Destroy(gameObject);
+                    yield break;
                 }
+                else
+                    yield return null;
             }
         }
     }
