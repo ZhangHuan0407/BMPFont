@@ -252,8 +252,11 @@ namespace AssetBundleUpdate
             if (UseEditorAssetSystem)
             {
                 assetBundleInfo.HaveUpdate = true;
-                LoadedAssetBundles.Add(assetBundleName, null);
-                assetBundleInfo.HaveLoaded = true;
+                if (!LoadedAssetBundles.ContainsKey(assetBundleName))
+                {
+                    LoadedAssetBundles.Add(assetBundleName, null);
+                    assetBundleInfo.HaveLoaded = true;
+                }
                 return;
             }
 #endif

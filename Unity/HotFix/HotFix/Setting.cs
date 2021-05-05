@@ -32,6 +32,7 @@ namespace HotFix
         internal static IEnumerator<object> CreateInstance()
         {
             Instance = LoadFromPlayerPrefs();
+            GameStart.TaskCount--;
             yield break;
         }
         internal static IEnumerator<object> StartInstance()
@@ -41,6 +42,7 @@ namespace HotFix
             AssetBundlePool.LoadAssetBundle(languageAssetBundle.InterfaceLanguageAssetBundleName, true);
             while (!AssetBundlePool.AssetBundleIsReady(languageAssetBundle.InterfaceLanguageAssetBundleName))
                 yield return null;
+            GameStart.TaskCount--;
         }
 
         /* func */

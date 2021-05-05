@@ -17,8 +17,8 @@ namespace HotFix.Database
         public PrefabAsset() { }
         public PrefabAsset(string prefabName, GameObject prefab)
         {
-            PrefabName = prefabName;
-            Prefab = prefab;
+            PrefabName = prefabName ?? throw new ArgumentNullException(nameof(prefabName));
+            Prefab = prefab ?? throw new ArgumentNullException(nameof(prefab));
         }
 
         /* func */

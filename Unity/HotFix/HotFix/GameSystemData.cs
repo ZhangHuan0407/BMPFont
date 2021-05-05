@@ -41,9 +41,16 @@ namespace HotFix
                     task--;
                 });
 
+            Table<string, PrefabAsset> prefabCache = new Table<string, PrefabAsset>()
+            {
+                Name = nameof(PrefabCache),
+            };
+            instance.Add(prefabCache);
+
             while (task > 0)
                 yield return null;
             Instance = instance;
+            GameStart.TaskCount--;
         }
         internal static IEnumerator<object> StartInstance()
         {
@@ -57,13 +64,14 @@ namespace HotFix
                 "Interface.json",
                 (textAsset) =>
                 {
-                    ITable interfaceString_Table = Table<string, LanguageTranslate>.LoadTableFromJson(nameof(InterfaceString), textAsset.text);
-                    Instance.Add(interfaceString_Table);
+                    //ITable interfaceString_Table = Table<string, LanguageTranslate>.LoadTableFromJson(nameof(InterfaceString), textAsset.text);
+                    //Instance.Add(interfaceString_Table);
                     task--;
                 });
 
             while (task > 0)
                 yield return null;
+            GameStart.TaskCount--;
         }
 
         /* func */

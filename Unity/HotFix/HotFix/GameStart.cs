@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Tween;
 using UnityEngine;
 
 namespace HotFix
@@ -16,6 +17,9 @@ namespace HotFix
         /* field */
         private List<IEnumerator<object>> CreateInstances;
         private List<IEnumerator<object>> StartInstance;
+        private List<Type> Windows;
+
+        public static int TaskCount { get; set; }
 
         /* ctor */
         /// <summary>
@@ -34,34 +38,7 @@ namespace HotFix
                 Setting.StartInstance(),
                 GameSystemData.StartInstance(),
             };
-
-            Coroutine coroutine = ILRuntimeService.StartILCoroutine(WaitForAll_Coroutine());
-        }
-        private IEnumerator<object> WaitForAll_Coroutine()
-        {
-            foreach (IEnumerator<object> enumerator in CreateInstances)
-                ILRuntimeService.StartILCoroutine(enumerator);
-            foreach (IEnumerator<object> enumerator in CreateInstances)
-            {
-                while (enumerator.MoveNext())
-                    yield return enumerator.Current;
-            }
-
-            foreach (IEnumerator<object> enumerator in StartInstance)
-                ILRuntimeService.StartILCoroutine(enumerator);
-            foreach (IEnumerator<object> enumerator in StartInstance)
-            {
-                while (enumerator.MoveNext())
-                    yield return enumerator.Current;
-            }
-        }
-
-        /* func */
-        public void Main()
-        {
-            Debug.Log("Invoke GameStart.Main.");
-            int task = 0;
-            List<Type> windows = new List<Type>()
+            Windows = new List<Type>()
             {
                 typeof(FileAndDirectoryWindow),
                 typeof(FontSettingWindow),
@@ -70,31 +47,42 @@ namespace HotFix
                 typeof(ProcessWindow),
                 typeof(RendererWindow),
             };
+        }
 
-            Table<string, PrefabAsset> prefabCache = new Table<string, PrefabAsset>()
+        /* func */
+        public void Main()
+        {
+            Debug.Log("Invoke GameStart.Main.");
+            Coroutine coroutine = ILRuntimeService.StartILCoroutine(WaitForAll_Coroutine());
+        }
+        private IEnumerator<object> WaitForAll_Coroutine()
+        {
+            TaskCount = CreateInstances.Count;
+            foreach (IEnumerator<object> enumerator in CreateInstances)
+                ILRuntimeService.StartILCoroutine(enumerator);
+
+            while (TaskCount > 0)
+                yield return null;
+            TaskCount = StartInstance.Count;
+            foreach (IEnumerator<object> enumerator in StartInstance)
+                ILRuntimeService.StartILCoroutine(enumerator);
+            while (TaskCount > 0)
+                yield return null;
+
+            foreach (Type window in Windows)
             {
-                Name = "PrefabCache",
-            };
-            GameSystemData.Instance.Add(prefabCache);
-            foreach (Type window in windows)
-            {
-                task++;
                 AssetBundlePool.LoadAsset<GameObject>(
                     "bmpfont_prefab.assetbundle",
                     window.Name,
                     (gameObject) =>
                     {
-                        prefabCache.Insert(new PrefabAsset(window.Name, gameObject));
-                        task--;
+                        GameSystemData.Instance.PrefabCache.Insert(new PrefabAsset(window.Name, gameObject));
+                        TaskCount--;
                     });
             }
-
-            ILRuntimeService.StartILCoroutine(WaitAllLoaded());
-            IEnumerator<object> WaitAllLoaded()
-            {
-                while (task > 0)
-                    yield return null;
-            }
+            while (TaskCount > 0)
+                yield return null;
+            Debug.Log("return GameStart.WaitForAll_Coroutine.");
         }
     }
 }

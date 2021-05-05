@@ -46,7 +46,7 @@ namespace HotFix.Database
         public bool Add(ITable table)
         {
             if (table is null)
-                throw new ArgumentNullException(nameof(table));
+                throw new ArgumentNullException($"Try to add {nameof(table)} : {table} in {nameof(TableSet)} : {Name}.");
             else if (IsReadOnly)
                 throw new ReadOnlyException($"Try to {nameof(Add)} one new table, where {nameof(TableSet)} is ReadOnly.");
             else if (table.TableSet is TableSet anotherSet)
