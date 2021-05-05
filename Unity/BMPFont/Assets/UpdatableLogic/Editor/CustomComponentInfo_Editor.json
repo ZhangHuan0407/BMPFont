@@ -212,6 +212,76 @@
     ]
   },
   {
+    "BindingComponentName": "Encoder.ContainerUpdatableComponent",
+    "TypeFullName": "HotFix.UI.ProcessWindow",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_WindowAnimator",
+        "Title": "窗体动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_TitleText",
+        "Title": "标题",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_ContentText",
+        "Title": "提示内容",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_ProcessImage",
+        "Title": "进度条",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 3,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickNoButton",
+        "Title": "OnClickNoButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickYesButton",
+        "Title": "OnClickYesButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      }
+    ]
+  },
+  {
     "BindingComponentName": "Encoder.CommonUpdatableComponent",
     "TypeFullName": "HotFix.UI.Component.CountdownText",
     "SerializeItems": [

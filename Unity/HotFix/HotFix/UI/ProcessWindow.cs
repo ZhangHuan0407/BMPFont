@@ -1,18 +1,18 @@
 ﻿using Encoder;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using Tween;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace HotFix.UI
 {
     [BindingUpdatableComponent(BindingUpdatableComponentAttribute.ContainerComponent)]
-    public class MakeSureWindow
+    public class ProcessWindow
     {
         /* const */
         /// <summary>
-        /// <see cref="MakeSureWindow"/> 预制体
+        /// <see cref="ProcessWindow"/> 预制体
         /// </summary>
         public static GameObject Prefab;
 
@@ -29,7 +29,8 @@ namespace HotFix.UI
         private Text m_TitleText;
         public string TitleText
         {
-            get {
+            get
+            {
                 if (m_TitleText)
                     return m_TitleText.text;
                 else
@@ -64,19 +65,19 @@ namespace HotFix.UI
 
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
-            Title = "确认按钮")]
-        private Button m_YesButton;
-
-        [InspectorInfo(
-            State = ItemSerializableState.SerializeIt,
-            Title = "拒绝按钮")]
-        private Button m_NoButton;
+            Title = "进度条")]
+        private Image m_ProcessImage;
+        public float Process
+        {
+            get => m_ProcessImage ? m_ProcessImage.fillAmount : 0;
+            set
+            {
+                value = Mathf.Clamp01(value);
+                m_ProcessImage.fillAmount = value;
+            }
+        }
 
         private UpdatableComponent m_UpdatableComponent;
-
-
-        public Action<MakeSureWindow> YesCallback;
-        public Action<MakeSureWindow> NoCallback;
 
         /* inter */
         protected GameObject gameObject;
@@ -84,7 +85,7 @@ namespace HotFix.UI
 #pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释
 
         /* ctor */
-        public MakeSureWindow(Dictionary<string, object> deserializeDictionary)
+        public ProcessWindow(Dictionary<string, object> deserializeDictionary)
         {
             m_UpdatableComponent = deserializeDictionary[nameof(UpdatableComponent)] as UpdatableComponent ?? throw new ArgumentException($"{nameof(UpdatableComponent)} is null.");
             gameObject = m_UpdatableComponent.gameObject;
@@ -108,33 +109,27 @@ namespace HotFix.UI
             else
                 m_ContentText = null;
 
-            if (deserializeDictionary.TryGetValue(nameof(m_YesButton), out object yesButton_object)
-                && yesButton_object is Button yesButton_button)
-                m_YesButton = yesButton_button;
+            if (deserializeDictionary.TryGetValue(nameof(m_ProcessImage), out object processImage_object)
+                && processImage_object is Image processImage_image)
+                m_ProcessImage = processImage_image;
             else
-                m_YesButton = null;
-
-            if (deserializeDictionary.TryGetValue(nameof(m_NoButton), out object noButton_object)
-                && noButton_object is Button noButton_button)
-                m_NoButton = noButton_button;
-            else
-                m_NoButton = null;
+                m_ProcessImage = null;
         }
-        public static MakeSureWindow OpenWindow()
+        public static ProcessWindow OpenWindow()
         {
             GameObject go = UnityEngine.Object.Instantiate(Prefab);
             go.transform.SetParent(GameObject.Find("Canvas").transform, false);
-            MakeSureWindow window = null;
+            ProcessWindow window = null;
             foreach (UpdatableComponent updatableComponent in go.GetComponents<UpdatableComponent>())
             {
-                if (typeof(MakeSureWindow).FullName.Equals(updatableComponent.ILTypeFullName))
+                if (typeof(ProcessWindow).FullName.Equals(updatableComponent.ILTypeFullName))
                 {
-                    window = updatableComponent.InstanceObject as MakeSureWindow;
+                    window = updatableComponent.InstanceObject as ProcessWindow;
                     break;
                 }
             }
             if (window is null)
-                throw new NullReferenceException($"Not found {nameof(MakeSureWindow)} in {nameof(UpdatableComponent)}.");
+                throw new NullReferenceException($"Not found {nameof(ProcessWindow)} in {nameof(UpdatableComponent)}.");
             return window;
         }
 
@@ -149,9 +144,6 @@ namespace HotFix.UI
         public void OnClickYesButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickYesButton)}");
-            m_YesButton.interactable = false;
-            m_NoButton.interactable = false;
-            YesCallback?.Invoke(this);
             if (m_WindowAnimator)
             {
                 m_WindowAnimator.Play("Disappear");
@@ -165,9 +157,6 @@ namespace HotFix.UI
         public void OnClickNoButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickNoButton)}");
-            m_YesButton.interactable = false;
-            m_NoButton.interactable = false;
-            NoCallback?.Invoke(this);
             if (m_WindowAnimator)
             {
                 m_WindowAnimator.Play("Disappear");
@@ -177,6 +166,16 @@ namespace HotFix.UI
                 UnityEngine.Object.Destroy(gameObject);
         }
 
+        public void StartToClose()
+        {
+            if (m_WindowAnimator)
+            {
+                m_WindowAnimator.Play("Disappear");
+                ILRuntimeService.StartILCoroutine(WaitToDestroy());
+            }
+            else
+                UnityEngine.Object.Destroy(gameObject);
+        }
         private IEnumerator<object> WaitToDestroy()
         {
             while (m_UpdatableComponent

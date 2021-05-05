@@ -1,6 +1,7 @@
 [
 {"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.FileAndDirectoryWindow","SerializeItems":["m_WindowAnimator","m_TitleText","m_FullPathText","m_OKButton","m_CancleButton","m_ScrollContentTrans","m_CacheTrans","m_FileItemPrefab","m_DirectoryItemPrefab"],"MarkingMethods":["OnClickCancleButton","OnClickOKButton","OnClickRefreshButton","OnEnable"]},
 {"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.MakeSureWindow","SerializeItems":["m_WindowAnimator","m_TitleText","m_ContentText","m_YesButton","m_NoButton"],"MarkingMethods":["OnClickNoButton","OnClickYesButton","OnEnable"]},
+{"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.ProcessWindow","SerializeItems":["m_WindowAnimator","m_TitleText","m_ContentText","m_ProcessImage"],"MarkingMethods":["OnClickNoButton","OnClickYesButton","OnEnable"]},
 {"BindingComponentName":"Encoder.CommonUpdatableComponent","TypeFullName":"HotFix.UI.Component.CountdownText","SerializeItems":["m_UseEmptyIfLessZero","StringFormat"],"MarkingMethods":["Update"]},
 {"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.Component.DirectoryItem","SerializeItems":["m_Animator","m_DateTimeText","m_FileNameText"],"MarkingMethods":["OnClickButtonSelected"]},
 {"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.Component.FileItem","SerializeItems":["m_Animator","m_DateTimeText","m_FileNameText"],"MarkingMethods":["OnClickButtonSelected"]},

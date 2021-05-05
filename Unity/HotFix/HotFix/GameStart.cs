@@ -80,6 +80,16 @@ namespace HotFix
                     FileAndDirectoryWindow.Prefab = gameObject;
                     task--;
                 });
+
+            task++;
+            AssetBundlePool.LoadAsset<GameObject>(
+                "bmpfont_prefab.assetbundle",
+                nameof(ProcessWindow),
+                (gameObject) =>
+                {
+                    ProcessWindow.Prefab = gameObject;
+                    task--;
+                });
         }
     }
 }

@@ -138,6 +138,7 @@
     <Compile Include="Database\IDataItem.cs" />
     <Compile Include="UI\FileAndDirectoryWindow.cs" />
     <Compile Include="UI\MakeSureWindow.cs" />
+    <Compile Include="UI\ProcessWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
