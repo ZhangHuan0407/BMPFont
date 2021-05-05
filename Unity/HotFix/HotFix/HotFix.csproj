@@ -113,6 +113,7 @@
     <Compile Include="BindingUpdatableComponentAttribute.cs" />
     <Compile Include="CheckComponentAttribute.cs" />
     <Compile Include="Database\LanguageTranslate.cs" />
+    <Compile Include="Database\PrefabAsset.cs" />
     <Compile Include="Database\PrimaryKeyNotFoundException.cs" />
     <Compile Include="Database\SetDataFunctionBuffer.cs" />
     <Compile Include="EncoderExtend\AssetBundlePoolExtend.cs" />
@@ -137,8 +138,11 @@
     <Compile Include="Database\Table.cs" />
     <Compile Include="Database\IDataItem.cs" />
     <Compile Include="UI\FileAndDirectoryWindow.cs" />
+    <Compile Include="UI\FontSettingWindow.cs" />
     <Compile Include="UI\MakeSureWindow.cs" />
+    <Compile Include="UI\MenuWindow.cs" />
     <Compile Include="UI\ProcessWindow.cs" />
+    <Compile Include="UI\RendererWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

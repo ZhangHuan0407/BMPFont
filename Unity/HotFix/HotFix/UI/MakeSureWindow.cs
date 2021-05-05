@@ -11,10 +11,6 @@ namespace HotFix.UI
     public class MakeSureWindow
     {
         /* const */
-        /// <summary>
-        /// <see cref="MakeSureWindow"/> 预制体
-        /// </summary>
-        public static GameObject Prefab;
 
         /* field */
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
@@ -122,8 +118,7 @@ namespace HotFix.UI
         }
         public static MakeSureWindow OpenWindow()
         {
-            GameObject go = UnityEngine.Object.Instantiate(Prefab);
-            go.transform.SetParent(GameObject.Find("Canvas").transform, false);
+            GameObject go = GameSystemData.Instance.InstantiateGo(nameof(RendererWindow));
             MakeSureWindow window = null;
             foreach (UpdatableComponent updatableComponent in go.GetComponents<UpdatableComponent>())
             {

@@ -1,5 +1,6 @@
 ﻿using AssetBundleUpdate;
 using Encoder;
+using HotFix.Database;
 using HotFix.EncoderExtend;
 using HotFix.UI;
 using System;
@@ -60,36 +61,33 @@ namespace HotFix
         {
             Debug.Log("Invoke GameStart.Main.");
             int task = 0;
-            
-            task++;
-            AssetBundlePool.LoadAsset<GameObject>(
-                "bmpfont_prefab.assetbundle",
-                nameof(MakeSureWindow),
-                (gameObject) =>
-                {
-                    MakeSureWindow.Prefab = gameObject;
-                    task--;
-                });
+            List<Type> windows = new List<Type>()
+            {
+                typeof(FileAndDirectoryWindow),
+                typeof(FontSettingWindow),
+                typeof(MakeSureWindow),
+                typeof(MenuWindow),
+                typeof(ProcessWindow),
+                typeof(RendererWindow),
+            };
 
-            task++;
-            AssetBundlePool.LoadAsset<GameObject>(
-                "bmpfont_prefab.assetbundle",
-                nameof(FileAndDirectoryWindow),
-                (gameObject) =>
-                {
-                    FileAndDirectoryWindow.Prefab = gameObject;
-                    task--;
-                });
-
-            task++;
-            AssetBundlePool.LoadAsset<GameObject>(
-                "bmpfont_prefab.assetbundle",
-                nameof(ProcessWindow),
-                (gameObject) =>
-                {
-                    ProcessWindow.Prefab = gameObject;
-                    task--;
-                });
+            Table<string, PrefabAsset> prefabCache = new Table<string, PrefabAsset>()
+            {
+                Name = "PrefabCache",
+            };
+            GameSystemData.Instance.Add(prefabCache);
+            foreach (Type window in windows)
+            {
+                task++;
+                AssetBundlePool.LoadAsset<GameObject>(
+                    "bmpfont_prefab.assetbundle",
+                    window.Name,
+                    (gameObject) =>
+                    {
+                        prefabCache.Insert(new PrefabAsset(window.Name, gameObject));
+                        task--;
+                    });
+            }
 
             ILRuntimeService.StartILCoroutine(WaitAllLoaded());
             IEnumerator<object> WaitAllLoaded()

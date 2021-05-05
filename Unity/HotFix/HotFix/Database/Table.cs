@@ -30,10 +30,12 @@ namespace HotFix.Database
         public string Name
         {
             get => m_Name;
-            private set 
+            internal set 
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException($"{nameof(value)} can not be null or white space.");
+                else if (!string.IsNullOrWhiteSpace(m_Name) && !m_Name.Equals(value))
+                    throw new ArgumentException($"Can't rename table's name");
                 m_Name = value;
             }
         }

@@ -10,11 +10,6 @@ namespace HotFix.UI
     [BindingUpdatableComponent(BindingUpdatableComponentAttribute.ContainerComponent)]
     public class ProcessWindow
     {
-        /* const */
-        /// <summary>
-        /// <see cref="ProcessWindow"/> 预制体
-        /// </summary>
-        public static GameObject Prefab;
 
         /* field */
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
@@ -117,8 +112,7 @@ namespace HotFix.UI
         }
         public static ProcessWindow OpenWindow()
         {
-            GameObject go = UnityEngine.Object.Instantiate(Prefab);
-            go.transform.SetParent(GameObject.Find("Canvas").transform, false);
+            GameObject go = GameSystemData.Instance.InstantiateGo(nameof(RendererWindow));
             ProcessWindow window = null;
             foreach (UpdatableComponent updatableComponent in go.GetComponents<UpdatableComponent>())
             {

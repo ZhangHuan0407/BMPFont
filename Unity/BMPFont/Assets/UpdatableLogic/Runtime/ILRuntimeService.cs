@@ -179,6 +179,8 @@ namespace Encoder
             domain.DelegateManager.RegisterMethodDelegate<GameObject>();
             domain.DelegateManager.RegisterMethodDelegate<TextAsset>();
             domain.DelegateManager.RegisterMethodDelegate<Sprite>();
+            domain.DelegateManager.RegisterMethodDelegate<Texture>();
+            domain.DelegateManager.RegisterMethodDelegate<Texture2D>();
             domain.DelegateManager.RegisterMethodDelegate<Material>();
             domain.DelegateManager.RegisterMethodDelegate<ScriptableObject>();
             domain.DelegateManager.RegisterMethodDelegate<Font>();

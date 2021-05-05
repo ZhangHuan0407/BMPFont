@@ -132,6 +132,31 @@
   },
   {
     "BindingComponentName": "Encoder.ContainerUpdatableComponent",
+    "TypeFullName": "HotFix.UI.FontSettingWindow",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_WindowAnimator",
+        "Title": "窗体动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.ContainerUpdatableComponent",
     "TypeFullName": "HotFix.UI.MakeSureWindow",
     "SerializeItems": [
       {
@@ -213,6 +238,31 @@
   },
   {
     "BindingComponentName": "Encoder.ContainerUpdatableComponent",
+    "TypeFullName": "HotFix.UI.MenuWindow",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_WindowAnimator",
+        "Title": "窗体动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.ContainerUpdatableComponent",
     "TypeFullName": "HotFix.UI.ProcessWindow",
     "SerializeItems": [
       {
@@ -273,6 +323,31 @@
         "Name": "OnClickYesButton",
         "Title": "OnClickYesButton"
       },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.ContainerUpdatableComponent",
+    "TypeFullName": "HotFix.UI.RendererWindow",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_WindowAnimator",
+        "Title": "窗体动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
       {
         "IsEditorAction": false,
         "IsRuntimeAction": true,

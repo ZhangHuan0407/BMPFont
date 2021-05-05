@@ -19,6 +19,7 @@ namespace HotFix
         /* inter */
         public Table<string, LanguageAssetBundle> LanguageAB => this[nameof(LanguageAssetBundle)] as Table<string, LanguageAssetBundle>;
         public Table<string, LanguageTranslate> InterfaceString => this[nameof(InterfaceString)] as Table<string, LanguageTranslate>;
+        public Table<string, PrefabAsset> PrefabCache => this[nameof(PrefabCache)] as Table<string, PrefabAsset>;
 
         /* ctor */
         private GameSystemData() : base(nameof(GameSystemData))
@@ -66,7 +67,12 @@ namespace HotFix
         }
 
         /* func */
-
+        public GameObject InstantiateGo(string prefabName)
+        {
+            GameObject go = UnityEngine.Object.Instantiate(PrefabCache[prefabName].Prefab);
+            go.transform.SetParent(GameObject.Find("Canvas").transform, false);
+            return go;
+        }
 
     }
 }
