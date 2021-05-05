@@ -19,6 +19,16 @@ namespace HotFix.UI
             Title = "窗体动画控制")]
         private Animator m_WindowAnimator;
 
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "加载字体按钮")]
+        private Button m_LoadFontButton;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "退出按钮")]
+        private Button m_ExitButton;
+
         private UpdatableComponent m_UpdatableComponent;
 
         /* inter */
@@ -38,6 +48,18 @@ namespace HotFix.UI
                 m_WindowAnimator = windowAnimator_animator;
             else
                 m_WindowAnimator = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_LoadFontButton), out object loadFontButton_object)
+                && loadFontButton_object is Button loadFontButton_button)
+                m_LoadFontButton = loadFontButton_button;
+            else
+                m_LoadFontButton = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_ExitButton), out object exitButton_object)
+                && exitButton_object is Button exitButton_button)
+                m_ExitButton = exitButton_button;
+            else
+                m_ExitButton = null;
         }
         public static MenuWindow OpenWindow()
         {
@@ -87,6 +109,25 @@ namespace HotFix.UI
                 else
                     yield return null;
             }
+        }
+
+        [InvokeAction(IsRuntimeAction = true)]
+        public void OnClickLoadFontButton()
+        {
+            Debug.Log($"{nameof(MenuWindow)}.{nameof(OnClickLoadFontButton)}");
+            FileAndDirectoryWindow window = FileAndDirectoryWindow.OpenWindow();
+            window.Title = "读取一个 *.fnt 文件";
+            window.OKCallback += (_) => 
+            {
+                Debug.Log(window.SelectedFileSystemInfo?.FullName);
+            };
+        }
+
+        [InvokeAction(IsRuntimeAction = true)]
+        public void OnClickExitButton()
+        {
+            Debug.Log($"{nameof(MenuWindow)}.{nameof(OnClickExitButton)}");
+            Application.Quit();
         }
     }
 }

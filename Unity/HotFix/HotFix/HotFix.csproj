@@ -111,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingUpdatableComponentAttribute.cs" />
+    <Compile Include="BMPFont\BMPFont.cs" />
+    <Compile Include="BMPFont\BMPFontChar.cs" />
+    <Compile Include="BMPFont\BMPFontCommon.cs" />
+    <Compile Include="BMPFont\BMPFontInfo.cs" />
+    <Compile Include="BMPFont\BMPFontPage.cs" />
+    <Compile Include="BMPFont\MessageBox.cs" />
     <Compile Include="CheckComponentAttribute.cs" />
     <Compile Include="Database\LanguageTranslate.cs" />
     <Compile Include="Database\PrefabAsset.cs" />
@@ -118,6 +124,8 @@
     <Compile Include="Database\SetDataFunctionBuffer.cs" />
     <Compile Include="EncoderExtend\AssetBundlePoolExtend.cs" />
     <Compile Include="EncoderExtend\EnumerableExtend.cs" />
+    <Compile Include="EncoderExtend\Vector2IntExtend.cs" />
+    <Compile Include="EncoderExtend\Vector4Extend.cs" />
     <Compile Include="GamePrewarm.cs" />
     <Compile Include="GameStart.cs" />
     <Compile Include="GameSystemData.cs" />
@@ -141,6 +149,7 @@
     <Compile Include="UI\FontSettingWindow.cs" />
     <Compile Include="UI\MakeSureWindow.cs" />
     <Compile Include="UI\MenuWindow.cs" />
+    <Compile Include="UI\MessageWindow.cs" />
     <Compile Include="UI\ProcessWindow.cs" />
     <Compile Include="UI\RendererWindow.cs" />
   </ItemGroup>

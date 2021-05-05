@@ -12,10 +12,6 @@ namespace HotFix.UI
     public class FileAndDirectoryWindow
     {
         /* const */
-        /// <summary>
-        /// <see cref="MakeSureWindow"/> 预制体
-        /// </summary>
-        public static GameObject Prefab;
 
         /* field */
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
@@ -28,7 +24,7 @@ namespace HotFix.UI
             State = ItemSerializableState.SerializeIt,
             Title = "标题")]
         private Text m_TitleText;
-        public string TitleText
+        public string Title
         {
             get
             {
@@ -190,8 +186,7 @@ namespace HotFix.UI
             if (fileSystemInfo is null)
                 fileSystemInfo = new DirectoryInfo(Environment.CurrentDirectory);
 
-            GameObject go = UnityEngine.Object.Instantiate(Prefab);
-            go.transform.SetParent(GameObject.Find("Canvas").transform, false);
+            GameObject go = GameSystemData.Instance.InstantiateGo(nameof(FileAndDirectoryWindow));
             FileAndDirectoryWindow window = null;
             foreach (UpdatableComponent updatableComponent in go.GetComponents<UpdatableComponent>())
             {

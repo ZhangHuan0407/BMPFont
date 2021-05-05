@@ -64,6 +64,7 @@ namespace HotFix
                 "Interface.json",
                 (textAsset) =>
                 {
+                    // Newston 无法获取 Table 数据类型
                     //ITable interfaceString_Table = Table<string, LanguageTranslate>.LoadTableFromJson(nameof(InterfaceString), textAsset.text);
                     //Instance.Add(interfaceString_Table);
                     task--;

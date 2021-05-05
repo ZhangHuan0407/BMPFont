@@ -163,7 +163,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4446869588415287787}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8563324117875868949}
+        m_MethodName: InvokeAction
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: OnClickMinusButton
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4446869588415287781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 10, y: 10}
+  m_EffectDistance: {x: 14, y: 14}
   m_UseGraphicAlpha: 1
 --- !u!1 &4446869589333819810
 GameObject:
@@ -438,7 +449,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4446869589768892448}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8563324117875868949}
+        m_MethodName: InvokeAction
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: OnClickPlusButton
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4446869589768892450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 10, y: 10}
+  m_EffectDistance: {x: 14, y: 14}
   m_UseGraphicAlpha: 1
 --- !u!1 &8563324117875868947
 GameObject:
@@ -510,11 +532,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ILTypeFullName: HotFix.UI.RendererWindow
-  StructData: '{}'
+  StructData: '{"m_MaxScale":"3","m_MinScale":"0.3"}'
   SerializableObject:
   - {fileID: 8563324117875868948}
+  - {fileID: 4446869589768892455}
+  - {fileID: 4446869588415287786}
+  - {fileID: 4446869589343997692}
   SerializableObjectName:
   - m_WindowAnimator
+  - m_PlusButton
+  - m_MinusButton
+  - m_ScrollContent
 --- !u!95 &8563324117875868948
 Animator:
   serializedVersion: 3

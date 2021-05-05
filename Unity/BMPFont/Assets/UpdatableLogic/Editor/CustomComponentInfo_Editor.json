@@ -250,9 +250,43 @@
         "Order": 0,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_LoadFontButton",
+        "Title": "加载字体按钮",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Button",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_ExitButton",
+        "Title": "退出按钮",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Button",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
       }
     ],
     "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickExitButton",
+        "Title": "OnClickExitButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickLoadFontButton",
+        "Title": "OnClickLoadFontButton"
+      },
       {
         "IsEditorAction": false,
         "IsRuntimeAction": true,
@@ -345,9 +379,76 @@
         "Order": 0,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_PlusButton",
+        "Title": "放大按钮",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Button",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_MinusButton",
+        "Title": "缩小按钮",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Button",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_MaxScale",
+        "Title": "最大缩放比例",
+        "ToolTip": "",
+        "TypeFullName": "System.Single",
+        "Order": 3,
+        "UseUnitySerialize": false,
+        "UseJsonSerialize": true
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_MinScale",
+        "Title": "最小缩放比例",
+        "ToolTip": "",
+        "TypeFullName": "System.Single",
+        "Order": 4,
+        "UseUnitySerialize": false,
+        "UseJsonSerialize": true
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_ScrollContent",
+        "Title": "展示内容",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.RectTransform",
+        "Order": 5,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
       }
     ],
     "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickMinusButton",
+        "Title": "OnClickMinusButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickPlusButton",
+        "Title": "OnClickPlusButton"
+      },
       {
         "IsEditorAction": false,
         "IsRuntimeAction": true,

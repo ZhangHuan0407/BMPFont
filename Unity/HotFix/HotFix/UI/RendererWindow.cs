@@ -19,6 +19,31 @@ namespace HotFix.UI
             Title = "窗体动画控制")]
         private Animator m_WindowAnimator;
 
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "放大按钮")]
+        private Button m_PlusButton;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "缩小按钮")]
+        private Button m_MinusButton;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "最大缩放比例")]
+        private float m_MaxScale;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "最小缩放比例")]
+        private float m_MinScale;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "展示内容")]
+        private RectTransform m_ScrollContent;
+
         private UpdatableComponent m_UpdatableComponent;
 
         /* inter */
@@ -38,6 +63,36 @@ namespace HotFix.UI
                 m_WindowAnimator = windowAnimator_animator;
             else
                 m_WindowAnimator = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_PlusButton), out object plusButton_object)
+                && plusButton_object is Button plusButton_button)
+                m_PlusButton = plusButton_button;
+            else
+                m_PlusButton = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_MinusButton), out object minusButton_object)
+                && minusButton_object is Button minusButton_button)
+                m_MinusButton = minusButton_button;
+            else
+                m_MinusButton = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_MaxScale), out object maxScale_object)
+                && maxScale_object is float maxScale_float)
+                m_MaxScale = maxScale_float;
+            else
+                m_MaxScale = 3f;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_MinScale), out object minScale_object)
+                && minScale_object is float minScale_float)
+                m_MinScale = minScale_float;
+            else
+                m_MinScale = 0.3f;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_ScrollContent), out object scrollContent_object)
+                && scrollContent_object is RectTransform scrollContent_trans)
+                m_ScrollContent = scrollContent_trans;
+            else
+                m_ScrollContent = null;
         }
         public static RendererWindow OpenWindow()
         {
@@ -87,6 +142,28 @@ namespace HotFix.UI
                 else
                     yield return null;
             }
+        }
+
+        [InvokeAction(IsRuntimeAction = true)]
+        public void OnClickMinusButton()
+        {
+            Debug.Log($"{nameof(RendererWindow)}.{nameof(OnClickMinusButton)}");
+            Vector3 scale = m_ScrollContent.localScale * 1.3f;
+            if (scale.x >= m_MaxScale)
+                return;
+            else
+                m_ScrollContent.localScale = scale;
+        }
+
+        [InvokeAction(IsRuntimeAction = true)]
+        public void OnClickPlusButton()
+        {
+            Debug.Log($"{nameof(RendererWindow)}.{nameof(OnClickPlusButton)}");
+            Vector3 scale = m_ScrollContent.localScale / 1.3f;
+            if (scale.x <= m_MinScale)
+                return;
+            else
+                m_ScrollContent.localScale = scale;
         }
     }
 }
