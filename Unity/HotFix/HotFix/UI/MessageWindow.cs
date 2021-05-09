@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HotFix.UI
 {
+    [BindingUpdatableComponent(BindingUpdatableComponentAttribute.ContainerComponent)]
     public class MessageWindow
     {
         /* const */
@@ -17,6 +19,11 @@ namespace HotFix.UI
             State = ItemSerializableState.SerializeIt,
             Title = "窗体动画控制")]
         private Animator m_WindowAnimator;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "文字内容")]
+        private Text m_ContentText;
 
         private UpdatableComponent m_UpdatableComponent;
 
@@ -41,6 +48,12 @@ namespace HotFix.UI
             else
                 m_WindowAnimator = null;
 
+            if (deserializeDictionary.TryGetValue(nameof(m_ContentText), out object contentText_object)
+                && contentText_object is Text contentText_text)
+                m_ContentText = contentText_text;
+            else
+                m_ContentText = null;
+
             m_MessageBuilder = new StringBuilder();
         }
         public static MessageWindow OpenWindow()
@@ -62,6 +75,20 @@ namespace HotFix.UI
         }
 
         /* func */
+        [MarkingAction(IsRuntimeAction = true)]
+        public void OnEnable()
+        {
+            m_WindowAnimator?.Play("Appear");
+        }
+
+        [MarkingAction(IsRuntimeAction = true)]
+        public void OnClickCloseButton()
+        {
+            Debug.Log($"Invoke {nameof(MessageWindow)}.{nameof(OnClickCloseButton)}");
+            m_WindowAnimator.Play("Disappear");
+            ILRuntimeService.StartILCoroutine(WaitToDestroy());
+        }
+
         private IEnumerator<object> WaitToDestroy()
         {
             while (m_UpdatableComponent
@@ -81,7 +108,7 @@ namespace HotFix.UI
         public void AppendLineAndRefresh(string content)
         {
             m_MessageBuilder.AppendLine(content);
-            // ...
+            m_ContentText.text = m_MessageBuilder.ToString();
         }
     }
 }

@@ -104,7 +104,6 @@ namespace HotFix.UI.Component
         [MarkingAction(IsRuntimeAction = true)]
         public void OnClickButtonSelected()
         {
-            Debug.Log($"{nameof(FileItem)}.{nameof(OnClickButtonSelected)}");
             Window.TouchThisItem(this);
         }
         /// <summary>

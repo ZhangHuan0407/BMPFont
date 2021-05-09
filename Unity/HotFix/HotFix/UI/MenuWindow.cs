@@ -120,7 +120,7 @@ namespace HotFix.UI
             window.Title = "读取一个 *.fnt 文件";
             window.OKCallback += (_) => 
             {
-                Debug.Log(window.SelectedFileSystemInfo.FullName);
+                Debug.Log($"{window.SelectedFileSystemInfo.GetType().Name} : {window.SelectedFileSystemInfo.FullName}");
                 GameSystemData.Instance.Font?.Dispose();
                 BMPFont font = new BMPFont();
                 font.LoadFontFromFile(window.SelectedFileSystemInfo.FullName);
