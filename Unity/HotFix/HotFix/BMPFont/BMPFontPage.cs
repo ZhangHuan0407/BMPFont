@@ -35,11 +35,13 @@ namespace HotFix
         /* func */
         public override int GetHashCode() => ID;
 
-        internal void SetStringValue(string line)
+        internal void SetStringValue(string line, string directoryPath)
         {
             HaveError = true;
             if (string.IsNullOrWhiteSpace(line))
                 throw new ArgumentException($"“{nameof(line)}”不能为 null 或空白。", nameof(line));
+            if (string.IsNullOrWhiteSpace(directoryPath))
+                throw new ArgumentException($"“{nameof(directoryPath)}”不能为 null 或空白。", nameof(directoryPath));
 
             Match pageIDMatch = PageIDRegex.Match(line);
             if (!pageIDMatch.Success
@@ -56,6 +58,10 @@ namespace HotFix
             {
                 MessageBox.Show("Page File Error");
                 return;
+            }
+            if (!Path.IsPathRooted(FilePath))
+            {
+                FilePath = Path.Combine(directoryPath, FilePath);
             }
 
             HaveError = false;

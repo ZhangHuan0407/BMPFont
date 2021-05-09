@@ -76,16 +76,8 @@ namespace HotFix
                 return;
             }
 
-            LoadFontFromText(File.ReadAllLines(filePath));
-        }
-        /// <summary>
-        /// 从目标复数行文本中读取字体配置
-        /// </summary>
-        /// <param name="lines">复数行文本</param>
-        public void LoadFontFromText(string[] lines)
-        {
-            if (lines is null)
-                throw new ArgumentNullException(nameof(lines));
+            string[] lines = File.ReadAllLines(filePath);
+            string directoryPath = new FileInfo(filePath).Directory.FullName;
             if (HaveSetValue)
                 throw new ArgumentException("Use new instance!");
             else
@@ -127,7 +119,7 @@ namespace HotFix
                         break;
                     case "page":
                         BMPFontPage page = new BMPFontPage();
-                        page.SetStringValue(line);
+                        page.SetStringValue(line, directoryPath);
                         Pages.Add(page);
                         break;
                     case "chars":
@@ -152,7 +144,7 @@ namespace HotFix
                 HaveError |= bMPFontChar.HaveError;
             if (HaveError)
             {
-                MessageBox.Show("读取字体配置时出现错误，停止读入");
+                MessageBox.Show($"读取字体配置时出现错误，停止读入(155)\n\t{nameof(BMPFontCommon)} : {Common.HaveError}\n\t{nameof(BMPFontInfo)} : {Info.HaveError}");
                 return;
             }
 
@@ -173,7 +165,7 @@ namespace HotFix
                 HaveError |= bMPFontChar.HaveError;
             if (HaveError)
             {
-                MessageBox.Show("加载字体配置时出现错误，停止读入");
+                MessageBox.Show($"加载字体配置时出现错误，停止读入(176)\n\t{nameof(BMPFontCommon)} : {Common.HaveError}\n\t{nameof(BMPFontInfo)} : {Info.HaveError}");
                 return;
             }
         }
