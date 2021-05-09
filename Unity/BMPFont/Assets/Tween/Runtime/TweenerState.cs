@@ -20,12 +20,12 @@
         /// <summary>
         /// Tweener 执行时绑定的资源被摧毁或失效，这个实例被抛弃了
         /// 这个状态算作错误，但不会抛出异常
-        /// <para>它不能变更为停止状态，或变更到执行状态</para>
+        /// <para>它不能变更为停止状态，也不能变更到执行状态</para>
         /// </summary>
         AssetHaveBeenDestroy = -1,
         /// <summary>
         /// Tweener 执行时出现了错误，这个实例被抛弃了
-        /// <para>它不能变更为停止状态，或变更到执行状态</para>
+        /// <para>它不能变更为停止状态，也不能变更到执行状态</para>
         /// </summary>
         Error = -2,
     }

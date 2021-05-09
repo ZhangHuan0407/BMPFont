@@ -29,6 +29,29 @@ namespace Tween
             return tweener;
         }
 
+        internal static IEnumerator<Tweener> DoUnscaleTime_Internal(TimeTweener tweener)
+        {
+            tweener.CumulativeTime += Time.unscaledDeltaTime;
+            while (tweener.Normalized < 1f)
+            {
+                yield return tweener;
+                tweener.CumulativeTime += Time.unscaledDeltaTime;
+            }
+        }
+        public static Tweener DoUnscaleTime(float duration)
+        {
+            if (duration < 0f)
+                throw new ArgumentException(nameof(duration));
+
+            TimeTweener tweener = new TimeTweener()
+            {
+                DurationTime = duration,
+                TimeType = TweenerTimeType.UnscaleTime,
+            };
+            tweener.Enumerator = DoUnscaleTime_Internal(tweener);
+            return tweener;
+        }
+
         internal static IEnumerator<Tweener> DoFrame_Internal(ProgressTweener tweener)
         {
             tweener.Progress++;

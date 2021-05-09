@@ -6,7 +6,7 @@
     public enum TweenerTimeType
     {
         Mix,
-        FixedTime,
+        UnscaleTime,
         ScaleTime,
     }
     public class TimeTweener : Tweener

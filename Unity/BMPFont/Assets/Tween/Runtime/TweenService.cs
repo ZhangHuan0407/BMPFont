@@ -28,6 +28,15 @@ namespace Tween
             set => m_NextFrameTweeners = value;
         }
 
+        /// <summary>
+        /// 已经抛弃或即将抛弃此实例
+        /// </summary>
+        public bool Abort { get; private set; }
+        /// <summary>
+        /// 标记此实例即将被抛弃，就仅仅是标记而已
+        /// </summary>
+        public void AbortInstance() => Abort = true;
+
         /* inter */
 
         /* ctor */
@@ -51,17 +60,21 @@ namespace Tween
         /* func */
         private void Update()
         {
-            if (Instance != this)
-            {
-                enabled = false;
+            if (Abort)
                 return;
-            }
 #if UNITY_EDITOR
             BehaviourHistory.Enqueue(Behaviour);
             Behaviour = default;
             if (BehaviourHistory.Count > 10)
                 BehaviourHistory.Dequeue();
 #endif
+            // 将 Tweeners 中剩余导入 NextFrameTweeners，并在首部执行
+            // 这些剩余来自 RestoreImmediately, AddImmediately 的添加
+            while (Tweeners.Count > 0)
+            {
+                NextFrameTweeners.AddFirst(Tweeners.Last);
+                Tweeners.RemoveLast();
+            }
             LinkedList<Tweener> temp = Tweeners;
             Tweeners = NextFrameTweeners;
             NextFrameTweeners = temp;
@@ -86,12 +99,14 @@ namespace Tween
                         tweener.State = TweenerState.Finish;
                         tweener.CompleteTween();
                     }
+                    // Update 回掉中没有停止 Tweener，资源仍然存在，能继续迭代
                     if (current != null && haveNext)
                         NextFrameTweeners.AddLast(current);
                 }
                 catch (Exception e)
                 {
                     Debug.LogError(e);
+                    // 出现错误导致停止
                     if (tweener != null)
                         tweener.State = TweenerState.Error;
                 }
@@ -106,7 +121,9 @@ namespace Tween
         }
         internal void Add_Internal(Tweener tweener, bool force)
         {
-            if (tweener.State == TweenerState.WaitForActivation
+            if (Abort)
+                return;
+            else if (tweener.State == TweenerState.WaitForActivation
                 || force)
             {
 #if UNITY_EDITOR
@@ -114,6 +131,25 @@ namespace Tween
 #endif
                 tweener.State = TweenerState.IsRunnning;
                 NextFrameTweeners.AddLast(tweener);
+            }
+        }
+        public static void AddImmediately(Tweener tweener)
+        {
+            if (tweener is null)
+                throw new ArgumentNullException(nameof(tweener));
+            Instance.AddImmediately_Internal(tweener);
+        }
+        internal void AddImmediately_Internal(Tweener tweener)
+        {
+            if (Abort)
+                return;
+            else if (tweener.State == TweenerState.WaitForActivation)
+            {
+#if UNITY_EDITOR
+                Behaviour.AddTweenerSuccessTimes++;
+#endif
+                tweener.State = TweenerState.IsRunnning;
+                Tweeners.AddLast(tweener);
             }
         }
 
@@ -125,7 +161,9 @@ namespace Tween
         }
         internal void Remove_Internal(Tweener tweener)
         {
-            if (tweener.State == TweenerState.WaitForActivation)
+            if (Abort)
+                return;
+            else if (tweener.State == TweenerState.WaitForActivation)
             {
 #if UNITY_EDITOR
                 Behaviour.StopTweenerSuccessTimes++;
@@ -160,7 +198,9 @@ namespace Tween
         }
         internal void Restore_Internal(Tweener tweener)
         {
-            if (tweener.State == TweenerState.Stop)
+            if (Abort)
+                return;
+            else if (tweener.State == TweenerState.Stop)
             {
 #if UNITY_EDITOR
                 Behaviour.RestoreTweenerSuccessTimes++;
@@ -170,9 +210,34 @@ namespace Tween
             }
         }
 
+        /// <summary>
+        /// 恢复一个 <see cref="Tweener"/> 实例的执行，尽可能添加到当前帧而不是下一帧
+        /// </summary>
+        /// <param name="tweener">需要恢复的 <see cref="Tweener"/> 实例</param>
+        public static void RestoreImmediately(Tweener tweener)
+        {
+            if (tweener is null)
+                throw new ArgumentNullException(nameof(tweener));
+            Instance.RestoreImmediately_Internal(tweener);
+        }
+        internal void RestoreImmediately_Internal(Tweener tweener)
+        {
+            if (Abort)
+                return;
+            else if (tweener.State == TweenerState.Stop)
+            {
+#if UNITY_EDITOR
+                Behaviour.RestoreTweenerSuccessTimes++;
+#endif
+                tweener.State = TweenerState.IsRunnning;
+                Tweeners.AddLast(tweener);
+            }
+        }
+
         /* IDisposable */
         public void Dispose()
         {
+            Abort = true;
             if (m_Tweeners != null)
             {
                 foreach (Tweener tweener in m_Tweeners)

@@ -51,9 +51,9 @@ namespace Tween
 
         /* func */
         /// <summary>
-        /// 将当前 Tweener
+        /// 将当前 <see cref="Tweener"/> 送去启动
         /// </summary>
-        /// <returns>是否启动成功</returns>
+        /// <returns>当前 <see cref="Tweener"/> 实例</returns>
         public Tweener DoIt()
         {
 #if UNITY_EDITOR
@@ -83,6 +83,11 @@ namespace Tween
             OnComplete_Handle += action;
             return this;
         }
+        /// <summary>
+        /// 一个 <see cref="Tweener"/> 实例只能有一个 <see cref="NextTweener"/>，如果尝试插入第二个，第一个将被丢弃
+        /// </summary>
+        /// <param name="nextTweener">下一个 <see cref="Tweener"/> 实例，可以用 null 来剔除原有</param>
+        /// <returns>指向的下一个 <see cref="Tweener"/> 实例</returns>
         public Tweener Then(Tweener nextTweener)
         {
             if (NextTweener != null)
@@ -124,6 +129,11 @@ namespace Tween
             selectTweener = null;
             return false;
         }
+        /// <summary>
+        /// 从当前实例的 Head 实例出发，向 NextTweener 方向查找，将第一个<see cref="TweenerState.Stop"/>状态的 Tweener 重新运行
+        /// </summary>
+        /// <param name="selectTweener">如果成功找到一个 Tweener，则返回实例</param>
+        /// <returns>是否成功找到<see cref="TweenerState.Stop"/>状态的 Tweener</returns>
         public bool FromHeadToEndIfNeedRestore(out Tweener selectTweener)
         {
 #if UNITY_EDITOR
