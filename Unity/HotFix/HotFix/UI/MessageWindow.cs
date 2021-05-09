@@ -85,6 +85,7 @@ namespace HotFix.UI
         public void OnClickCloseButton()
         {
             Debug.Log($"Invoke {nameof(MessageWindow)}.{nameof(OnClickCloseButton)}");
+            ActiveMessageWindow = null;
             m_WindowAnimator.Play("Disappear");
             ILRuntimeService.StartILCoroutine(WaitToDestroy());
         }
