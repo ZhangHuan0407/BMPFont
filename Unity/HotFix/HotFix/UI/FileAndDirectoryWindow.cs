@@ -237,7 +237,7 @@ namespace HotFix.UI
                 selectedDirectory = directoryInfo;
 
             if (m_FullPathText)
-                m_FullPathText.text = selectedDirectory?.FullName;
+                m_FullPathText.text = SelectedFileSystemInfo?.FullName;
 
             // 无有效文件夹选择
             if (selectedDirectory is null
@@ -338,7 +338,14 @@ namespace HotFix.UI
             }
 
             if (m_LastTouchItem != item)
+            {
                 m_LastTouchItem = item;
+                if (item is FileItem)
+                {
+                    SelectedFileSystemInfo = FileSystemInfos[item.Index];
+                    m_FullPathText.text = SelectedFileSystemInfo.FullName;
+                }
+            }
             else
             {
                 SelectedFileSystemInfo = FileSystemInfos[item.Index];
@@ -363,6 +370,7 @@ namespace HotFix.UI
         public void OnClickOKButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickOKButton)}");
+            m_LastTouchItem = null;
             m_OKButton.interactable = false;
             m_CancleButton.interactable = false;
             OKCallback?.Invoke(this);
@@ -379,6 +387,7 @@ namespace HotFix.UI
         public void OnClickCancleButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickCancleButton)}");
+            m_LastTouchItem = null;
             m_OKButton.interactable = false;
             m_CancleButton.interactable = false;
             CancleCallback?.Invoke(this);
