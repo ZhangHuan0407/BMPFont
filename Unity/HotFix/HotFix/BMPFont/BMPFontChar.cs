@@ -41,7 +41,7 @@ namespace BMPFont
         public static readonly Regex LetterRegex = new Regex("(?<=letter=\").+(?=\")");
         public string Letter { get; set; }
 
-        internal Color[,] Colors;
+        internal Sprite Sprite;
 
         /// <summary>
         /// 存在错误，无法使用
@@ -178,13 +178,7 @@ namespace BMPFont
             if (bMPFontPage.HaveError)
                 return;
 
-            Colors = new Color[Size.x, Size.y];
-            for (int indexY = 0; indexY < Size.y; indexY++)
-                for (int indexX = 0; indexX < Size.x; indexX++)
-                {
-                    //Colors[indexX, indexY] = bMPFontPage.PageImage.GetPixel(Position.x + indexX, Position.y + indexY);
-                }
-
+            Sprite = Sprite.Create(bMPFontPage.PageImage, new Rect(Position, Size), new Vector2(0.5f, 0.5f));
 
             HaveError = false;
         }

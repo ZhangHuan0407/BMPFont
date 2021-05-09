@@ -1,8 +1,4 @@
-﻿using AssetBundleUpdate;
-using HotFix.Database;
-using HotFix.EncoderExtend;
-using System;
-using System.Collections;
+﻿using HotFix.Database;
 using System.Collections.Generic;
 using UnityEngine;
 

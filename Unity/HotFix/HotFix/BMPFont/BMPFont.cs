@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BMPFont
@@ -66,6 +65,10 @@ namespace BMPFont
 
             LoadFontFromText(File.ReadAllLines(filePath));
         }
+        /// <summary>
+        /// 从目标复数行文本中读取字体配置
+        /// </summary>
+        /// <param name="lines">复数行文本</param>
         public void LoadFontFromText(string[] lines)
         {
             if (lines is null)
@@ -77,6 +80,12 @@ namespace BMPFont
 
             HaveError = true;
             int charCounts = 0;
+
+            if (lines.Length < 4)
+            {
+                MessageBox.Show("字体配置行数过少，停止读入");
+                return;
+            }
 
             foreach (string line in lines)
             {
@@ -156,11 +165,6 @@ namespace BMPFont
             }
         }
         
-        //public Bitmap RedererLine(string line)
-        //{
-        //    return BMPFontRenderer.RendererLine(this, line, new StringBuilder());
-        //}
-
         /* IDisposable */
         public void Dispose()
         {
@@ -169,12 +173,9 @@ namespace BMPFont
             if (Common != null)
                 Common = null;
             foreach (BMPFontPage bMPFontPage in Pages)
-            {
-                //bMPFontPage.PageImage?.Dispose();
-                //bMPFontPage.PageImage = null;
-            }
+                bMPFontPage.PageImage = null;
             foreach (BMPFontChar bMPFontChar in Chars.Values)
-                bMPFontChar.Colors = null;
+                bMPFontChar.Sprite = null;
         }
     }
 }

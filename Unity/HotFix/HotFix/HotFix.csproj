@@ -96,6 +96,9 @@
       <HintPath>..\HotFixReference.dll\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\HotFixReference.dll\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>..\HotFixReference.dll\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>

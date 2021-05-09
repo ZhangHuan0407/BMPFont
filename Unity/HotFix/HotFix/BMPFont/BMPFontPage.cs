@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace BMPFont
 {
@@ -22,7 +22,7 @@ namespace BMPFont
         /// 存在错误，无法使用
         /// </summary>
         public bool HaveError { get; private set; }
-        //internal Bitmap PageImage;
+        internal Texture2D PageImage;
 
         /* inter */
 
@@ -84,7 +84,9 @@ namespace BMPFont
                 return;
             }
 
-            //PageImage = new Bitmap(FilePath);
+            PageImage = new Texture2D(0, 0);
+            PageImage.LoadImage(File.ReadAllBytes(FilePath));
+            Debug.Log($"load image, size : {PageImage.width}, {PageImage.height}");
             HaveError = false;
         }
     }
