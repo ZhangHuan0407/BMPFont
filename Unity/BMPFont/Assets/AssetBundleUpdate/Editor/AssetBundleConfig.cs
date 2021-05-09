@@ -154,6 +154,7 @@ namespace AssetBundleUpdate
                 {
                     Name = abName,
                 });
+            EditorUtility.SetDirty(this);
         }
         public void CreateAssetBundles()
         {

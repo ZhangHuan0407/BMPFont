@@ -18,7 +18,11 @@ namespace AssetBundleUpdate.Editor
                 EditorApplication.delayCall += m_Target.GetParameters;
             EditorGUILayout.Space();
             if (GUILayout.Button(nameof(AssetBundleConfig.GetUpdateSummery)))
-                EditorApplication.delayCall += () => m_Target.GetUpdateSummery();
+                EditorApplication.delayCall += () =>
+                {
+                    UpdateSummery updateSummery = m_Target.GetUpdateSummery();
+                    Debug.Log(updateSummery.ToString());
+                };
             EditorGUILayout.Space();
             if (GUILayout.Button(nameof(AssetBundleConfig.CreateAssetBundles)))
                 EditorApplication.delayCall += m_Target.CreateAssetBundles;
