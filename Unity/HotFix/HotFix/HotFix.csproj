@@ -129,7 +129,7 @@
     <Compile Include="GameStart.cs" />
     <Compile Include="GameSystemData.cs" />
     <Compile Include="InspectorInfoAttribute.cs" />
-    <Compile Include="InvokeActionAttribute.cs" />
+    <Compile Include="MarkingActionAttribute.cs" />
     <Compile Include="ItemSerializableState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting.cs" />

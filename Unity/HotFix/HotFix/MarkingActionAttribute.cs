@@ -7,7 +7,7 @@ namespace HotFix
     /// <para>仅 Public Instance Action 的标记为有效标记</para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public class InvokeActionAttribute : Attribute
+    public class MarkingActionAttribute : Attribute
     {
         /* field */
         /// <summary>
@@ -31,7 +31,7 @@ namespace HotFix
         /// <summary>
         /// 声明一个公开实例行为实例，它具有默认值
         /// </summary>
-        public InvokeActionAttribute()
+        public MarkingActionAttribute()
         {
             IsEditorAction = false;
             IsRuntimeAction = false;

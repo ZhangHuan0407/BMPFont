@@ -111,7 +111,7 @@ namespace HotFix.UI.Component
         }
 
         /* func */
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickButtonSelected()
         {
             Debug.Log($"{nameof(FileItem)}.{nameof(OnClickButtonSelected)}");

@@ -73,13 +73,10 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\HotFixReference.dll\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.SharedInternalsModule">
-      <HintPath>..\HotFixReference.dll\UnityEngine.SharedInternalsModule.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomComponentInfo_Editor.cs" />
-    <Compile Include="ExportCustomComponentFunction.cs" />
+    <Compile Include="UpdatableComponentInfo_Editor.cs" />
+    <Compile Include="ExportUpdatableComponentFunction.cs" />
     <Compile Include="MarkingMethod.cs" />
     <Compile Include="SerializeItem.cs" />
     <Compile Include="Program.cs" />

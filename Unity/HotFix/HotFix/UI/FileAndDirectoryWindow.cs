@@ -205,7 +205,7 @@ namespace HotFix.UI
         }
 
         /* func */
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnEnable()
         {
             m_WindowAnimator?.Play("Appear");
@@ -346,7 +346,7 @@ namespace HotFix.UI
             }
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickRefreshButton()
         {
             string fullPath = m_FullPathText.text ?? string.Empty.Replace('\\', '/');
@@ -359,7 +359,7 @@ namespace HotFix.UI
             RefreshUI();
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickOKButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickOKButton)}");
@@ -375,7 +375,7 @@ namespace HotFix.UI
                 UnityEngine.Object.Destroy(gameObject);
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickCancleButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickCancleButton)}");

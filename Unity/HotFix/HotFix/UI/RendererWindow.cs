@@ -112,7 +112,7 @@ namespace HotFix.UI
         }
 
         /* func */
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnEnable()
         {
             m_WindowAnimator?.Play("Appear");
@@ -144,7 +144,7 @@ namespace HotFix.UI
             }
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickMinusButton()
         {
             Debug.Log($"{nameof(RendererWindow)}.{nameof(OnClickMinusButton)}");
@@ -155,7 +155,7 @@ namespace HotFix.UI
                 m_ScrollContent.localScale = scale;
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickPlusButton()
         {
             Debug.Log($"{nameof(RendererWindow)}.{nameof(OnClickPlusButton)}");

@@ -73,14 +73,14 @@ namespace HotFix.UI.Component
         }
 
         /* func */
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void Update()
         {
             if (Time.time - m_LastUpdateTime > 0.5f)
                 SetTextValue();
         }
 
-        [InvokeAction(IsEditorAction = true)]
+        [MarkingAction(IsEditorAction = true)]
         public void SetTextValue()
         {
             m_LastUpdateTime = Time.time;

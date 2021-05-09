@@ -12,42 +12,42 @@ namespace ExportUpdatableComponent
         /// <summary>
         /// 自定义组件信息默认输出路径
         /// </summary>
-        private static string CustomComponentInfoFilePath;
+        private static string UpdatableComponentsInfoFilePath;
         /// <summary>
         /// 自定义组件信息(Editor版本)默认输出路径
         /// </summary>
-        private static string CustomComponentInfoEditorFilePath;
+        private static string UpdatableComponentsInfoEditorFilePath;
 
         /* func */
         [STAThread]
         private static void Main(string[] args)
         {
             if (args.Length > 0)
-                CustomComponentInfoFilePath = args[0];
-            CustomComponentInfoFilePath = CustomComponentInfoFilePath ?? "../../BMPFont/Assets/UpdatableLogic/Hotfix/CustomComponentInfo.txt";
+                UpdatableComponentsInfoFilePath = args[0];
+            UpdatableComponentsInfoFilePath = UpdatableComponentsInfoFilePath ?? "../../BMPFont/Assets/UpdatableLogic/Hotfix/UpdatableComponentInfo.txt";
             if (args.Length > 1)
-                CustomComponentInfoEditorFilePath = args[1];
-            CustomComponentInfoEditorFilePath = CustomComponentInfoEditorFilePath ?? "../../BMPFont/Assets/UpdatableLogic/Editor/CustomComponentInfo_Editor.json";
+                UpdatableComponentsInfoEditorFilePath = args[1];
+            UpdatableComponentsInfoEditorFilePath = UpdatableComponentsInfoEditorFilePath ?? "../../BMPFont/Assets/UpdatableLogic/Editor/UpdatableComponentInfo_Editor.json";
 
-            var customComponentTypes = ExportCustomComponentFunction.GetAllCustomComponentTypes();
-            CustomComponentInfo_Editor[] editorInfos = ExportCustomComponentFunction.FromTypeToInfo(customComponentTypes);
+            var customComponentTypes = ExportUpdatableComponentFunction.GetAllUpdatableComponentTypes();
+            UpdatableComponentInfo_Editor[] editorInfos = ExportUpdatableComponentFunction.FromTypeToInfo(customComponentTypes);
             string editorInfo = JsonConvert.SerializeObject(editorInfos, Formatting.Indented);
-            File.WriteAllText(CustomComponentInfoEditorFilePath, editorInfo);
-            Console.WriteLine($"Write Custom Component Info(Editor) at {CustomComponentInfoEditorFilePath}");
+            File.WriteAllText(UpdatableComponentsInfoEditorFilePath, editorInfo);
+            Console.WriteLine($"Write Updatable Component Info(Editor) at {UpdatableComponentsInfoEditorFilePath}");
 
-            CustomComponentInfo[] runtimeInfos = ExportCustomComponentFunction.FromInfoToRuntimeInfo(editorInfos);
+            UpdatableComponentInfo[] runtimeInfos = ExportUpdatableComponentFunction.FromInfoToRuntimeInfo(editorInfos);
             StringBuilder stringBuilder = new StringBuilder().AppendLine("[");
             for (int index = 0; index < runtimeInfos.Length; index++)
             {
-                CustomComponentInfo customComponentInfo = runtimeInfos[index];
+                UpdatableComponentInfo customComponentInfo = runtimeInfos[index];
                 stringBuilder.Append(JsonConvert.SerializeObject(customComponentInfo, Formatting.None));
                 if (index < runtimeInfos.Length - 1)
                     stringBuilder.AppendLine(",");
             }
 
             stringBuilder.AppendLine().AppendLine("]");
-            File.WriteAllText(CustomComponentInfoFilePath, stringBuilder.ToString());
-            Console.WriteLine($"Write Custom Component Info at {CustomComponentInfoFilePath}");
+            File.WriteAllText(UpdatableComponentsInfoFilePath, stringBuilder.ToString());
+            Console.WriteLine($"Write Updatable Component Info at {UpdatableComponentsInfoFilePath}");
 
             if (args.Length == 0)
             {

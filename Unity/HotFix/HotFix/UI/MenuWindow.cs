@@ -79,7 +79,7 @@ namespace HotFix.UI
         }
 
         /* func */
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnEnable()
         {
             m_WindowAnimator?.Play("Appear");
@@ -111,7 +111,7 @@ namespace HotFix.UI
             }
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickLoadFontButton()
         {
             Debug.Log($"{nameof(MenuWindow)}.{nameof(OnClickLoadFontButton)}");
@@ -123,7 +123,7 @@ namespace HotFix.UI
             };
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickExitButton()
         {
             Debug.Log($"{nameof(MenuWindow)}.{nameof(OnClickExitButton)}");

@@ -134,13 +134,13 @@ namespace HotFix.UI
         }
 
         /* func */
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnEnable()
         {
             m_WindowAnimator?.Play("Appear");
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickYesButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickYesButton)}");
@@ -156,7 +156,7 @@ namespace HotFix.UI
                 UnityEngine.Object.Destroy(gameObject);
         }
 
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnClickNoButton()
         {
             Debug.Log($"Invoke {nameof(MakeSureWindow)}.{nameof(OnClickNoButton)}");

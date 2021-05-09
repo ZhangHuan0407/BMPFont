@@ -57,7 +57,7 @@ namespace HotFix.UI
         }
 
         /* func */
-        [InvokeAction(IsRuntimeAction = true)]
+        [MarkingAction(IsRuntimeAction = true)]
         public void OnEnable()
         {
             m_WindowAnimator?.Play("Appear");

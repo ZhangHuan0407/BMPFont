@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Encoder.Editor.CustomComponentEditor
+namespace Encoder.Editor
 {
     [UpdatableComponentEditor("HotFix.UI.MakeSureWindow")]
     public class MakeSureWindowEditor : IUpdatableComponentEditor
