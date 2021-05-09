@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HotFix
 {
-    public class BMPFont : IDisposable
+    public class BMPFont
     {
         /* const */
         public static readonly Regex CharsCountRegex = new Regex("(?<=count=)[0-9]{1,}");
@@ -35,15 +35,18 @@ namespace HotFix
         /// 最宽字符，额外空白行宽，以防止索引越界。这并不是有效的处理方法，但是最简单的处理方法。
         /// </summary>
         public int CharMaxWidth;
+        /// <summary>
+        /// 是否已经尝试着为此实例进行赋值操作
+        /// <para>BMPFont 只允许进行一次赋值操作</para>
+        /// </summary>
         public bool HaveSetValue { get; private set; }
+        /// <summary>
+        /// 当前实例是否存在错误
+        /// </summary>
         public bool HaveError { get; private set; }
 
         /* inter */
-        /// <summary>
-        /// 额外空白行高，以防止索引越界。这并不是有效的处理方法，但是最简单的处理方法。
-        /// </summary>
-        public int ExtraLineHeight => (int)(Common.LineHelght * 0.2f > 10f ? Common.LineHelght * 0.2f : 10f);
-
+        
         /* ctor */
         public BMPFont()
         {

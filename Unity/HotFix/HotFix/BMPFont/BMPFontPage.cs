@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HotFix
 {
-    public class BMPFontPage : IComparable<BMPFontPage>
+    public class BMPFontPage
     {
         /* const */
 

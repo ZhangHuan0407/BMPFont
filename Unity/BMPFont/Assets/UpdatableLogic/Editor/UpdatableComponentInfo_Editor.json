@@ -663,14 +663,63 @@
       {
         "IsEditorAction": false,
         "IsRuntimeAction": true,
-        "Name": "Unfold",
-        "Title": "Unfold"
+        "Name": "OnClickTitleButton",
+        "Title": "OnClickTitleButton"
       },
       {
         "IsEditorAction": false,
         "IsRuntimeAction": true,
-        "Name": "Update",
-        "Title": "Update"
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Unfold",
+        "Title": "Unfold"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.CommonUpdatableComponent",
+    "TypeFullName": "HotFix.UI.Component.UIBMPFontInfo",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_Animator",
+        "Title": "组件动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Fold",
+        "Title": "Fold"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickTitleButton",
+        "Title": "OnClickTitleButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Unfold",
+        "Title": "Unfold"
       }
     ]
   },

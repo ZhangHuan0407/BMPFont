@@ -1,4 +1,5 @@
 ﻿using Encoder;
+using HotFix.UI.Component;
 using System;
 using System.Collections.Generic;
 using Tween;
@@ -23,6 +24,7 @@ namespace HotFix.UI
             State = ItemSerializableState.SerializeIt,
             Title = "BMP Font Common 属性")]
         private UpdatableComponent m_UIBMPFontCommon;
+        private UIBMPFontCommon UIBMPFontCommon => m_UIBMPFontCommon.InstanceObject as UIBMPFontCommon;
 
         private UpdatableComponent m_UpdatableComponent;
 

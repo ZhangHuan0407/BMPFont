@@ -24,10 +24,7 @@ namespace HotFix
         }
         internal static IEnumerator<object> CreateInstance()
         {
-            int task = 0;
             GameSystemData instance = new GameSystemData();
-
-            task++;
 
             Table<string, PrefabAsset> prefabCache = new Table<string, PrefabAsset>()
             {
@@ -35,10 +32,9 @@ namespace HotFix
             };
             instance.Add(prefabCache);
 
-            while (task > 0)
-                yield return null;
             Instance = instance;
             GameStart.TaskCount--;
+            yield break;
         }
         internal static IEnumerator<object> StartInstance()
         {

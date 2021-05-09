@@ -6,11 +6,11 @@ using UnityEngine;
 namespace HotFix.UI.Component
 {
     /// <summary>
-    /// 包装<see cref="BMPFontCommon"/>的界面显示
+    /// 包装<see cref="BMPFontInfo"/>的界面显示
     /// </summary>
     [CheckComponent(typeof(Animator))]
     [BindingUpdatableComponent(BindingUpdatableComponentAttribute.CommonComponent)]
-    public class UIBMPFontCommon
+    public class UIBMPFontInfo
     {
         /* field */
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
@@ -34,12 +34,12 @@ namespace HotFix.UI.Component
 
 
         /// <summary>
-        /// <see cref="BMPFont"/> 普通信息数据
+        /// <see cref="BMPFont"/> 信息数据
         /// </summary>
-        public BMPFontCommon BMPFontCommon { get; set; }
+        public BMPFontInfo BMPFontInfo { get; set; }
 
         /* ctor */
-        public UIBMPFontCommon(Dictionary<string, object> deserializeDictionary)
+        public UIBMPFontInfo(Dictionary<string, object> deserializeDictionary)
         {
             m_UpdatableComponent = deserializeDictionary[nameof(UpdatableComponent)] as UpdatableComponent ?? throw new ArgumentException($"{nameof(UpdatableComponent)} is null.");
             gameObject = m_UpdatableComponent.gameObject;
@@ -74,8 +74,8 @@ namespace HotFix.UI.Component
 
         public void RefreshUI()
         {
-            if (BMPFontCommon is null
-                || BMPFontCommon.HaveError)
+            if (BMPFontInfo is null
+                || BMPFontInfo.HaveError)
             {
                 Fold();
                 return;
@@ -88,8 +88,8 @@ namespace HotFix.UI.Component
         public void OnClickTitleButton()
         {
             Debug.Log($"{nameof(UIBMPFontCommon)}.{nameof(OnClickTitleButton)}");
-            if (BMPFontCommon is null
-                || BMPFontCommon.HaveError)
+            if (BMPFontInfo is null
+                || BMPFontInfo.HaveError)
                 Fold();
             else if (IsFold)
                 Unfold();

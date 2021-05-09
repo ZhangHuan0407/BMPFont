@@ -8,6 +8,7 @@
 {"BindingComponentName":"Encoder.CommonUpdatableComponent","TypeFullName":"HotFix.UI.Component.CountdownText","SerializeItems":["m_UseEmptyIfLessZero","StringFormat"],"MarkingMethods":["Update"]},
 {"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.Component.DirectoryItem","SerializeItems":["m_Animator","m_DateTimeText","m_FileNameText"],"MarkingMethods":["OnClickButtonSelected"]},
 {"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.Component.FileItem","SerializeItems":["m_Animator","m_DateTimeText","m_FileNameText"],"MarkingMethods":["OnClickButtonSelected"]},
-{"BindingComponentName":"Encoder.CommonUpdatableComponent","TypeFullName":"HotFix.UI.Component.UIBMPFontCommon","SerializeItems":["m_Animator"],"MarkingMethods":["Fold","Unfold","Update"]},
+{"BindingComponentName":"Encoder.CommonUpdatableComponent","TypeFullName":"HotFix.UI.Component.UIBMPFontCommon","SerializeItems":["m_Animator"],"MarkingMethods":["Fold","OnClickTitleButton","OnEnable","Unfold"]},
+{"BindingComponentName":"Encoder.CommonUpdatableComponent","TypeFullName":"HotFix.UI.Component.UIBMPFontInfo","SerializeItems":["m_Animator"],"MarkingMethods":["Fold","OnClickTitleButton","OnEnable","Unfold"]},
 {"BindingComponentName":"Encoder.ContainerUpdatableComponent","TypeFullName":"HotFix.UI.Component.UIHorizontalLayout","SerializeItems":["ChildsInLayout"],"MarkingMethods":[]}
 ]

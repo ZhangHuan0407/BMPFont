@@ -180,6 +180,7 @@ namespace Encoder.Editor
                 EditorInstance.OnDiable();
                 EditorInstance.UpdatableComponent = null;
             }
+
             EditorUtility.SetDirty(target);
             InspectorObjects.Clear();
 

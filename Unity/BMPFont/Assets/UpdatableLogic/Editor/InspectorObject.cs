@@ -155,12 +155,14 @@ namespace Encoder.Editor
             GUILayout.EndHorizontal();
 
             // 同时为空或无效数据，无法判断
-            if (NewValue is null && OldValue is null)
+            if (NewValue == null && OldValue == null)
                 return;
             // 对象被置空
-            else if (NewValue is null
+            else if (NewValue == null
                 || !NewValue.Equals(OldValue))
+            {
                 EditorUtility.SetDirty(Editor.target);
+            }
         }
 
         /* IComparable */
