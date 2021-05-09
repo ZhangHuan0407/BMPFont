@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace BMPFont
+namespace HotFix
 {
     public class BMPFont : IDisposable
     {
         /* const */
         public static readonly Regex CharsCountRegex = new Regex("(?<=count=)[0-9]{1,}");
+
+        /// <summary>
+        /// 加载新的位图字体事件
+        /// </summary>
+        public static event Action LoadedNewBMPFont_Handle;
+        /// <summary>
+        /// 释放位图字体事件
+        /// </summary>
+        public static event Action DisposeBMPFont_Handle;
 
         /* field */
         /// <summary>
@@ -164,10 +173,19 @@ namespace BMPFont
                 return;
             }
         }
+        public void UseIt()
+        {
+            GameSystemData.Instance.Font = this;
+            DisposeBMPFont_Handle?.Invoke();
+        }
         
         /* IDisposable */
         public void Dispose()
         {
+            if (GameSystemData.Instance.Font == this)
+                GameSystemData.Instance.Font = null;
+            DisposeBMPFont_Handle?.Invoke();
+
             if (Info != null)
                 Info = null;
             if (Common != null)

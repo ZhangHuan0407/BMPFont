@@ -1,4 +1,5 @@
 ﻿using HotFix.Database;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace HotFix
     {
         /* field */
         public static GameSystemData Instance { get; private set; }
+
+        public BMPFont Font;
 
         /* inter */
         public Table<string, PrefabAsset> PrefabCache => this[nameof(PrefabCache)] as Table<string, PrefabAsset>;

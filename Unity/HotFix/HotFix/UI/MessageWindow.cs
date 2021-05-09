@@ -1,6 +1,7 @@
 ﻿using Encoder;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace HotFix.UI
@@ -19,11 +20,13 @@ namespace HotFix.UI
 
         private UpdatableComponent m_UpdatableComponent;
 
+
+        private StringBuilder m_MessageBuilder;
+
         /* inter */
         protected GameObject gameObject;
         protected Transform transform;
 #pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释
-
 
         /* ctor */
         public MessageWindow(Dictionary<string, object> deserializeDictionary)
@@ -31,6 +34,14 @@ namespace HotFix.UI
             m_UpdatableComponent = deserializeDictionary[nameof(UpdatableComponent)] as UpdatableComponent ?? throw new ArgumentException($"{nameof(UpdatableComponent)} is null.");
             gameObject = m_UpdatableComponent.gameObject;
             transform = m_UpdatableComponent.transform;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_WindowAnimator), out object windowAnimator_object)
+                && windowAnimator_object is Animator windowAnimator_animator)
+                m_WindowAnimator = windowAnimator_animator;
+            else
+                m_WindowAnimator = null;
+
+            m_MessageBuilder = new StringBuilder();
         }
         public static MessageWindow OpenWindow()
         {
@@ -65,6 +76,12 @@ namespace HotFix.UI
                 else
                     yield return null;
             }
+        }
+
+        public void AppendLineAndRefresh(string content)
+        {
+            m_MessageBuilder.AppendLine(content);
+            // ...
         }
     }
 }

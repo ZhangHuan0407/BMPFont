@@ -1,7 +1,4 @@
-﻿using AssetBundleUpdate;
-using HotFix.Database;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,13 +16,13 @@ namespace HotFix
         /// </summary>
         public string Language { get; set; }
         /// <summary>
-        /// 启用字幕
-        /// </summary>
-        public bool Subtitles { get; set; }
-        /// <summary>
         /// 跳过新手引导
         /// </summary>
         public bool SkipNewGuide { get; set; }
+        /// <summary>
+        /// 最后一次选择的位图字体路径
+        /// </summary>
+        public string LatestBMPFontPath { get; set; }
 
         /* ctor */
         private Setting() { }
@@ -44,27 +41,18 @@ namespace HotFix
         /* func */
         public static Setting LoadFromPlayerPrefs()
         {
-            string content = PlayerPrefs.GetString(nameof(Setting));
-            Setting setting = null;
-            try
+            Setting setting = new Setting()
             {
-                if (!string.IsNullOrWhiteSpace(content))
-                {
-                    setting = JsonConvert.DeserializeObject<Setting>(content);
-                }
-            }
-            // 解析出现错误或者没有数据，生成默认数据
-            catch (Exception e)
-            {
-                setting = null;
-            }
-            finally
-            {
-                setting = setting ?? new Setting()
-                {
-                    Language = Application.systemLanguage.ToString(),
-                };
-            }
+                Language = Application.systemLanguage.ToString(),
+                SkipNewGuide = false,
+                LatestBMPFontPath = "",
+            };
+            if (PlayerPrefs.GetString($"{nameof(Setting)}.{nameof(Language)}") is string language)
+                setting.Language = language;
+            if (PlayerPrefs.GetInt($"{nameof(Setting)}.{nameof(SkipNewGuide)}") > 0)
+                setting.SkipNewGuide = true;
+            if (PlayerPrefs.GetString($"{nameof(Setting)}.{nameof(LatestBMPFontPath)}") is string fontPath)
+                setting.LatestBMPFontPath = fontPath;
             return setting;
         }
         public void SaveOutPlayerPrefs()
@@ -72,8 +60,9 @@ namespace HotFix
             if (Instance == null)
                 throw new NullReferenceException(nameof(Instance));
 
-            string content = JsonConvert.SerializeObject(Instance);
-            PlayerPrefs.SetString(nameof(Setting), content);
+            PlayerPrefs.SetString($"{nameof(Setting)}.{nameof(Language)}", Language);
+            PlayerPrefs.SetInt($"{nameof(Setting)}.{nameof(SkipNewGuide)}", SkipNewGuide ? 1 : 0);
+            PlayerPrefs.SetString($"{nameof(Setting)}.{nameof(LatestBMPFontPath)}", LatestBMPFontPath);
         }
     }
 }

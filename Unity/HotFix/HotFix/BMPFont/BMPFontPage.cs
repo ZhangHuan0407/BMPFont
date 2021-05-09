@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace BMPFont
+namespace HotFix
 {
     public class BMPFontPage : IComparable<BMPFontPage>
     {

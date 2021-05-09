@@ -63,3 +63,8 @@ Unity/HotFix/ExportUpdatableComponent/obj
 Unity/HotFix/ExportUpdatableComponent/bin
 Unity/HotFix/packages/
 Unity/BMPFont/.vsconfig
+
+Unity/BMPFont/Assets/BMPFont/Font/
+Unity/BMPFont/Assets/BMPFont/BMPFont/
+Unity/BMPFont/Assets/BMPFont/Font.meta
+Unity/BMPFont/Assets/BMPFont/BMPFont.meta

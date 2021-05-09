@@ -115,11 +115,16 @@ namespace HotFix.UI
         public void OnClickLoadFontButton()
         {
             Debug.Log($"{nameof(MenuWindow)}.{nameof(OnClickLoadFontButton)}");
+
             FileAndDirectoryWindow window = FileAndDirectoryWindow.OpenWindow();
             window.Title = "读取一个 *.fnt 文件";
             window.OKCallback += (_) => 
             {
-                Debug.Log(window.SelectedFileSystemInfo?.FullName);
+                Debug.Log(window.SelectedFileSystemInfo.FullName);
+                GameSystemData.Instance.Font?.Dispose();
+                BMPFont font = new BMPFont();
+                font.LoadFontFromFile(window.SelectedFileSystemInfo.FullName);
+                font.UseIt();
             };
         }
 
