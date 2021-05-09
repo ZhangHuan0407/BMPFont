@@ -13,6 +13,14 @@ namespace Encoder.Editor
         /* const */
         public static readonly Dictionary<string, Type> TypeDictionary = new Dictionary<string, Type>()
         {
+            // Encoder
+            { "Encoder.UpdatableComponent", typeof(Encoder.UpdatableComponent) },
+            { "Encoder.Collision2DUpdatableComponent", typeof(Encoder.Collision2DUpdatableComponent) },
+            { "Encoder.CommonUpdatableComponent", typeof(Encoder.CommonUpdatableComponent) },
+            { "Encoder.ContainerUpdatableComponent", typeof(Encoder.ContainerUpdatableComponent) },
+            { "Encoder.LogicUpdatableComponent", typeof(Encoder.LogicUpdatableComponent) },
+            { "Encoder.ReferenceUpdatableComponent", typeof(Encoder.ReferenceUpdatableComponent) },
+
             // UnityEngine
             { "UnityEngine.Animation", typeof(UnityEngine.Animation)},
             { "UnityEngine.Animator", typeof(UnityEngine.Animator)},

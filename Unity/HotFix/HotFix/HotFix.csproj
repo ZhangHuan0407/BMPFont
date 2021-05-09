@@ -140,6 +140,7 @@
     <Compile Include="UI\Component\DirectoryItem.cs" />
     <Compile Include="UI\Component\FileItem.cs" />
     <Compile Include="UI\Component\IFileAndDirectoryItem.cs" />
+    <Compile Include="UI\Component\UIBMPFontCommon.cs" />
     <Compile Include="UI\Component\UIHorizontalLayout.cs" />
     <Compile Include="UI\Component\UILayout.cs" />
     <Compile Include="Database\TableSet.cs" />

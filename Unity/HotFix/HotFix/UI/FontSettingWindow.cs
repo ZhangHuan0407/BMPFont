@@ -19,6 +19,11 @@ namespace HotFix.UI
             Title = "窗体动画控制")]
         private Animator m_WindowAnimator;
 
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "BMP Font Common 属性")]
+        private UpdatableComponent m_UIBMPFontCommon;
+
         private UpdatableComponent m_UpdatableComponent;
 
         /* inter */
@@ -53,6 +58,10 @@ namespace HotFix.UI
             }
             if (window is null)
                 throw new NullReferenceException($"Not found {nameof(FontSettingWindow)} in {nameof(UpdatableComponent)}.");
+
+            BMPFont.LoadedNewBMPFont_Handle += window.RefreshUI;
+            BMPFont.DisposeBMPFont_Handle += window.RefreshUI;
+
             return window;
         }
 
@@ -65,6 +74,9 @@ namespace HotFix.UI
 
         public void StartToClose()
         {
+            BMPFont.LoadedNewBMPFont_Handle -= RefreshUI;
+            BMPFont.DisposeBMPFont_Handle -= RefreshUI;
+
             if (m_WindowAnimator)
             {
                 m_WindowAnimator.Play("Disappear");
@@ -87,6 +99,11 @@ namespace HotFix.UI
                 else
                     yield return null;
             }
+        }
+
+        public void RefreshUI()
+        {
+
         }
     }
 }

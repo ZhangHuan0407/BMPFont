@@ -108,6 +108,10 @@ namespace HotFix.UI
             }
             if (window is null)
                 throw new NullReferenceException($"Not found {nameof(RendererWindow)} in {nameof(UpdatableComponent)}.");
+
+            BMPFont.LoadedNewBMPFont_Handle += window.ClearAll;
+            BMPFont.DisposeBMPFont_Handle += window.ClearAll;
+
             return window;
         }
 
@@ -120,6 +124,9 @@ namespace HotFix.UI
 
         public void StartToClose()
         {
+            BMPFont.LoadedNewBMPFont_Handle -= ClearAll;
+            BMPFont.DisposeBMPFont_Handle -= ClearAll;
+
             if (m_WindowAnimator)
             {
                 m_WindowAnimator.Play("Disappear");
@@ -142,6 +149,15 @@ namespace HotFix.UI
                 else
                     yield return null;
             }
+        }
+
+        public void ClearAll()
+        {
+
+        }
+        public void RefreshUI()
+        {
+
         }
 
         [MarkingAction(IsRuntimeAction = true)]

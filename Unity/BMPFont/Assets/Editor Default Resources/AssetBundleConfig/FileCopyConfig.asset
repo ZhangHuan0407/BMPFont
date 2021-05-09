@@ -19,7 +19,7 @@ MonoBehaviour:
     ReplaceName: '{FileName}'
   - ImportLocalDirectoryPath: ../HotFix/ExportUpdatableComponent
     ExportLocalDirectoryPath: Assets/UpdatableLogic/Editor
-    SearchPattern: CustomComponentInfo_Editor.cs
+    SearchPattern: UpdatebleComponentInfo_Editor.cs
     ReplaceName: '{FileName}'
   - ImportLocalDirectoryPath: ../HotFix/ExportUpdatableComponent
     ExportLocalDirectoryPath: Assets/UpdatableLogic/Editor

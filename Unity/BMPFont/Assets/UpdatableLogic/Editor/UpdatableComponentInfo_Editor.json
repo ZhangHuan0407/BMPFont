@@ -144,6 +144,17 @@
         "Order": 0,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_UIBMPFontCommon",
+        "Title": "BMP Font Common 属性",
+        "ToolTip": "",
+        "TypeFullName": "Encoder.UpdatableComponent",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
       }
     ],
     "MarkingMethods": [
@@ -623,6 +634,43 @@
         "IsRuntimeAction": true,
         "Name": "OnClickButtonSelected",
         "Title": "OnClickButtonSelected"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.CommonUpdatableComponent",
+    "TypeFullName": "HotFix.UI.Component.UIBMPFontCommon",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_Animator",
+        "Title": "组件动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Fold",
+        "Title": "Fold"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Unfold",
+        "Title": "Unfold"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Update",
+        "Title": "Update"
       }
     ]
   },

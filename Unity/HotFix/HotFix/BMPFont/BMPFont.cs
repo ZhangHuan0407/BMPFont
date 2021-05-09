@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace HotFix
 {
@@ -175,8 +176,9 @@ namespace HotFix
         }
         public void UseIt()
         {
+            Debug.Log($"{nameof(BMPFont)}.{nameof(UseIt)}");
             GameSystemData.Instance.Font = this;
-            DisposeBMPFont_Handle?.Invoke();
+            LoadedNewBMPFont_Handle?.Invoke();
         }
         
         /* IDisposable */

@@ -40,6 +40,7 @@ namespace HotFix.UI.Component
 
         private UpdatableComponent m_UpdatableComponent;
 
+
         /// <summary>
         /// 上一次界面倒计时刷新的时间(Unity Time)
         /// </summary>
