@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HotFix.UI.Component
 {
@@ -18,6 +19,16 @@ namespace HotFix.UI.Component
             State = ItemSerializableState.SerializeIt,
             Title = "组件动画控制")]
         private Animator m_Animator;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "折叠状态图片")]
+        private Image m_FoldImage;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "展开状态图片")]
+        private Image m_UnfoldImage;
 
         private UpdatableComponent m_UpdatableComponent;
 
@@ -50,6 +61,18 @@ namespace HotFix.UI.Component
                 m_Animator = windowAnimator_animator;
             else
                 m_Animator = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_FoldImage), out object foldImage_object)
+                && foldImage_object is Image foldImage_image)
+                m_FoldImage = foldImage_image;
+            else
+                m_FoldImage = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_UnfoldImage), out object unfoldImage_object)
+                && unfoldImage_object is Image unfoldImage_image)
+                m_UnfoldImage = unfoldImage_image;
+            else
+                m_UnfoldImage = null;
         }
 
         /* func */
@@ -64,12 +87,16 @@ namespace HotFix.UI.Component
         {
             IsFold = true;
             m_Animator.SetBool(nameof(IsFold), true);
+            m_FoldImage.enabled = true;
+            m_UnfoldImage.enabled = false;
         }
         [MarkingAction(IsRuntimeAction = true)]
         public void Unfold()
         {
             IsFold = false;
             m_Animator.SetBool(nameof(IsFold), false);
+            m_FoldImage.enabled = false;
+            m_UnfoldImage.enabled = true;
         }
 
         public void RefreshUI()
@@ -81,7 +108,7 @@ namespace HotFix.UI.Component
                 return;
             }
 
-            Debug.Log("Refresh!");
+            Debug.Log($"{nameof(BMPFontCommon)} Refresh UI!");
         }
 
         [MarkingAction(IsRuntimeAction = true)]

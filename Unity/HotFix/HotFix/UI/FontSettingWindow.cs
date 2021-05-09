@@ -24,7 +24,13 @@ namespace HotFix.UI
             State = ItemSerializableState.SerializeIt,
             Title = "BMP Font Common 属性")]
         private UpdatableComponent m_UIBMPFontCommon;
-        private UIBMPFontCommon UIBMPFontCommon => m_UIBMPFontCommon.InstanceObject as UIBMPFontCommon;
+        internal UIBMPFontCommon UIBMPFontCommon;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "BMP Font Info 属性")]
+        private UpdatableComponent m_UIBMPFontInfo;
+        internal UIBMPFontInfo UIBMPFontInfo;
 
         private UpdatableComponent m_UpdatableComponent;
 
@@ -45,6 +51,13 @@ namespace HotFix.UI
                 m_WindowAnimator = windowAnimator_animator;
             else
                 m_WindowAnimator = null;
+
+            if (deserializeDictionary.TryGetValue(nameof(m_UIBMPFontInfo), out object uiBMPFontInfo_object)
+                && uiBMPFontInfo_object is UpdatableComponent uiBMPFontInfo_component
+                && uiBMPFontInfo_component.InstanceObject != null)
+                UIBMPFontInfo = uiBMPFontInfo_component.InstanceObject as UIBMPFontInfo;
+            else
+                UIBMPFontInfo = null;
         }
         public static FontSettingWindow OpenWindow()
         {

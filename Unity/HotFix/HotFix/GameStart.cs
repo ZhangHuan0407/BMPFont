@@ -44,6 +44,7 @@ namespace HotFix
                 typeof(FontSettingWindow),
                 typeof(MakeSureWindow),
                 typeof(MenuWindow),
+                typeof(MessageWindow),
                 typeof(ProcessWindow),
                 typeof(RendererWindow),
             };

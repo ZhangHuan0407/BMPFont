@@ -155,6 +155,17 @@
         "Order": 1,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_UIBMPFontInfo",
+        "Title": "BMP Font Info 属性",
+        "ToolTip": "",
+        "TypeFullName": "Encoder.UpdatableComponent",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
       }
     ],
     "MarkingMethods": [
@@ -651,6 +662,28 @@
         "Order": 0,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_FoldImage",
+        "Title": "折叠状态图片",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_UnfoldImage",
+        "Title": "展开状态图片",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
       }
     ],
     "MarkingMethods": [
@@ -692,6 +725,28 @@
         "ToolTip": "",
         "TypeFullName": "UnityEngine.Animator",
         "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_FoldImage",
+        "Title": "折叠状态图片",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_UnfoldImage",
+        "Title": "展开状态图片",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 2,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }

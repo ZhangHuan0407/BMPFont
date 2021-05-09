@@ -58,8 +58,12 @@ MonoBehaviour:
   StructData: '{}'
   SerializableObject:
   - {fileID: 182654695621025541}
+  - {fileID: 3294239151638791278}
+  - {fileID: 9134582141808415070}
   SerializableObjectName:
   - m_WindowAnimator
+  - m_UIBMPFontCommon
+  - m_UIBMPFontInfo
 --- !u!95 &182654695621025541
 Animator:
   serializedVersion: 3
@@ -771,8 +775,12 @@ MonoBehaviour:
   StructData: '{}'
   SerializableObject:
   - {fileID: 8933983803319826033}
+  - {fileID: 4683339729033789228}
+  - {fileID: 5552421321796011806}
   SerializableObjectName:
   - m_Animator
+  - m_FoldImage
+  - m_UnfoldImage
 --- !u!95 &8933983803319826033
 Animator:
   serializedVersion: 3
@@ -1487,9 +1495,13 @@ MonoBehaviour:
   ILTypeFullName: HotFix.UI.Component.UIBMPFontCommon
   StructData: '{}'
   SerializableObject:
-  - {fileID: 0}
+  - {fileID: 5159009775795273396}
+  - {fileID: 928221662984136779}
+  - {fileID: 2564323168145628344}
   SerializableObjectName:
   - m_Animator
+  - m_FoldImage
+  - m_UnfoldImage
 --- !u!95 &5159009775795273396
 Animator:
   serializedVersion: 3
