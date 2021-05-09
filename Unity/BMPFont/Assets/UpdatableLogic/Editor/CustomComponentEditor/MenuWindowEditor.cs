@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Encoder.Editor.CustomComponentEditor
+namespace Encoder.Editor
 {
-    [CustomComponentEditor("HotFix.UI.MenuWindow")]
+    [UpdatableComponentEditor("HotFix.UI.MenuWindow")]
     public class MenuWindowEditor : IUpdatableComponentEditor
     {
         /* field */

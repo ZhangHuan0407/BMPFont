@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Encoder.Editor.CustomComponentEditor
+namespace Encoder.Editor
 {
-    [CustomComponentEditor("HotFix.UI.FileAndDirectoryWindow")]
+    [UpdatableComponentEditor("HotFix.UI.FileAndDirectoryWindow")]
     public class FileAndDirectoryWindowEditor : IUpdatableComponentEditor
     {
         /* field */

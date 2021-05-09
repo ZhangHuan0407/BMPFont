@@ -3,7 +3,7 @@
 namespace Encoder.Editor
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class CustomComponentEditorAttribute : Attribute
+    public class UpdatableComponentEditorAttribute : Attribute
     {
         /* field */
         /// <summary>
@@ -13,7 +13,7 @@ namespace Encoder.Editor
         public readonly string UpdatableComponentTypeName;
 
         /* ctor */
-        public CustomComponentEditorAttribute(string updatableComponentTypeName)
+        public UpdatableComponentEditorAttribute(string updatableComponentTypeName)
         {
             if (string.IsNullOrWhiteSpace(updatableComponentTypeName))
                 throw new ArgumentException($"{nameof(updatableComponentTypeName)} can't be null or white space.");

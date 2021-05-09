@@ -6,7 +6,7 @@ using UnityEditor;
 namespace Encoder.Editor
 {
     /// <summary>
-    /// <see cref="UnityEditor"/> 下，一个面板渲染项目
+    /// <see cref="UnityEditor"/> 下，一个面板渲染的数据
     /// </summary>
     public class InspectorObject : IComparable<InspectorObject>
     {
@@ -16,18 +16,25 @@ namespace Encoder.Editor
             // UnityEngine
             { "UnityEngine.Animation", typeof(UnityEngine.Animation)},
             { "UnityEngine.Animator", typeof(UnityEngine.Animator)},
+            { "UnityEngine.AudioClip", typeof(UnityEngine.AudioClip)},
             { "UnityEngine.GameObject", typeof(UnityEngine.GameObject)},
             { "UnityEngine.Transform", typeof(UnityEngine.Transform)},
             { "UnityEngine.RectTransform", typeof(UnityEngine.RectTransform)},
 
             // UnityEngine.UI
             { "UnityEngine.UI.Button", typeof(UnityEngine.UI.Button)},
+            { "UnityEngine.UI.Graphic", typeof(UnityEngine.UI.Graphic)},
             { "UnityEngine.UI.Image", typeof(UnityEngine.UI.Image)},
             { "UnityEngine.UI.InputField", typeof(UnityEngine.UI.InputField)},
+            { "UnityEngine.UI.Mask", typeof(UnityEngine.UI.Mask)},
+            { "UnityEngine.UI.RectMask2D", typeof(UnityEngine.UI.RectMask2D)},
             { "UnityEngine.UI.Text", typeof(UnityEngine.UI.Text)},
         };
 
         /* field */
+        /// <summary>
+        /// 展示对象实际序列化名称
+        /// </summary>
         public readonly string Name;
         /// <summary>
         /// 面板及其它描述中对象的代称
@@ -43,8 +50,17 @@ namespace Encoder.Editor
         /// </summary>
         public readonly bool UseJsonSerialize;
 
+        /// <summary>
+        /// 展示对象类型
+        /// </summary>
         public Type ObjectType;
+        /// <summary>
+        /// 展示对象原始值
+        /// </summary>
         public readonly object OldValue;
+        /// <summary>
+        /// 展示对象当前值
+        /// </summary>
         public object NewValue;
 
         public UpdatableComponentEditor Editor { get; }
@@ -58,7 +74,6 @@ namespace Encoder.Editor
                 throw new ArgumentNullException(nameof(deserializeDictionary));
             if (serializeItem is null)
                 throw new ArgumentNullException(nameof(serializeItem));
-
             Editor = editor ?? throw new ArgumentNullException(nameof(editor));
 
             Name = serializeItem.Name;
@@ -76,11 +91,7 @@ namespace Encoder.Editor
         }
 
         /* func */
-
-        /* IComparable */
-        public int CompareTo(InspectorObject other) => Order.CompareTo(other?.Order);
-
-        internal void OnInspectorGUI()
+        public void OnInspectorGUI()
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label(Title);
@@ -144,10 +155,7 @@ namespace Encoder.Editor
                 EditorUtility.SetDirty(Editor.target);
         }
 
-        // 运行时重新获取状态值，从而实时显示状态值
-        //internal void RumtimeUpdate()
-        //{
-
-        //}
+        /* IComparable */
+        public int CompareTo(InspectorObject other) => Order.CompareTo(other?.Order);
     }
 }

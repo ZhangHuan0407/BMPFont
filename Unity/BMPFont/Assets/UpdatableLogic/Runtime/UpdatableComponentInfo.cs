@@ -2,7 +2,7 @@
 
 namespace Encoder
 {
-    public class CustomComponentInfo
+    public class UpdatableComponentInfo
     {
         /* field */
         /// <summary>
@@ -17,7 +17,7 @@ namespace Encoder
         public HashSet<string> MarkingMethods;
 
         /* ctor */
-        public CustomComponentInfo()
+        public UpdatableComponentInfo()
         {
         }
     }

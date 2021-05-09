@@ -22,6 +22,7 @@ namespace Encoder
             if (m_OnEnableMethod != null)
                 ILRuntimeService.InvokeMethod(m_OnEnableMethod, Instance, EmptyParameters);
         }
+
         private IMethod m_OnDisableMethod;
         private void OnDisable()
         {
@@ -32,7 +33,7 @@ namespace Encoder
         /* func */
         protected override void CacheComponentMethods()
         {
-            Dictionary<string, IMethod> typeMethods = CustomComponentMethodBuffer.ComponentMethodsCache[ILTypeFullName];
+            Dictionary<string, IMethod> typeMethods = UpdatableComponentsBuffer.ComponentMethodsCache[ILTypeFullName];
             typeMethods.TryGetValue(nameof(OnEnable), out m_OnEnableMethod);
             typeMethods.TryGetValue(nameof(OnDisable), out m_OnDisableMethod);
         }

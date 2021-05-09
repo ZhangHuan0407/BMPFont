@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Encoder.Editor.CustomComponentEditor
+namespace Encoder.Editor
 {
-    [CustomComponentEditor("HotFix.UI.FontSettingWindow")]
+    [UpdatableComponentEditor("HotFix.UI.FontSettingWindow")]
     public class FontSettingWindowEditor : IUpdatableComponentEditor
     {
         /* field */

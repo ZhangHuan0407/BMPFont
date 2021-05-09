@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Encoder.Editor.CustomComponentEditor
+namespace Encoder.Editor
 {
-    [CustomComponentEditor("HotFix.UI.ProcessWindow")]
+    [UpdatableComponentEditor("HotFix.UI.ProcessWindow")]
     public class ProcessWindowEditor : IUpdatableComponentEditor
     {
         /* field */

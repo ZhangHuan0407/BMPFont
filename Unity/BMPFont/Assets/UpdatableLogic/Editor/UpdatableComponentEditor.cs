@@ -20,16 +20,16 @@ namespace Encoder.Editor
         /// <summary>
         /// 所有导出的自定义组件名称
         /// </summary>
-        private static GUIContent[] CustomComponentsSelection = new GUIContent[0];
+        private static GUIContent[] UpdatableComponentsSelection = new GUIContent[0];
         /// <summary>
         /// 所有导出的自定义组件对应编号
         /// </summary>
-        private static int[] CustomComponentsIndex = new int[0];
+        private static int[] UpdatableComponentsIndex = new int[0];
         /// <summary>
         /// 自定义组件的编辑器实例的构造函数缓存，<see cref="Encoder"/> 在必要时刻重新定向编辑器实例
         /// </summary>
-        public static Lazy<Dictionary<string, ConstructorInfo>> CustomComponentEditor =
-            new Lazy<Dictionary<string, ConstructorInfo>>(FindCustomComponentEditorFromAssemblies);
+        public static Lazy<Dictionary<string, ConstructorInfo>> UpdatableComponentsEditor =
+            new Lazy<Dictionary<string, ConstructorInfo>>(FindUpdatableComponentEditorFromAssemblies);
         
         /* field */
         /// <summary>
@@ -48,7 +48,7 @@ namespace Encoder.Editor
         private List<InspectorObject> InspectorObjects;
 
         /* inter */
-        private UpdatableComponent updatableComponent => target as UpdatableComponent;
+        internal UpdatableComponent updatableComponent => target as UpdatableComponent;
 
         /* ctor */
         private void OnEnable()
@@ -64,21 +64,24 @@ namespace Encoder.Editor
             // 还没有选择
             if (string.IsNullOrWhiteSpace(updatableComponent.ILTypeFullName))
             {
-                // 强制 CustomComponentEditor.Value 初始化
-                _ = CustomComponentEditor.Value;
+                // 强制 UpdatableComponentsEditor.Value 初始化
+                _ = UpdatableComponentsEditor.Value;
                 EditorApplication.delayCall += RefreshSelectionsPopup;
                 return;
             }
             // 通过组件名称找到对应的编辑器实例，这个组件可能就没有编辑器实例
-            if (CustomComponentEditor.Value.TryGetValue(updatableComponent.ILTypeFullName, out ConstructorInfo info))
+            if (UpdatableComponentsEditor.Value.TryGetValue(updatableComponent.ILTypeFullName, out ConstructorInfo info))
             {
                 EditorInstance = info.Invoke(new object[0]) as IUpdatableComponentEditor;
-                EditorInstance.UpdatableComponent = updatableComponent;
-                EditorInstance.OnEnable();
+                if (EditorInstance != null)
+                {
+                    EditorInstance.UpdatableComponent = updatableComponent;
+                    EditorInstance.OnEnable();
+                }
             }
             // 通过组件名称找到对应的自定义组件序列化信息，这个组件可能没有导出
             if (!DeserializeInspectorObject())
-                Debug.LogError($"Not Found CustomComponentInfo in Export File.ILTypeFullName : {updatableComponent.ILTypeFullName}");
+                Debug.LogError($"Not Found {nameof(UpdatableComponentInfo)} in Export File.ILTypeFullName : {updatableComponent.ILTypeFullName}");
 
             SelectedILTypeName = updatableComponent.ILTypeFullName;
         }
@@ -108,50 +111,62 @@ namespace Encoder.Editor
         }
 
         /* func */
-        private static Dictionary<string, ConstructorInfo> FindCustomComponentEditorFromAssemblies()
+        private static Dictionary<string, ConstructorInfo> FindUpdatableComponentEditorFromAssemblies()
         {
-            Dictionary<string, ConstructorInfo> allCustomUpdatableComponentEditorType = new Dictionary<string, ConstructorInfo>();
+            Dictionary<string, ConstructorInfo> allUpdatableComponentsEditorType = new Dictionary<string, ConstructorInfo>();
+            // 从当前所程序集中，遍历并找到 IUpdatableComponentEditor 类型
             Type[] ZeroTypes = new Type[0];
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 var selectedSet =
                     from type in assembly.GetTypes()
-                    where type.GetCustomAttribute<CustomComponentEditorAttribute>() != null
+                    where type.IsAssignableFrom(typeof(IUpdatableComponentEditor))
+                        && type.GetCustomAttribute<UpdatableComponentEditorAttribute>() != null
                     select
                     (
-                        name: type.GetCustomAttribute<CustomComponentEditorAttribute>().UpdatableComponentTypeName,
+                        name: type.GetCustomAttribute<UpdatableComponentEditorAttribute>().UpdatableComponentTypeName,
                         ctor: type.GetConstructor(ZeroTypes)
                     );
                 foreach ((string name, ConstructorInfo ctor) selectedType in selectedSet)
                 {
-                    if (allCustomUpdatableComponentEditorType.ContainsKey(selectedType.name))
-                        Debug.LogError($"There are multi-Custom Updatable Component Editor Binding type : {selectedType.name}");
+                    if (allUpdatableComponentsEditorType.ContainsKey(selectedType.name))
+                        Debug.LogError($"There are multi-UpdatableComponentEditors Binding same type : {selectedType.name}");
                     else if (selectedType.ctor is null)
                         Debug.LogError($"Not Found Non-parameters ctor in Binding type : {selectedType.name}");
                     else
-                        allCustomUpdatableComponentEditorType.Add(selectedType.name, selectedType.ctor);
+                        allUpdatableComponentsEditorType.Add(selectedType.name, selectedType.ctor);
                 }
             }
-            string[] componentsName = allCustomUpdatableComponentEditorType.Keys.ToArray();
-            CustomComponentsSelection = new GUIContent[componentsName.Length];
-            CustomComponentsIndex = new int[componentsName.Length];
-            for (int index = 0; index < componentsName.Length; index++)
+
+            // 为没有自定义 IUpdatableComponentEditor 的类型，添加默认编辑器
+            ConstructorInfo defaultEditorCtor = typeof(DefaultUpdatableComponentEditor).GetConstructor(ZeroTypes);
+            foreach (string updatableComponentTypeName in UpdatableComponentsBuffer_Editor.ComponentInfoCache.Value.Keys)
             {
-                CustomComponentsSelection[index] = new GUIContent(componentsName[index]);
-                CustomComponentsIndex[index] = index;
+                if (!allUpdatableComponentsEditorType.ContainsKey(updatableComponentTypeName))
+                    allUpdatableComponentsEditorType.Add(updatableComponentTypeName, defaultEditorCtor);
             }
 
-            return allCustomUpdatableComponentEditorType;
+            // 生成显示信息
+            string[] componentsName = allUpdatableComponentsEditorType.Keys.ToArray();
+            UpdatableComponentsSelection = new GUIContent[componentsName.Length];
+            UpdatableComponentsIndex = new int[componentsName.Length];
+            for (int index = 0; index < componentsName.Length; index++)
+            {
+                UpdatableComponentsSelection[index] = new GUIContent(componentsName[index]);
+                UpdatableComponentsIndex[index] = index;
+            }
+
+            return allUpdatableComponentsEditorType;
         }
         /// <summary>
         /// 清除当前的自定义组件编辑器缓存
         /// <para>变更 Unity 主工程代码会触发静态变量全部清除，大多数情况下不需要主动调用</para>
         /// </summary>
-        [MenuItem("Custom Tool/Clear Custom Component/Inspector Editor Class Cache")]
-        public static void ClearCustomComponentCache()
+        [MenuItem("Custom Tool/Clear Updatable Components Cache/Inspector Editor Class")]
+        public static void ClearUpdatableComponentCache()
         {
-            CustomComponentEditor.Value?.Clear();
-            CustomComponentEditor = new Lazy<Dictionary<string, ConstructorInfo>>(FindCustomComponentEditorFromAssemblies);
+            UpdatableComponentsEditor.Value?.Clear();
+            UpdatableComponentsEditor = new Lazy<Dictionary<string, ConstructorInfo>>(FindUpdatableComponentEditorFromAssemblies);
         }
 
         /// <summary>
@@ -176,19 +191,22 @@ namespace Encoder.Editor
             }
             // 用户觉得能切换到目标编辑器实例，实际上不行
             // 例如使用 UI. 作为模糊搜索
-            if (!CustomComponentEditor.Value.TryGetValue(SelectedILTypeName, out ConstructorInfo info))
+            if (!UpdatableComponentsEditor.Value.TryGetValue(SelectedILTypeName, out ConstructorInfo info))
                 return;
             else
             {
                 EditorInstance = info.Invoke(new object[0]) as IUpdatableComponentEditor;
-                EditorInstance.UpdatableComponent = updatableComponent;
+                if (EditorInstance != null)
+                {
+                    EditorInstance.UpdatableComponent = updatableComponent;
+                    EditorInstance.OnEnable();
+                }
                 updatableComponent.ILTypeFullName = SelectedILTypeName;
-                EditorInstance.OnEnable();
             }
 
             // 通过组件名称找到对应的自定义组件序列化信息，这个组件可能没有导出
             if (!DeserializeInspectorObject())
-                Debug.LogError($"Not Found CustomComponentInfo in Export File.ILTypeFullName : {updatableComponent.ILTypeFullName}");
+                Debug.LogError($"Not Found {nameof(UpdatableComponentInfo)} in Export File.ILTypeFullName : {updatableComponent.ILTypeFullName}");
         }
         /// <summary>
         /// 将当前内容视作关键字，匹配者出现在选项中
@@ -197,20 +215,20 @@ namespace Encoder.Editor
         {
             if (string.IsNullOrWhiteSpace(SelectedILTypeName))
             {
-                PatternSelections = CustomComponentsSelection;
-                PatternIndex = CustomComponentsIndex;
+                PatternSelections = UpdatableComponentsSelection;
+                PatternIndex = UpdatableComponentsIndex;
                 return;
             }
             List<GUIContent> patternSelectionsList = new List<GUIContent>();
             List<int> patternIndexList = new List<int>();
-            for (int index = 0; index < CustomComponentsSelection.Length; index++)
+            for (int index = 0; index < UpdatableComponentsSelection.Length; index++)
             {
-                GUIContent content = CustomComponentsSelection[index];
+                GUIContent content = UpdatableComponentsSelection[index];
                 if (!content.text.Contains(content.text))
                     continue;
 
                 patternSelectionsList.Add(content);
-                patternIndexList.Add(CustomComponentsIndex[index]);
+                patternIndexList.Add(UpdatableComponentsIndex[index]);
             }
             PatternSelections = patternSelectionsList.ToArray();
             PatternIndex = patternIndexList.ToArray();
@@ -260,14 +278,13 @@ namespace Encoder.Editor
         public bool DeserializeInspectorObject()
         {
             InspectorObjects.Clear();
-
             // 暂不支持运行时反序列化
             if (EditorApplication.isPlaying)
                 return true;
-            
-            if (CustomComponentBuffer_Editor.ComponentInfoCache.Value.TryGetValue(
+
+            if (UpdatableComponentsBuffer_Editor.ComponentInfoCache.Value.TryGetValue(
                             updatableComponent.ILTypeFullName,
-                            out CustomComponentInfo_Editor ComponentInfo_Editor))
+                            out UpdatableComponentInfo_Editor ComponentInfo_Editor))
             {
                 // 反序列化已有的数据
                 Dictionary<string, object> deserializeDictionary = new Dictionary<string, object>();
@@ -307,7 +324,7 @@ namespace Encoder.Editor
             SelectionIndex = EditorGUILayout.IntPopup(SelectionIndex, PatternSelections, PatternIndex);
             if (SelectionIndex != lastSelectionIndex && SelectionIndex != NoneSelection)
             {
-                SelectedILTypeName = CustomComponentsSelection[SelectionIndex].text;
+                SelectedILTypeName = UpdatableComponentsSelection[SelectionIndex].text;
                 EditorApplication.delayCall += SwitchAnotherEditorInstance;
             }
 

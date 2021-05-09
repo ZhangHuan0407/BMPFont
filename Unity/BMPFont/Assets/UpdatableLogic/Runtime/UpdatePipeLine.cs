@@ -10,7 +10,7 @@ using UnityEngine.Events;
 namespace Encoder
 {
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(AssetBundlePool))]
+    [RequireComponent(typeof(AssetBundlePool), typeof(ILRuntimeService), typeof(TweenService))]
     public class UpdatePipeLine : MonoBehaviour
     {
         internal class OneTask
@@ -40,6 +40,8 @@ namespace Encoder
         private AssetBundlePool m_AssetBundlePool;
         [SerializeField]
         private ILRuntimeService m_ILRuntimeService;
+        [SerializeField]
+        private TweenService m_TweenService;
         /// <summary>
         /// 任务执行队列
         /// </summary>
@@ -64,6 +66,8 @@ namespace Encoder
             m_AssetBundlePool.enabled = false;
             m_ILRuntimeService = GetComponent<ILRuntimeService>();
             m_ILRuntimeService.enabled = false;
+            m_TweenService = GetComponent<TweenService>();
+            m_TweenService.enabled = false;
 #if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(this);
 #endif
@@ -75,21 +79,21 @@ namespace Encoder
             // 更新流程
             UpdatorTaskQueue = new Queue<OneTask>()
             {
-                new OneTask(nameof(AbortIfRequested), AbortIfRequested),
-                new OneTask(nameof(SetInstanceAndEnableComponent), SetInstanceAndEnableComponent),
-                new OneTask(nameof(AssetBundlePool.GetLatestUpdateSummery_Coroutine), m_AssetBundlePool.GetLatestUpdateSummery_Coroutine),
-                new OneTask(nameof(InitParameterInMainThread), InitParameterInMainThread),
+                new OneTask(nameof(AbortIfRequested),                                       AbortIfRequested),
+                new OneTask(nameof(SetInstanceAndEnableComponent),                          SetInstanceAndEnableComponent),
+                new OneTask(nameof(AssetBundlePool.GetLatestUpdateSummery_Coroutine),       m_AssetBundlePool.GetLatestUpdateSummery_Coroutine),
+                new OneTask(nameof(InitParameterInMainThread),                              InitParameterInMainThread),
                 new OneTask(nameof(AssetBundlePool.ClearAllFilesInTempDirectory_Coroutine), m_AssetBundlePool.ClearAllFilesInTempDirectory_Coroutine),
                 new OneTask(nameof(AssetBundlePool.ClearOldAssetBundlesInDirectory_Coroutine), m_AssetBundlePool.ClearOldAssetBundlesInDirectory_Coroutine),
-                new OneTask(nameof(UpdatorStartUpdate), UpdatorStartUpdate),
+                new OneTask(nameof(UpdatorStartUpdate),                                     UpdatorStartUpdate),
                 new OneTask(nameof(AssetBundlePool.UpdateForceUpdateAssetBundles_Coroutine), m_AssetBundlePool.UpdateForceUpdateAssetBundles_Coroutine),
                 new OneTask(nameof(AssetBundlePool.StartUpdateReserveAssetBundles_Coroutine), m_AssetBundlePool.StartUpdateReserveAssetBundles_Coroutine),
-                new OneTask(nameof(UpdatorFinishUpdate), UpdatorFinishUpdate),
+                new OneTask(nameof(UpdatorFinishUpdate),                                    UpdatorFinishUpdate),
                 new OneTask(nameof(ILRuntimeService.LoadAssemblyFromAssetBundle_Coroutine), m_ILRuntimeService.LoadAssemblyFromAssetBundle_Coroutine),
-                new OneTask(nameof(ILRuntimeService.InitILRuntime_Coroutine), () => ILRuntimeService.InitILRuntime_Coroutine(m_ILRuntimeService.AppDomain)),
-                new OneTask(nameof(ILRuntimeService.PrewarmGame_Coroutine), m_ILRuntimeService.PrewarmGame_Coroutine),
-                new OneTask(nameof(ILRuntimeService.LoadCustomComponentInfo_Coroutine), m_ILRuntimeService.LoadCustomComponentInfo_Coroutine),
-                new OneTask(nameof(ILRuntimeService.StartGame_Coroutine), m_ILRuntimeService.StartGame_Coroutine),
+                new OneTask(nameof(ILRuntimeService.InitILRuntime_Coroutine),               m_ILRuntimeService.InitILRuntime_Coroutine),
+                new OneTask(nameof(ILRuntimeService.PrewarmGame_Coroutine),                 m_ILRuntimeService.PrewarmGame_Coroutine),
+                new OneTask(nameof(ILRuntimeService.LoadUpdatableComponentInfo_Coroutine),  m_ILRuntimeService.LoadUpdatableComponentInfo_Coroutine),
+                new OneTask(nameof(ILRuntimeService.StartGame_Coroutine),                   m_ILRuntimeService.StartGame_Coroutine),
             };
 
             // 日志输出
@@ -154,6 +158,13 @@ namespace Encoder
 
             Instance.StopAllCoroutines();
 
+            if (TweenService.Instance != null)
+            {
+                TweenService.Instance.AbortInstance();
+                TweenService.Instance.Dispose();
+                yield return null;
+            }
+
             if (ILRuntimeService.Instance != null)
             {
                 ILRuntimeService.Instance.AbortInstance();
@@ -161,7 +172,7 @@ namespace Encoder
                 yield return null;
             }
 
-            CustomComponentMethodBuffer.ComponentMethodsCache = null;
+            UpdatableComponentsBuffer.ComponentMethodsCache = null;
 
             if (AssetBundlePool.Instance != null)
             {
@@ -170,12 +181,11 @@ namespace Encoder
                 while (AssetBundlePool.Instance.UpdateTasksCount > 0)
                     yield return null;
                 AssetBundlePool.Instance.MarkSweepAssetBundles(new string[0], true);
-                yield return null;
                 AssetBundlePool.Instance.Dispose();
                 yield return null;
             }
             Destroy(Instance.gameObject);
-            yield return null;
+            yield break;
         }
         internal IEnumerable SetInstanceAndEnableComponent()
         {
@@ -183,21 +193,20 @@ namespace Encoder
                 Instance = this;
             else
                 Debug.LogError($"{nameof(UpdatePipeLine)}.{nameof(Instance)} is not null.");
+            m_TweenService.enabled = true;
             m_AssetBundlePool.enabled = true;
             m_ILRuntimeService.enabled = true;
             yield return null;
         }
         internal IEnumerable UpdatorStartUpdate()
         {
-            yield return null;
             UpdatorStartUpdate_Handle?.Invoke();
-            yield return null;
+            yield break;
         }
         internal IEnumerable UpdatorFinishUpdate()
         {
-            yield return null;
             UpdatorFinishUpdate_Handle?.Invoke();
-            yield return null;
+            yield break;
         }
     }
 }

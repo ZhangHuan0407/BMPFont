@@ -17,8 +17,6 @@ namespace HotFix
         public static GameSystemData Instance { get; private set; }
 
         /* inter */
-        public Table<string, LanguageAssetBundle> LanguageAB => this[nameof(LanguageAssetBundle)] as Table<string, LanguageAssetBundle>;
-        public Table<string, LanguageTranslate> InterfaceString => this[nameof(InterfaceString)] as Table<string, LanguageTranslate>;
         public Table<string, PrefabAsset> PrefabCache => this[nameof(PrefabCache)] as Table<string, PrefabAsset>;
 
         /* ctor */
@@ -31,15 +29,6 @@ namespace HotFix
             GameSystemData instance = new GameSystemData();
 
             task++;
-            AssetBundlePool.LoadAsset<TextAsset>(
-                "updatablelogic/hotfix.assetbundle",
-                "LanguageAssetBundle.csv",
-                (textAsset) =>
-                {
-                    ITable languageAB_Table = Table<string, LanguageAssetBundle>.LoadTableFromCSV(nameof(LanguageAssetBundle), textAsset.text);
-                    instance.Add(languageAB_Table);
-                    task--;
-                });
 
             Table<string, PrefabAsset> prefabCache = new Table<string, PrefabAsset>()
             {
@@ -55,20 +44,6 @@ namespace HotFix
         internal static IEnumerator<object> StartInstance()
         {
             int task = 0;
-
-            // 加载语言包
-            LanguageAssetBundle languageAB = Instance.LanguageAB[Setting.Instance.Language];
-            AssetBundlePool.LoadAssetBundle(languageAB.InterfaceLanguageAssetBundleName, true);
-            AssetBundlePool.LoadAsset<TextAsset>(
-                languageAB.InterfaceLanguageAssetBundleName,
-                "Interface.json",
-                (textAsset) =>
-                {
-                    // Newston 无法获取 Table 数据类型
-                    //ITable interfaceString_Table = Table<string, LanguageTranslate>.LoadTableFromJson(nameof(InterfaceString), textAsset.text);
-                    //Instance.Add(interfaceString_Table);
-                    task--;
-                });
 
             while (task > 0)
                 yield return null;

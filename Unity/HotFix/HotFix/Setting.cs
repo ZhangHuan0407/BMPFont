@@ -37,12 +37,8 @@ namespace HotFix
         }
         internal static IEnumerator<object> StartInstance()
         {
-            Table<string, LanguageAssetBundle> languageABTable = GameSystemData.Instance[nameof(LanguageAssetBundle)] as Table<string, LanguageAssetBundle> ?? throw new NullReferenceException(nameof(languageABTable));
-            LanguageAssetBundle languageAssetBundle = languageABTable[Instance.Language] ?? languageABTable["ChineseSimplified"] ?? throw new NullReferenceException(nameof(languageAssetBundle));
-            AssetBundlePool.LoadAssetBundle(languageAssetBundle.InterfaceLanguageAssetBundleName, true);
-            while (!AssetBundlePool.AssetBundleIsReady(languageAssetBundle.InterfaceLanguageAssetBundleName))
-                yield return null;
             GameStart.TaskCount--;
+            yield break;
         }
 
         /* func */

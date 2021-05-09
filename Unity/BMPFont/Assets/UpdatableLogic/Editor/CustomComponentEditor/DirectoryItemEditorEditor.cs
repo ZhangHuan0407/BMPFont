@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Encoder.Editor.CustomComponentEditor
+namespace Encoder.Editor
 {
-    [CustomComponentEditor("HotFix.UI.Component.DirectoryItem")]
+    [UpdatableComponentEditor("HotFix.UI.Component.DirectoryItem")]
     public class DirectoryItemEditor : IUpdatableComponentEditor
     {
         /* field */

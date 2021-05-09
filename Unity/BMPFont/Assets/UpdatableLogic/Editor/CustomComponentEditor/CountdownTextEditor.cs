@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Encoder.Editor.CustomComponentEditor
+namespace Encoder.Editor
 {
-    [CustomComponentEditor("HotFix.UI.Component.CountdownText")]
+    [UpdatableComponentEditor("HotFix.UI.Component.CountdownText")]
     public class CountdownTextEditor : IUpdatableComponentEditor
     {
         /* field */

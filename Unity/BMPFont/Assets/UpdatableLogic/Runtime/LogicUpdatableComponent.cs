@@ -25,6 +25,7 @@ namespace Encoder
             if (m_OnEnableMethod != null)
                 ILRuntimeService.InvokeMethod(m_OnEnableMethod, Instance, EmptyParameters);
         }
+
         private IMethod m_OnDisableMethod;
         private void OnDisable()
         {
@@ -39,12 +40,14 @@ namespace Encoder
             if (m_UpdateMethod != null)
                 ILRuntimeService.InvokeMethod(m_UpdateMethod, Instance, EmptyParameters);
         }
+
         private IMethod m_LateUpdateMethod;
         private void LateUpdate()
         {
             if (m_LateUpdateMethod != null)
                 ILRuntimeService.InvokeMethod(m_LateUpdateMethod, Instance, EmptyParameters);
         }
+
         private IMethod m_FixedUpdateMethod;
         private void FixedUpdate()
         {
@@ -54,7 +57,7 @@ namespace Encoder
 
         protected override void CacheComponentMethods()
         {
-            Dictionary<string, IMethod> typeMethods = CustomComponentMethodBuffer.ComponentMethodsCache[ILTypeFullName];
+            Dictionary<string, IMethod> typeMethods = UpdatableComponentsBuffer.ComponentMethodsCache[ILTypeFullName];
             typeMethods.TryGetValue(nameof(OnEnable), out m_OnEnableMethod);
             typeMethods.TryGetValue(nameof(OnDisable), out m_OnDisableMethod);
             typeMethods.TryGetValue(nameof(Update), out m_UpdateMethod);

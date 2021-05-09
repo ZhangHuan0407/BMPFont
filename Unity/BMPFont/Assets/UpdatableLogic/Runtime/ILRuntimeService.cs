@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Tween;
 using UnityEngine;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
@@ -154,8 +155,9 @@ namespace Encoder
         /// <summary>
         /// 初始化适配器并注册 CLR 绑定
         /// </summary>
-        public static IEnumerable InitILRuntime_Coroutine(AppDomain domain)
+        public IEnumerable InitILRuntime_Coroutine()
         {
+            AppDomain domain = AppDomain;
             //这里需要注册所有热更DLL中用到的跨域继承Adapter，否则无法正确抓取引用
             domain.RegisterCrossBindingAdaptor(new Dictionary_2_Object_ObjectAdapter());
             domain.RegisterCrossBindingAdaptor(new ExceptionAdapter());
@@ -168,32 +170,49 @@ namespace Encoder
             domain.RegisterCrossBindingAdaptor(new List_1_ObjectAdapter());
             domain.RegisterCrossBindingAdaptor(new Queue_1_ObjectAdapter());
             domain.RegisterCrossBindingAdaptor(new Stack_1_ObjectAdapter());
-            yield return null;
+
+            domain.DelegateManager.RegisterMethodDelegate<Action>();
             domain.DelegateManager.RegisterMethodDelegate<int>();
             domain.DelegateManager.RegisterMethodDelegate<float>();
             domain.DelegateManager.RegisterMethodDelegate<double>();
             domain.DelegateManager.RegisterMethodDelegate<string>();
+            domain.DelegateManager.RegisterMethodDelegate<ILTypeInstance>();
             domain.DelegateManager.RegisterMethodDelegate<IEnumerable<object>>();
             domain.DelegateManager.RegisterMethodDelegate<object>();
             domain.DelegateManager.RegisterMethodDelegate<UnityEngine.Object>();
             domain.DelegateManager.RegisterMethodDelegate<GameObject>();
             domain.DelegateManager.RegisterMethodDelegate<TextAsset>();
             domain.DelegateManager.RegisterMethodDelegate<Sprite>();
-            domain.DelegateManager.RegisterMethodDelegate<Texture>();
-            domain.DelegateManager.RegisterMethodDelegate<Texture2D>();
             domain.DelegateManager.RegisterMethodDelegate<Material>();
+            domain.DelegateManager.RegisterMethodDelegate<Tweener>();
             domain.DelegateManager.RegisterMethodDelegate<ScriptableObject>();
             domain.DelegateManager.RegisterMethodDelegate<Font>();
             domain.DelegateManager.RegisterMethodDelegate<UpdatableComponent>();
-            domain.DelegateManager.RegisterMethodDelegate<Action>();
             domain.DelegateManager.RegisterMethodDelegate<Dictionary<string, object>>();
             domain.DelegateManager.RegisterMethodDelegate<UpdatableComponent, string>();
+            domain.DelegateManager.RegisterMethodDelegate<Vector2, object>();
+            domain.DelegateManager.RegisterMethodDelegate<Vector3, object>();
             domain.DelegateManager.RegisterMethodDelegate<object, object>();
+            domain.DelegateManager.RegisterMethodDelegate<ILTypeInstance, ILTypeInstance>();
+            domain.DelegateManager.RegisterMethodDelegate<ILTypeInstance, object, object>();
             domain.DelegateManager.RegisterMethodDelegate<object, object, object>();
             domain.DelegateManager.RegisterMethodDelegate<object, object, object, object>();
+            domain.DelegateManager.RegisterMethodDelegate<ILTypeInstance, object, object, object>();
 
+            domain.DelegateManager.RegisterFunctionDelegate<object>();
+            domain.DelegateManager.RegisterFunctionDelegate<bool>();
+            domain.DelegateManager.RegisterFunctionDelegate<Tweener>();
+            domain.DelegateManager.RegisterFunctionDelegate<Vector3, Vector3>();
+            domain.DelegateManager.RegisterFunctionDelegate<float, float>();
             domain.DelegateManager.RegisterFunctionDelegate<string, object>();
+            domain.DelegateManager.RegisterFunctionDelegate<Tweener, Tweener>();
+            domain.DelegateManager.RegisterFunctionDelegate<LogicTweener, LogicTweener>();
+            domain.DelegateManager.RegisterFunctionDelegate<Tweener, bool>();
+            domain.DelegateManager.RegisterFunctionDelegate<UnityEngine.Object, UnityEngine.Object>();
+            domain.DelegateManager.RegisterFunctionDelegate<object, ILTypeInstance>();
+            domain.DelegateManager.RegisterFunctionDelegate<ILTypeInstance, object>();
             domain.DelegateManager.RegisterFunctionDelegate<object, object>();
+            domain.DelegateManager.RegisterFunctionDelegate<UnityEngine.Object, object, UnityEngine.Object>();
             domain.DelegateManager.RegisterFunctionDelegate<object, object, object>();
             domain.DelegateManager.RegisterFunctionDelegate<object, object, object, object>();
             domain.DelegateManager.RegisterFunctionDelegate<object, object, object, object, object>();
@@ -230,19 +249,19 @@ namespace Encoder
                     yield return null;
             }
         }
-        public IEnumerable LoadCustomComponentInfo_Coroutine()
+        public IEnumerable LoadUpdatableComponentInfo_Coroutine()
         {
             if (Abort)
                 yield break;
 
             bool wait = true;
-            AssetBundlePool.LoadAsset<TextAsset>(HotfixAssetBundleName, "CustomComponentInfo", LoadCallback);
+            AssetBundlePool.LoadAsset<TextAsset>(HotfixAssetBundleName, "UpdatableComponentInfo", LoadCallback);
             while (wait)
                 yield return null;
 
-            void LoadCallback(TextAsset customComponentInfo)
+            void LoadCallback(TextAsset updatableComponentInfo)
             {
-                CustomComponentMethodBuffer.ClearAndRecreateCache(customComponentInfo.text);
+                UpdatableComponentsBuffer.ClearAndRecreateCache(updatableComponentInfo.text);
                 wait = false;
             }
         }
@@ -251,7 +270,6 @@ namespace Encoder
             if (Abort)
                 yield break;
 
-            yield return null;
             IType gameStartType = AppDomain.LoadedTypes["HotFix.GameStart"] ?? throw new NotFoundBindingTypeException("Hotfix.GameStart");
             ILTypeInstance gameStart = ((ILType)gameStartType).Instantiate() ?? throw new NullReferenceException(nameof(gameStart));
             IMethod method = gameStartType.GetMethod("Main", 0) ?? throw new NotFoundBindingMethodException("Main");
@@ -306,7 +324,7 @@ namespace Encoder
         /* IDisposable */
         public void Dispose()
         {
-            AbortInstance();
+            Abort = true;
             if (Instance == this)
                 Instance = null;
             InvokeMethod = null;

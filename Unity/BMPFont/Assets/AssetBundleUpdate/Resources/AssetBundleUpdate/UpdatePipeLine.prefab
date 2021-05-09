@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4013686529251037643}
   - component: {fileID: 6128198691340577142}
   - component: {fileID: 1978537353145315773}
+  - component: {fileID: 2695521065440482918}
   m_Layer: 0
   m_Name: UpdatePipeLine
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   DeleteLatestABUpdator: 1
   m_AssetBundlePool: {fileID: 6128198691340577142}
   m_ILRuntimeService: {fileID: 1978537353145315773}
+  m_TweenService: {fileID: 2695521065440482918}
   UpdatorStartUpdate_Handle:
     m_PersistentCalls:
       m_Calls: []
@@ -77,5 +79,17 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3de054254e655824f97c440f7c3b0b17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2695521065440482918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475874687890524774}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f813aae57a7dbc44bbb7e6560030089c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

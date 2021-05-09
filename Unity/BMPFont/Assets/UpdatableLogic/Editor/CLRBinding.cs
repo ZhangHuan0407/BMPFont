@@ -23,7 +23,18 @@ namespace Encoder.Editor
                 domain.LoadAssembly(fs);
 
                 //Crossbind Adapter is needed to generate the correct binding code
-                ILRuntimeService.InitILRuntime_Coroutine(domain).GetEnumerator().MoveNext();
+                domain.RegisterCrossBindingAdaptor(new Dictionary_2_Object_ObjectAdapter());
+                domain.RegisterCrossBindingAdaptor(new ExceptionAdapter());
+                domain.RegisterCrossBindingAdaptor(new HashSet_1_ObjectAdapter());
+                domain.RegisterCrossBindingAdaptor(new IEnumerable_1_ILTypeInstanceAdapter());
+                domain.RegisterCrossBindingAdaptor(new IEnumerable_1_ObjectAdapter());
+                domain.RegisterCrossBindingAdaptor(new IEnumerator_1_ILTypeInstanceAdapter());
+                domain.RegisterCrossBindingAdaptor(new IEnumerator_1_ObjectAdapter());
+                domain.RegisterCrossBindingAdaptor(new LinkedList_1_ObjectAdapter());
+                domain.RegisterCrossBindingAdaptor(new List_1_ObjectAdapter());
+                domain.RegisterCrossBindingAdaptor(new Queue_1_ObjectAdapter());
+                domain.RegisterCrossBindingAdaptor(new Stack_1_ObjectAdapter());
+
                 ILRuntime.Runtime.CLRBinding.BindingCodeGenerator.GenerateBindingCode(
                     domain, "Assets/ILRuntime/Generated");
             }

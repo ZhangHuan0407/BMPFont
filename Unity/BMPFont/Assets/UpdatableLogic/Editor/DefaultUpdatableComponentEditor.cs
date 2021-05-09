@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Encoder.Editor.CustomComponentEditor
+namespace Encoder.Editor
 {
-    [UpdatableComponentEditor("HotFix.UI.MakeSureWindow")]
-    public class MakeSureWindowEditor : IUpdatableComponentEditor
+    public class DefaultUpdatableComponentEditor : IUpdatableComponentEditor
     {
         /* field */
         public UpdatableComponent UpdatableComponent { get; set; }
 
         /* ctor */
-        public MakeSureWindowEditor()
+        public DefaultUpdatableComponentEditor()
         {
         }
 

@@ -83,9 +83,13 @@ namespace Encoder
         }
 
         /* func */
+        /// <summary>
+        /// 调用当前 HotFix 实例公开行为
+        /// </summary>
+        /// <param name="actionName">方法名称</param>
         public void InvokeAction(string actionName)
         {
-            Dictionary<string, IMethod> typeMethods = CustomComponentMethodBuffer.ComponentMethodsCache[ILTypeFullName];
+            Dictionary<string, IMethod> typeMethods = UpdatableComponentsBuffer.ComponentMethodsCache[ILTypeFullName];
             if (typeMethods.TryGetValue(actionName, out IMethod method))
             {
 #if UNITY_EDITOR

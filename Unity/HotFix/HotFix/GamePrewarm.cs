@@ -21,8 +21,6 @@ namespace HotFix
             typeof(IDataItem<int>).FullName,
             typeof(IDataItem<string>).FullName,
             typeof(ITable).FullName,
-            typeof(LanguageAssetBundle).FullName,
-            typeof(LanguageTranslate).FullName,
             typeof(PrimaryKeyNotFoundException).FullName,
             typeof(SetDataFunctionBuffer).FullName,
             typeof(TableSet).FullName,

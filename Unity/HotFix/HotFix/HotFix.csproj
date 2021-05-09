@@ -118,7 +118,6 @@
     <Compile Include="BMPFont\BMPFontPage.cs" />
     <Compile Include="BMPFont\MessageBox.cs" />
     <Compile Include="CheckComponentAttribute.cs" />
-    <Compile Include="Database\LanguageTranslate.cs" />
     <Compile Include="Database\PrefabAsset.cs" />
     <Compile Include="Database\PrimaryKeyNotFoundException.cs" />
     <Compile Include="Database\SetDataFunctionBuffer.cs" />
@@ -129,7 +128,6 @@
     <Compile Include="GamePrewarm.cs" />
     <Compile Include="GameStart.cs" />
     <Compile Include="GameSystemData.cs" />
-    <Compile Include="Database\LanguageAssetBundle.cs" />
     <Compile Include="InspectorInfoAttribute.cs" />
     <Compile Include="InvokeActionAttribute.cs" />
     <Compile Include="ItemSerializableState.cs" />
