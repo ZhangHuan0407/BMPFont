@@ -15,7 +15,7 @@ namespace Encoder
     {
         /* const */
         protected static readonly object[] EmptyParameters = new object[0];
-        private static readonly Dictionary<string, object> DeserializeDictionary = new Dictionary<string, object>();
+        //private static readonly Dictionary<string, object> DeserializeDictionary = new Dictionary<string, object>();
 
         /* field */
         [Tooltip("绑定的运行时动态类型，使用类型全名称")]
@@ -33,7 +33,7 @@ namespace Encoder
                 if (BeforeInit
                     && !string.IsNullOrEmpty(ILTypeFullName))
                 {
-                    DeserializeDictionary.Clear();
+                    var DeserializeDictionary = new Dictionary<string, object>();
                     for (int index = 0; index < SerializableObjectName.Length; index++)
                         DeserializeDictionary.Add(SerializableObjectName[index], SerializableObject[index]);
                     foreach (var pair in JsonConvert.DeserializeObject<Dictionary<string, string>>(StructData))
