@@ -1,4 +1,5 @@
 ﻿using Encoder;
+using HotFix.EncoderExtend;
 using HotFix.UI.Component;
 using System;
 using System.Collections.Generic;
@@ -52,12 +53,10 @@ namespace HotFix.UI
             else
                 m_WindowAnimator = null;
 
-            if (deserializeDictionary.TryGetValue(nameof(m_UIBMPFontInfo), out object uiBMPFontInfo_object)
-                && uiBMPFontInfo_object is UpdatableComponent uiBMPFontInfo_component
-                && uiBMPFontInfo_component.InstanceObject != null)
-                UIBMPFontInfo = uiBMPFontInfo_component.InstanceObject as UIBMPFontInfo;
-            else
-                UIBMPFontInfo = null;
+            deserializeDictionary.TryPushValue(nameof(m_UIBMPFontCommon), out m_UIBMPFontCommon);
+            UIBMPFontCommon = m_UIBMPFontCommon.InstanceObject as UIBMPFontCommon ?? throw new NullReferenceException(nameof(UIBMPFontCommon));
+            deserializeDictionary.TryPushValue(nameof(m_UIBMPFontInfo), out m_UIBMPFontInfo);
+            UIBMPFontInfo = m_UIBMPFontInfo.InstanceObject as UIBMPFontInfo ?? throw new NullReferenceException(nameof(UIBMPFontInfo));
         }
         public static FontSettingWindow OpenWindow()
         {
@@ -118,7 +117,12 @@ namespace HotFix.UI
 
         public void RefreshUI()
         {
+            BMPFont bmpFont = GameSystemData.Instance.Font;
+            UIBMPFontCommon.BMPFontCommon = bmpFont?.Common;
+            UIBMPFontInfo.BMPFontInfo = bmpFont?.Info;
 
+            UIBMPFontCommon.RefreshUI();
+            UIBMPFontInfo.RefreshUI();
         }
     }
 }

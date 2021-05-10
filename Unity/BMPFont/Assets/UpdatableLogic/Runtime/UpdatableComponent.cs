@@ -25,7 +25,7 @@ namespace Encoder
         public string[] SerializableObjectName = new string[0];
 
         private ILTypeInstance m_Instance;
-        public object InstanceObject => m_Instance;
+        public object InstanceObject => Instance;
         public ILTypeInstance Instance
         {
             get

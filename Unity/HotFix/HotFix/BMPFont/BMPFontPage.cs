@@ -96,7 +96,6 @@ namespace HotFix
 
             PageImage = new Texture2D(0, 0);
             PageImage.LoadImage(File.ReadAllBytes(FilePath));
-            Debug.Log($"load image, size : {PageImage.width}, {PageImage.height}");
             HaveError = false;
         }
     }
