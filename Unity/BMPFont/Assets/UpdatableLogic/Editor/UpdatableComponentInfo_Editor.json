@@ -726,6 +726,39 @@
         "Order": 2,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_LineHelght",
+        "Title": "LineHelght",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 3,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_Base",
+        "Title": "Base",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 4,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_Scale",
+        "Title": "Scale",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 5,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
       }
     ],
     "MarkingMethods": [
@@ -789,6 +822,127 @@
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Image",
         "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_FaceText",
+        "Title": "Face",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 3,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_SizeText",
+        "Title": "Size",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 4,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_BoldToggle",
+        "Title": "Bold",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Toggle",
+        "Order": 5,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_ItalicToggle",
+        "Title": "Italic",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Toggle",
+        "Order": 6,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_CharSetText",
+        "Title": "CharSet",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 7,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_UnicodeToggle",
+        "Title": "Unicode",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Toggle",
+        "Order": 8,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_StretchHText",
+        "Title": "StretchH",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 9,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_SmoothToggle",
+        "Title": "Smooth",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Toggle",
+        "Order": 10,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_AAToggle",
+        "Title": "AA",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Toggle",
+        "Order": 11,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_PaddingText",
+        "Title": "Padding",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 12,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_SpacingText",
+        "Title": "Spacing",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Text",
+        "Order": 13,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }

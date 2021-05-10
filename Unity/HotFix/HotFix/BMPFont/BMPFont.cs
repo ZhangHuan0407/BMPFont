@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace HotFix
 {
+    /// <summary>
+    /// 一个位图字体类型，包含位图字体的配置信息和纹理切割素材
+    /// <para>读取资源后，访问 <see cref="HaveError"/> 以查看自检结果/para>
+    /// </summary>
     public class BMPFont
     {
         /* const */

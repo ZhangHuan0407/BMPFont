@@ -155,6 +155,7 @@
     <Compile Include="UI\MessageWindow.cs" />
     <Compile Include="UI\ProcessWindow.cs" />
     <Compile Include="UI\RendererWindow.cs" />
+    <Compile Include="EncoderExtend\DictionaryExtend.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

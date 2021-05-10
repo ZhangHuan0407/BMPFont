@@ -1,4 +1,5 @@
 ﻿using Encoder;
+using HotFix.EncoderExtend;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,21 @@ namespace HotFix.UI.Component
             State = ItemSerializableState.SerializeIt,
             Title = "展开状态图片")]
         private Image m_UnfoldImage;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "LineHelght")]
+        private Text m_LineHelght;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "Base")]
+        private Text m_Base;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "Scale")]
+        private Text m_Scale;
 
         private UpdatableComponent m_UpdatableComponent;
 
@@ -73,6 +89,10 @@ namespace HotFix.UI.Component
                 m_UnfoldImage = unfoldImage_image;
             else
                 m_UnfoldImage = null;
+
+            deserializeDictionary.TryPushValue(nameof(m_LineHelght), out m_LineHelght);
+            deserializeDictionary.TryPushValue(nameof(m_Base), out m_Base);
+            deserializeDictionary.TryPushValue(nameof(m_Scale), out m_Scale);
         }
 
         /* func */
