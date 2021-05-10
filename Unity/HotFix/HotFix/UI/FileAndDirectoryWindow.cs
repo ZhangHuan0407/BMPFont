@@ -273,7 +273,7 @@ namespace HotFix.UI
             {
                 IFileAndDirectoryItem item = FileAndDirectoryItems[index];
                 FileSystemInfo fileSystemInfo = FileSystemInfos[index];
-                item.DateTime = fileSystemInfo.LastWriteTime.ToString();
+                item.DateTime = $"{fileSystemInfo.LastWriteTime:yy/MM/dd HH:mm:ss}";
                 item.Index = index;
                 item.Window = this;
                 item.transform.SetParent(m_ScrollContentTrans, false);
