@@ -17,6 +17,7 @@ namespace HotFix
 
         public static readonly Regex FilePathRegex = new Regex("(?<=file=\")\\w+\\.png(?=\")");
         public string FilePath { get; set; }
+        public string RawFilePath { get; set; }
 
         /// <summary>
         /// 存在错误，无法使用
@@ -53,7 +54,10 @@ namespace HotFix
 
             Match filePathMatch = FilePathRegex.Match(line);
             if (filePathMatch.Success)
+            {
                 FilePath = filePathMatch.Value;
+                RawFilePath = filePathMatch.Value;
+            }
             else
             {
                 MessageBox.Show("Page File Error");
@@ -84,7 +88,7 @@ namespace HotFix
                 MessageBox.Show($"没有找到图片文件。\n{FilePath}");
                 return;
             }
-            if (FilePath.Contains("/"))
+            if (RawFilePath.Contains("/"))
             {
                 MessageBox.Show("使用相对文件路径，而非绝对文件路径");
                 return;
