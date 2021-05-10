@@ -37,6 +37,7 @@ namespace Encoder.Editor
             { "UnityEngine.UI.Mask", typeof(UnityEngine.UI.Mask)},
             { "UnityEngine.UI.RectMask2D", typeof(UnityEngine.UI.RectMask2D)},
             { "UnityEngine.UI.Text", typeof(UnityEngine.UI.Text)},
+            { "UnityEngine.UI.Toggle", typeof(UnityEngine.UI.Toggle)},
         };
 
         /* field */
