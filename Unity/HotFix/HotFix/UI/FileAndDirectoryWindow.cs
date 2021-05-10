@@ -186,6 +186,10 @@ namespace HotFix.UI
             if (fileSystemInfo is null)
                 fileSystemInfo = new DirectoryInfo(Environment.CurrentDirectory);
 
+            // 当一个文件不存在时，不要试图拿取文件夹
+            if (!fileSystemInfo.Exists)
+                fileSystemInfo = null;
+
             GameObject go = GameSystemData.Instance.InstantiateGo(nameof(FileAndDirectoryWindow));
             FileAndDirectoryWindow window = null;
             foreach (UpdatableComponent updatableComponent in go.GetComponents<UpdatableComponent>())

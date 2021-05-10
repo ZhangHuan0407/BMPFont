@@ -1,6 +1,7 @@
 ﻿using Encoder;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Tween;
 using UnityEngine;
 using UnityEngine.UI;
@@ -116,11 +117,18 @@ namespace HotFix.UI
         {
             Debug.Log($"{nameof(MenuWindow)}.{nameof(OnClickLoadFontButton)}");
 
-            FileAndDirectoryWindow window = FileAndDirectoryWindow.OpenWindow();
+            string latestBMPFontPath = Setting.Instance.LatestBMPFontPath;
+            FileInfo fontFileInfo = null;
+            if (!string.IsNullOrWhiteSpace(latestBMPFontPath))
+                fontFileInfo = new FileInfo(latestBMPFontPath);
+            FileAndDirectoryWindow window = FileAndDirectoryWindow.OpenWindow(fontFileInfo);
             window.Title = "读取一个 *.fnt 文件";
             window.OKCallback += (_) => 
             {
-                Debug.Log($"{window.SelectedFileSystemInfo.GetType().Name} : {window.SelectedFileSystemInfo.FullName}");
+                string fontPath = window.SelectedFileSystemInfo.FullName;
+                Debug.Log($"{window.SelectedFileSystemInfo.GetType().Name} : {fontPath}");
+                Setting.Instance.LatestBMPFontPath = fontPath;
+                Setting.Instance.SaveOutPlayerPrefs();
                 GameSystemData.Instance.Font?.Dispose();
                 BMPFont font = new BMPFont();
                 font.LoadFontFromFile(window.SelectedFileSystemInfo.FullName);
