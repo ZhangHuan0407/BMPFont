@@ -85,9 +85,9 @@ namespace HotFix
             while (TaskCount > 0)
                 yield return null;
 
-            FontSettingWindow.OpenWindow();
-            MenuWindow.OpenWindow();
-            RendererWindow.OpenWindow();
+            GameSystemData.Instance.FontSettingWindow = FontSettingWindow.OpenWindow();
+            GameSystemData.Instance.MenuWindow = MenuWindow.OpenWindow();
+            GameSystemData.Instance.RendererWindow = RendererWindow.OpenWindow();
             Debug.Log("return GameStart.WaitForAll_Coroutine.");
         }
     }
