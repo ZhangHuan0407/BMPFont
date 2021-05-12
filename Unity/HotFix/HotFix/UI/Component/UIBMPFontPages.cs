@@ -12,7 +12,7 @@ namespace HotFix.UI.Component
     /// </summary>
     [CheckComponent(typeof(Animator))]
     [BindingUpdatableComponent(BindingUpdatableComponentAttribute.CommonComponent)]
-    public class UIBMPFontCommon
+    public class UIBMPFontPages
     {
         /* field */
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
@@ -31,21 +31,6 @@ namespace HotFix.UI.Component
             Title = "展开状态图片")]
         private Image m_UnfoldImage;
 
-        [InspectorInfo(
-            State = ItemSerializableState.SerializeIt,
-            Title = "LineHelght")]
-        private Text m_LineHelght;
-
-        [InspectorInfo(
-            State = ItemSerializableState.SerializeIt,
-            Title = "Base")]
-        private Text m_Base;
-
-        [InspectorInfo(
-            State = ItemSerializableState.SerializeIt,
-            Title = "Scale")]
-        private Text m_Scale;
-
         private UpdatableComponent m_UpdatableComponent;
 
 
@@ -61,38 +46,20 @@ namespace HotFix.UI.Component
 
 
         /// <summary>
-        /// <see cref="BMPFont"/> 普通信息数据
+        /// BMP 页信息
         /// </summary>
-        public BMPFontCommon BMPFontCommon { get; set; }
+        public List<BMPFontPage> Pages { get; set; }
 
         /* ctor */
-        public UIBMPFontCommon(Dictionary<string, object> deserializeDictionary)
+        public UIBMPFontPages(Dictionary<string, object> deserializeDictionary)
         {
-            m_UpdatableComponent = deserializeDictionary[nameof(UpdatableComponent)] as UpdatableComponent ?? throw new ArgumentException($"{nameof(UpdatableComponent)} is null.");
+            deserializeDictionary.TryPushValue(nameof(UpdatableComponent), out m_UpdatableComponent);
             gameObject = m_UpdatableComponent.gameObject;
             transform = m_UpdatableComponent.transform;
 
-            if (deserializeDictionary.TryGetValue(nameof(m_Animator), out object windowAnimator_object)
-                && windowAnimator_object is Animator windowAnimator_animator)
-                m_Animator = windowAnimator_animator;
-            else
-                m_Animator = null;
-
-            if (deserializeDictionary.TryGetValue(nameof(m_FoldImage), out object foldImage_object)
-                && foldImage_object is Image foldImage_image)
-                m_FoldImage = foldImage_image;
-            else
-                m_FoldImage = null;
-
-            if (deserializeDictionary.TryGetValue(nameof(m_UnfoldImage), out object unfoldImage_object)
-                && unfoldImage_object is Image unfoldImage_image)
-                m_UnfoldImage = unfoldImage_image;
-            else
-                m_UnfoldImage = null;
-
-            deserializeDictionary.TryPushValue(nameof(m_LineHelght), out m_LineHelght);
-            deserializeDictionary.TryPushValue(nameof(m_Base), out m_Base);
-            deserializeDictionary.TryPushValue(nameof(m_Scale), out m_Scale);
+            deserializeDictionary.TryPushValue(nameof(m_Animator), out m_Animator);
+            deserializeDictionary.TryPushValue(nameof(m_FoldImage), out m_FoldImage);
+            deserializeDictionary.TryPushValue(nameof(m_UnfoldImage), out m_UnfoldImage);
         }
 
         /* func */
@@ -119,26 +86,11 @@ namespace HotFix.UI.Component
             m_UnfoldImage.enabled = true;
         }
 
-        public void RefreshUI()
-        {
-            if (BMPFontCommon is null
-                || BMPFontCommon.HaveError)
-            {
-                Fold();
-                return;
-            }
-
-            m_LineHelght.text = BMPFontCommon.LineHelght.ToString();
-            m_Base.text = BMPFontCommon.Base.ToString();
-            m_Scale.text = BMPFontCommon.Scale.ToString();
-        }
-
         [MarkingAction(IsRuntimeAction = true)]
         public void OnClickTitleButton()
         {
             Debug.Log($"{nameof(UIBMPFontCommon)}.{nameof(OnClickTitleButton)}");
-            if (BMPFontCommon is null
-                || BMPFontCommon.HaveError)
+            if (Pages is null)
                 Fold();
             else if (IsFold)
                 Unfold();

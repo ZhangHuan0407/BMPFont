@@ -99,7 +99,7 @@ namespace HotFix.UI.Component
         protected Transform transform;
 #pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释
 
-
+        
         /// <summary>
         /// <see cref="BMPFont"/> 信息数据
         /// </summary>
@@ -176,7 +176,17 @@ namespace HotFix.UI.Component
                 return;
             }
 
-            Debug.Log($"{nameof(BMPFontInfo)} Refresh UI!");
+            m_FaceText.text = BMPFontInfo.Face;
+            m_SizeText.text = BMPFontInfo.Size.ToString();
+            m_BoldToggle.isOn = BMPFontInfo.Bold;
+            m_ItalicToggle.isOn = BMPFontInfo.Italic;
+            m_CharSetText.text = BMPFontInfo.CharSet;
+            m_UnicodeToggle.isOn = BMPFontInfo.Unicode;
+            m_StretchHText.text = BMPFontInfo.StretchH.ToString();
+            m_SmoothToggle.isOn = BMPFontInfo.Smooth;
+            m_AAToggle.isOn = BMPFontInfo.AA;
+            m_PaddingText.text = BMPFontInfo.Padding.ToString();
+            m_SpacingText.text = BMPFontInfo.Spacing.ToString();
         }
 
         [MarkingAction(IsRuntimeAction = true)]

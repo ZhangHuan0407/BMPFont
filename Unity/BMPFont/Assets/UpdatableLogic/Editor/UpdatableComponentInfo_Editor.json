@@ -692,6 +692,71 @@
   },
   {
     "BindingComponentName": "Encoder.CommonUpdatableComponent",
+    "TypeFullName": "HotFix.UI.Component.UIBMPFontCharSet",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_Animator",
+        "Title": "组件动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_FoldImage",
+        "Title": "折叠状态图片",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_UnfoldImage",
+        "Title": "展开状态图片",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Fold",
+        "Title": "Fold"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickTitleButton",
+        "Title": "OnClickTitleButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Unfold",
+        "Title": "Unfold"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.CommonUpdatableComponent",
     "TypeFullName": "HotFix.UI.Component.UIBMPFontCommon",
     "SerializeItems": [
       {
@@ -943,6 +1008,71 @@
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Text",
         "Order": 13,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      }
+    ],
+    "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Fold",
+        "Title": "Fold"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickTitleButton",
+        "Title": "OnClickTitleButton"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnEnable",
+        "Title": "OnEnable"
+      },
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "Unfold",
+        "Title": "Unfold"
+      }
+    ]
+  },
+  {
+    "BindingComponentName": "Encoder.CommonUpdatableComponent",
+    "TypeFullName": "HotFix.UI.Component.UIBMPFontPages",
+    "SerializeItems": [
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_Animator",
+        "Title": "组件动画控制",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Animator",
+        "Order": 0,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_FoldImage",
+        "Title": "折叠状态图片",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_UnfoldImage",
+        "Title": "展开状态图片",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 2,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }
