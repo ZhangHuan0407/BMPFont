@@ -178,7 +178,12 @@ namespace HotFix
             if (bMPFontPage.HaveError)
                 return;
 
-            Sprite = Sprite.Create(bMPFontPage.PageImage, new Rect(Position, Size), new Vector2(0.5f, 0.5f));
+            Texture2D pageImage = bMPFontPage.PageImage;
+            Rect charRect = new Rect(Position.x, pageImage.height - Position.y - Size.y, Size.x, Size.y);
+            Sprite = Sprite.Create(
+                pageImage,
+                charRect,
+                new Vector2(0.5f, 0.5f));
 
             HaveError = false;
         }

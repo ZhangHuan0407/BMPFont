@@ -1,4 +1,5 @@
 ﻿using Encoder;
+using HotFix.EncoderExtend;
 using System;
 using System.Collections.Generic;
 using Tween;
@@ -44,7 +45,20 @@ namespace HotFix.UI
             Title = "展示内容")]
         private RectTransform m_ScrollContent;
 
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "字符预制体")]
+        private GameObject m_CharItemPrefab;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "字符缺失")]
+        private Sprite m_NoneCharSprite;
+
         private UpdatableComponent m_UpdatableComponent;
+
+
+        private List<GameObject> CharGo;
 
         /* inter */
         protected GameObject gameObject;
@@ -93,6 +107,10 @@ namespace HotFix.UI
                 m_ScrollContent = scrollContent_trans;
             else
                 m_ScrollContent = null;
+
+            deserializeDictionary.TryPushValue(nameof(m_CharItemPrefab), out m_CharItemPrefab);
+            deserializeDictionary.TryPushValue(nameof(m_NoneCharSprite), out m_NoneCharSprite);
+            CharGo = new List<GameObject>();
         }
         public static RendererWindow OpenWindow()
         {
@@ -120,6 +138,7 @@ namespace HotFix.UI
         public void OnEnable()
         {
             m_WindowAnimator?.Play("Appear");
+            m_CharItemPrefab.SetActive(false);
         }
 
         public void StartToClose()
@@ -153,11 +172,33 @@ namespace HotFix.UI
 
         public void ClearAll()
         {
-
+            foreach (GameObject go in CharGo)
+                UnityEngine.Object.Destroy(go);
+            CharGo.Clear();
         }
-        public void RefreshUI()
+        public void Append(string content)
         {
+            if (string.IsNullOrEmpty(content))
+                return;
+            BMPFont font = GameSystemData.Instance.Font;
+            if (font is null || font.HaveError)
+                return;
 
+            foreach (char @char in content)
+            {
+                GameObject charItem = UnityEngine.Object.Instantiate(m_CharItemPrefab);
+                charItem.SetActive(true);
+                charItem.name = @char.ToString();
+                CharGo.Add(charItem);
+
+                _ = font.Chars.TryGetValue(@char, out BMPFontChar fontChar) || font.Chars.TryGetValue(' ', out fontChar);
+                Sprite charSprite = fontChar?.Sprite ?? m_NoneCharSprite;
+                charItem.transform.SetParent(m_ScrollContent, false);
+
+                Image image = charItem.GetComponent<Image>();
+                image.sprite = charSprite;
+                image.SetNativeSize();
+            }
         }
 
         [MarkingAction(IsRuntimeAction = true)]
