@@ -28,6 +28,8 @@ namespace Tween
             set => m_NextFrameTweeners = value;
         }
 
+        protected Tweener TweenerInUsed;
+
         /// <summary>
         /// 已经抛弃或即将抛弃此实例
         /// </summary>
@@ -81,23 +83,23 @@ namespace Tween
 
             while (Tweeners.Count > 0)
             {
-                Tweener tweener = Tweeners.First.Value;
+                TweenerInUsed = Tweeners.First.Value;
                 Tweeners.RemoveFirst();
                 try
                 {
-                    bool haveNext = tweener.Enumerator.MoveNext();
-                    Tweener current = tweener.Enumerator.Current;
-                    tweener.UpdateTween();
+                    bool haveNext = TweenerInUsed.Enumerator.MoveNext();
+                    Tweener current = TweenerInUsed.Enumerator.Current;
+                    TweenerInUsed.UpdateTween();
                     // Update 回掉中停 Tweener
-                    if (tweener.State == TweenerState.Stop)
+                    if (TweenerInUsed.State == TweenerState.Stop)
                         haveNext = false;
                     // 资源被摧毁导致停止
                     else if (current == null)
-                        tweener.State = TweenerState.AssetHaveBeenDestroy;
-                    else if (tweener.Normalized >= 1f)
+                        TweenerInUsed.State = TweenerState.AssetHaveBeenDestroy;
+                    else if (TweenerInUsed.Normalized >= 1f)
                     {
-                        tweener.State = TweenerState.Finish;
-                        tweener.CompleteTween();
+                        TweenerInUsed.State = TweenerState.Finish;
+                        TweenerInUsed.CompleteTween();
                     }
                     // Update 回掉中没有停止 Tweener，资源仍然存在，能继续迭代
                     if (current != null && haveNext)
@@ -107,8 +109,12 @@ namespace Tween
                 {
                     Debug.LogError(e);
                     // 出现错误导致停止
-                    if (tweener != null)
-                        tweener.State = TweenerState.Error;
+                    if (TweenerInUsed != null)
+                        TweenerInUsed.State = TweenerState.Error;
+                }
+                finally
+                {
+                    TweenerInUsed = null;
                 }
             }
         }
@@ -176,7 +182,7 @@ namespace Tween
                 Behaviour.StopTweenerSuccessTimes++;
 #endif
                 tweener.State = TweenerState.Stop;
-                bool haveRemove = NextFrameTweeners.Remove(tweener) || Tweeners.Remove(tweener);
+                bool haveRemove = NextFrameTweeners.Remove(tweener) || Tweeners.Remove(tweener) || tweener == TweenerInUsed;
                 if (!haveRemove)
                     Debug.LogError($"Not found tweener in list, but it's state is running.");
             }
@@ -256,6 +262,7 @@ namespace Tween
                 }
                 m_NextFrameTweeners = null;
             }
+            // TweenerInUsed 暂时不做清理
         }
     }
 }
