@@ -1,6 +1,5 @@
 ﻿using Encoder;
 using HotFix.EncoderExtend;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,11 +17,6 @@ namespace HotFix.UI.Component
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
-            Title = "组件动画控制")]
-        private Animator m_Animator;
-
-        [InspectorInfo(
-            State = ItemSerializableState.SerializeIt,
             Title = "折叠状态图片")]
         private Image m_FoldImage;
 
@@ -30,6 +24,16 @@ namespace HotFix.UI.Component
             State = ItemSerializableState.SerializeIt,
             Title = "展开状态图片")]
         private Image m_UnfoldImage;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "内容父节点")]
+        private Transform m_ContentTrans;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
+            Title = "单页预制体")]
+        private GameObject m_PagePrefab;
 
         private UpdatableComponent m_UpdatableComponent;
 
@@ -57,9 +61,10 @@ namespace HotFix.UI.Component
             gameObject = m_UpdatableComponent.gameObject;
             transform = m_UpdatableComponent.transform;
 
-            deserializeDictionary.TryPushValue(nameof(m_Animator), out m_Animator);
             deserializeDictionary.TryPushValue(nameof(m_FoldImage), out m_FoldImage);
             deserializeDictionary.TryPushValue(nameof(m_UnfoldImage), out m_UnfoldImage);
+            deserializeDictionary.TryPushValue(nameof(m_ContentTrans), out m_ContentTrans);
+            deserializeDictionary.TryPushValue(nameof(m_PagePrefab), out m_PagePrefab);
         }
 
         /* func */
@@ -73,7 +78,6 @@ namespace HotFix.UI.Component
         public void Fold()
         {
             IsFold = true;
-            m_Animator.SetBool(nameof(IsFold), true);
             m_FoldImage.enabled = true;
             m_UnfoldImage.enabled = false;
         }
@@ -81,7 +85,6 @@ namespace HotFix.UI.Component
         public void Unfold()
         {
             IsFold = false;
-            m_Animator.SetBool(nameof(IsFold), false);
             m_FoldImage.enabled = false;
             m_UnfoldImage.enabled = true;
         }

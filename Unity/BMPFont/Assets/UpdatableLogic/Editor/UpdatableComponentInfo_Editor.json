@@ -697,22 +697,11 @@
       {
         "IsField": true,
         "IsProperty": false,
-        "Name": "m_Animator",
-        "Title": "组件动画控制",
-        "ToolTip": "",
-        "TypeFullName": "UnityEngine.Animator",
-        "Order": 0,
-        "UseUnitySerialize": true,
-        "UseJsonSerialize": false
-      },
-      {
-        "IsField": true,
-        "IsProperty": false,
         "Name": "m_FoldImage",
         "Title": "折叠状态图片",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Image",
-        "Order": 1,
+        "Order": 0,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -723,7 +712,29 @@
         "Title": "展开状态图片",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_ContentTrans",
+        "Title": "内容父节点",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Transform",
         "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_PagePrefab",
+        "Title": "单页预制体",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.GameObject",
+        "Order": 3,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }
@@ -1046,22 +1057,11 @@
       {
         "IsField": true,
         "IsProperty": false,
-        "Name": "m_Animator",
-        "Title": "组件动画控制",
-        "ToolTip": "",
-        "TypeFullName": "UnityEngine.Animator",
-        "Order": 0,
-        "UseUnitySerialize": true,
-        "UseJsonSerialize": false
-      },
-      {
-        "IsField": true,
-        "IsProperty": false,
         "Name": "m_FoldImage",
         "Title": "折叠状态图片",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Image",
-        "Order": 1,
+        "Order": 0,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -1072,7 +1072,29 @@
         "Title": "展开状态图片",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.UI.Image",
+        "Order": 1,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_ContentTrans",
+        "Title": "内容父节点",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.Transform",
         "Order": 2,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
+        "Name": "m_PagePrefab",
+        "Title": "单页预制体",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.GameObject",
+        "Order": 3,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }
