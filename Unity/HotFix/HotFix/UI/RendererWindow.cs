@@ -11,6 +11,8 @@ namespace HotFix.UI
     [BindingUpdatableComponent(BindingUpdatableComponentAttribute.ContainerComponent)]
     public class RendererWindow
     {
+        private const int BorderWidth = 50;
+
         /* const */
 
         /* field */
@@ -42,6 +44,11 @@ namespace HotFix.UI
 
         [InspectorInfo(
             State = ItemSerializableState.SerializeIt,
+            Title = "输入框")]
+        private InputField m_InputField;
+
+        [InspectorInfo(
+            State = ItemSerializableState.SerializeIt,
             Title = "展示内容")]
         private RectTransform m_ScrollContent;
 
@@ -49,11 +56,6 @@ namespace HotFix.UI
             State = ItemSerializableState.SerializeIt,
             Title = "字符预制体")]
         private GameObject m_CharItemPrefab;
-
-        [InspectorInfo(
-            State = ItemSerializableState.SerializeIt,
-            Title = "字符缺失")]
-        private Sprite m_NoneCharSprite;
 
         private UpdatableComponent m_UpdatableComponent;
 
@@ -109,7 +111,7 @@ namespace HotFix.UI
                 m_ScrollContent = null;
 
             deserializeDictionary.TryPushValue(nameof(m_CharItemPrefab), out m_CharItemPrefab);
-            deserializeDictionary.TryPushValue(nameof(m_NoneCharSprite), out m_NoneCharSprite);
+            deserializeDictionary.TryPushValue(nameof(m_InputField), out m_InputField);
             CharGo = new List<GameObject>();
         }
         public static RendererWindow OpenWindow()
@@ -176,7 +178,7 @@ namespace HotFix.UI
                 UnityEngine.Object.Destroy(go);
             CharGo.Clear();
         }
-        public void Append(string content)
+        public void Drawing(string content)
         {
             if (string.IsNullOrEmpty(content))
                 return;
@@ -184,21 +186,57 @@ namespace HotFix.UI
             if (font is null || font.HaveError)
                 return;
 
-            foreach (char @char in content)
+            string[] lines = content.Split('\n');
+            for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
             {
-                GameObject charItem = UnityEngine.Object.Instantiate(m_CharItemPrefab);
-                charItem.SetActive(true);
-                charItem.name = @char.ToString();
-                CharGo.Add(charItem);
+                string line = lines[lineIndex];
+                int lineLocalY = -font.Common.LineHelght * lineIndex - BorderWidth;
+                int lineLocalX = BorderWidth;
 
-                _ = font.Chars.TryGetValue(@char, out BMPFontChar fontChar) || font.Chars.TryGetValue(' ', out fontChar);
-                Sprite charSprite = fontChar?.Sprite ?? m_NoneCharSprite;
-                charItem.transform.SetParent(m_ScrollContent, false);
-
-                Image image = charItem.GetComponent<Image>();
-                image.sprite = charSprite;
-                image.SetNativeSize();
+                for (int charIndex = 0; charIndex < line.Length; charIndex++)
+                {
+                    char @char = line[charIndex];
+                    GameObject go = AppendChar(font, @char, out BMPFontChar fontChar);
+                    go.name = $"char : {lineIndex}, {charIndex}";
+                    RectTransform trans = (go.transform as RectTransform);
+                    trans.localPosition = new Vector2(lineLocalX + (fontChar?.Offset.x ?? 0), lineLocalY + (fontChar?.Offset.y ?? 0));
+                    if (fontChar is null)
+                        lineLocalX += (int)trans.sizeDelta.x;
+                    else
+                        lineLocalX += fontChar.XAdvance;
+                }
             }
+        }
+        /// <summary>
+        /// 渲染一个字符
+        /// </summary>
+        /// <param name="font">使用的字体</param>
+        /// <param name="char">字体内容</param>
+        /// <returns>此渲染单位对应的游戏对象</returns>
+        private GameObject AppendChar(BMPFont font, char @char, out BMPFontChar fontChar)
+        {
+            GameObject charItem = UnityEngine.Object.Instantiate(m_CharItemPrefab);
+            CharGo.Add(charItem);
+            charItem.transform.SetParent(m_ScrollContent, false);
+
+            if (font.Chars.TryGetValue(@char, out fontChar))
+            {
+                Image image = charItem.GetComponent<Image>();
+                // 离谱，Unity 渲染大小为0, 0 的精灵图片报错??
+                if (fontChar.Size.x * fontChar.Size.y == 0f)
+                {
+                    image.color = new Color();
+                    (charItem.transform as RectTransform).sizeDelta = fontChar.Size;
+                }
+                else
+                {
+                    image.sprite = fontChar.Sprite;
+                    image.color = Color.white;
+                    image.SetNativeSize();
+                }
+            }
+            charItem.SetActive(true);
+            return charItem;
         }
 
         [MarkingAction(IsRuntimeAction = true)]
@@ -221,6 +259,14 @@ namespace HotFix.UI
                 return;
             else
                 m_ScrollContent.localScale = scale;
+        }
+
+        [MarkingAction(IsRuntimeAction = true)]
+        public void OnClickDrawingButton()
+        {
+            Debug.Log($"{nameof(RendererWindow)}.{nameof(OnClickDrawingButton)}");
+            ClearAll();
+            Drawing(m_InputField.text);
         }
     }
 }

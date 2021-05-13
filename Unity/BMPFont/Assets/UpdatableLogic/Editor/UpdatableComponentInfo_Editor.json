@@ -491,11 +491,22 @@
       {
         "IsField": true,
         "IsProperty": false,
+        "Name": "m_InputField",
+        "Title": "输入框",
+        "ToolTip": "",
+        "TypeFullName": "UnityEngine.UI.InputField",
+        "Order": 5,
+        "UseUnitySerialize": true,
+        "UseJsonSerialize": false
+      },
+      {
+        "IsField": true,
+        "IsProperty": false,
         "Name": "m_ScrollContent",
         "Title": "展示内容",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.RectTransform",
-        "Order": 5,
+        "Order": 6,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       },
@@ -506,23 +517,18 @@
         "Title": "字符预制体",
         "ToolTip": "",
         "TypeFullName": "UnityEngine.GameObject",
-        "Order": 6,
-        "UseUnitySerialize": true,
-        "UseJsonSerialize": false
-      },
-      {
-        "IsField": true,
-        "IsProperty": false,
-        "Name": "m_NoneCharSprite",
-        "Title": "字符缺失",
-        "ToolTip": "",
-        "TypeFullName": "UnityEngine.Sprite",
         "Order": 7,
         "UseUnitySerialize": true,
         "UseJsonSerialize": false
       }
     ],
     "MarkingMethods": [
+      {
+        "IsEditorAction": false,
+        "IsRuntimeAction": true,
+        "Name": "OnClickDrawingButton",
+        "Title": "OnClickDrawingButton"
+      },
       {
         "IsEditorAction": false,
         "IsRuntimeAction": true,

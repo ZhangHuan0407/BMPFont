@@ -187,29 +187,5 @@ namespace HotFix
 
             HaveError = false;
         }
-
-        //public Action<Bitmap> CreateDrawCall(int vernierX, int vernierY)
-        //{
-        //    return (Bitmap bitmap) =>
-        //    {
-        //        for (int indexY = 0; indexY < Size.Y; indexY++)
-        //            for (int indexX = 0; indexX < Size.X; indexX++)
-        //            {
-        //                Color fontColor = Colors[indexX, indexY];
-        //                int bitmapIndexX = vernierX + indexX + Offset.X;
-        //                int bitmapIndexY = vernierY + indexY + Offset.Y;
-        //                Color backColor = bitmap.GetPixel(bitmapIndexX, bitmapIndexY);
-        //                if (fontColor.A == 0)
-        //                    continue;
-        //                else if (backColor.A == 0)
-        //                    bitmap.SetPixel(bitmapIndexX, bitmapIndexY, fontColor);
-        //                else
-        //                {
-        //                    Color resultColor = BMPFontRenderer.ColorPlusColor(backColor, fontColor);
-        //                    bitmap.SetPixel(bitmapIndexX, bitmapIndexY, resultColor);
-        //                }
-        //            }
-        //    };
-        //}
     }
 }
